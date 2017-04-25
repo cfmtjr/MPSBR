@@ -5,14 +5,33 @@
  */
 package mpsbr.view;
 
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import mpsbr.control.AvaliacaoControl;
+import mpsbr.control.NivelControl;
+import mpsbr.control.ProjetoControl;
 
 /**
  *
  * @author gabriela
  */
-public class MainView extends javax.swing.JFrame {
+public class MainView extends javax.swing.JFrame implements Runnable{
 
+    
+    public static final String CADASTRA_PRJ = "cadPrj";
+    public static final String BUSCA_PRJ = "srcPrj";
+    public static final String SIMULA_AVL = "simAvl";
+    public static final String CONSULTA_AVL = "consAvl";
+    public static final String CADASTRA_XML = "regXML";
+    public static final String CADASTRA_USR = "regUsr";
+    
+    
     /**
      * Creates new form mainView
      */
@@ -32,16 +51,17 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        mainPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        cadProjMenuItem = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        buscProj = new javax.swing.JMenuItem();
+        remProjMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -54,6 +74,10 @@ public class MainView extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAutoRequestFocus(false);
+
+        mainPanel.setLayout(new java.awt.CardLayout());
+        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("Usuários");
 
@@ -75,8 +99,13 @@ public class MainView extends javax.swing.JFrame {
 
         jMenu2.setText("Projetos");
 
-        jMenuItem4.setText("Cadastrar");
-        jMenu2.add(jMenuItem4);
+        cadProjMenuItem.setText("Cadastrar");
+        cadProjMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadProjMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(cadProjMenuItem);
 
         jMenuItem5.setText("Alterar");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -86,17 +115,32 @@ public class MainView extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
-        jMenuItem6.setText("Consultar");
-        jMenu2.add(jMenuItem6);
+        buscProj.setText("Consultar");
+        buscProj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscProjActionPerformed(evt);
+            }
+        });
+        jMenu2.add(buscProj);
 
-        jMenuItem7.setText("Remover");
-        jMenu2.add(jMenuItem7);
+        remProjMenuItem.setText("Remover");
+        remProjMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remProjMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(remProjMenuItem);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Avaliações");
 
         jMenuItem8.setText("Simular Avaliação");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Consultar Avaliações Anteriores");
@@ -149,17 +193,6 @@ public class MainView extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -180,50 +213,70 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void cadastrarXMLMenulItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarXMLMenulItemActionPerformed
-        int ret = 999;
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.CADASTRA_XML);
     }//GEN-LAST:event_cadastrarXMLMenulItemActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void remProjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remProjMenuItemActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, "REM PROJ");
+    }//GEN-LAST:event_remProjMenuItemActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainView().setVisible(true);
-            }
-        });
+    private void cadProjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadProjMenuItemActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.CADASTRA_PRJ);
+    }//GEN-LAST:event_cadProjMenuItemActionPerformed
+
+    private void buscProjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscProjActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.BUSCA_PRJ);
+    }//GEN-LAST:event_buscProjActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.SIMULA_AVL);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    public void run() 
+    {
+        try{
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");            
+            MainView mv = new MainView();
+            
+            ProjetoControl pc = ProjetoControl.getInstance();
+            NivelControl nc = NivelControl.getInstance();
+            AvaliacaoControl ac = AvaliacaoControl.getInstance();
+            
+            mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
+            mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
+            mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
+            mv.mainPanel.add(ac.getEnv(),MainView.SIMULA_AVL);
+            mv.setVisible(true);
+            mv.setPreferredSize(new Dimension(960,720));
+            mv.pack();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem buscProj;
+    private javax.swing.JMenuItem cadProjMenuItem;
     private javax.swing.JMenuItem cadastrarXMLMenulItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -238,11 +291,10 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JMenuItem remProjMenuItem;
     // End of variables declaration//GEN-END:variables
 }

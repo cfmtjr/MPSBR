@@ -5,6 +5,10 @@
  */
 package mpsbr;
 
+import java.awt.Dimension;
+import javax.swing.JFrame;
+import mpsbr.view.MainView;
+
 /**
  *
  * @author gabriela
@@ -16,6 +20,7 @@ public class MPSBR {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new Thread(new MainView()).start();
     }
     
 }

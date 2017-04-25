@@ -27,19 +27,44 @@ public class CadastraNivelXMLView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        titleLabel = new javax.swing.JLabel();
+        procurarButton = new javax.swing.JButton();
+        localTextField = new javax.swing.JTextField();
+        localLabel = new javax.swing.JLabel();
+        uploadButton = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        titleLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        titleLabel.setText("Cadastrar Nível MPS.BR - Arquivo XML");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, -1, -1));
+
+        procurarButton.setText("Procurar Arquivo");
+        add(procurarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
+        add(localTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 310, -1));
+
+        localLabel.setText("Local do Arquivo:");
+        add(localLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, -1));
+
+        uploadButton.setText("Upload de Arquivo XML");
+        uploadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadButtonActionPerformed(evt);
+            }
+        });
+        add(uploadButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void uploadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_uploadButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel localLabel;
+    private javax.swing.JTextField localTextField;
+    private javax.swing.JButton procurarButton;
+    private javax.swing.JLabel titleLabel;
+    private javax.swing.JButton uploadButton;
     // End of variables declaration//GEN-END:variables
 }
