@@ -43,7 +43,7 @@ public class EscolheNivelView extends javax.swing.JPanel {
         jLabel2.setText("Selecione o nível:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, -1));
 
-        nivelComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nível A", "Nível B", "Nível C", "Nível D", "Nível E", "Nível F", "Nível G", " " }));
+        nivelComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nível A", "Nível B", "Nível C", "Nível D", "Nível E", "Nível F", "Nível G" }));
         add(nivelComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 320, -1));
 
         nivelButton.setText("Escolher nível");

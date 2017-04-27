@@ -22,25 +22,32 @@ import mpsbr.control.ProjetoControl;
  * @author gabriela
  */
 public class MainView extends javax.swing.JFrame implements Runnable{
-
     
     public static final String CADASTRA_PRJ = "cadPrj";
     public static final String BUSCA_PRJ = "srcPrj";
     public static final String SIMULA_AVL = "simAvl";
+    public static final String SEL_PRJ = "selPrj";
     public static final String CONSULTA_AVL = "consAvl";
     public static final String CADASTRA_XML = "regXML";
     public static final String CADASTRA_USR = "regUsr";
-    
+   
+    public static MainView FRAME;
     
     /**
      * Creates new form mainView
      */
-    
     private final static JFileChooser FILECHOOSER = new JFileChooser();
     
     public MainView() {
         initComponents();
     }
+    
+    public static void showPanel(String panelName){                
+        CardLayout cl = (CardLayout)MainView.FRAME.mainPanel.getLayout();
+        cl.show(MainView.FRAME.mainPanel, panelName);
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -259,9 +266,12 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
             mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
             mv.mainPanel.add(ac.getEnv(),MainView.SIMULA_AVL);
+            mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();
+            
+            MainView.FRAME = mv; 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

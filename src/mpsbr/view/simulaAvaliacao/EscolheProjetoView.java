@@ -5,18 +5,25 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
+import java.util.List;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+import mpsbr.view.MainView;
+
 /**
  *
  * @author gabriela
  */
-public class EscolheProjetoView extends javax.swing.JPanel {
-
+public class EscolheProjetoView extends javax.swing.JPanel 
+{
+    
     /**
      * Creates new form EscolheProjetoView
      */
     public EscolheProjetoView() {
         initComponents();
     }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,70 +36,93 @@ public class EscolheProjetoView extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        projetoComboBox = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        projetoScrollPane = new javax.swing.JScrollPane();
+        projetoTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        continuaButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Simulação de Avaliação");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
         jLabel2.setText("Selecione o projeto:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 290, -1));
+        add(projetoComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 290, -1));
 
         jButton1.setText("Adicionar projeto");
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Projetos adicionados:");
-        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, -1, -1));
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        projetoTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        projetoScrollPane.setViewportView(projetoTable);
 
-        jButton3.setText("Cancelar");
+        add(projetoScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 570, 140));
 
-        jButton2.setText("Continuar avaliação");
+        jButton2.setText("Cancelar");
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(264, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(35, 35, 35)
-                .addComponent(jButton2)
-                .addGap(49, 49, 49))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2))
-                .addContainerGap())
-        );
-
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 580, 130));
+        continuaButton.setText("Continuar Avaliação");
+        continuaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                continuaButtonActionPerformed(evt);
+            }
+        });
+        add(continuaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 420, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void continuaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuaButtonActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_continuaButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton continuaButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> projetoComboBox;
+    private javax.swing.JScrollPane projetoScrollPane;
+    private javax.swing.JTable projetoTable;
     // End of variables declaration//GEN-END:variables
+
+    public void loadScr(List<String> projetos) 
+    {
+        this.projetoComboBox.removeAllItems();
+        for(String prj : projetos)
+            this.projetoComboBox.addItem(prj);
+        
+        Vector<String> colunas = new Vector<String>();
+        colunas.add(0,"Nome do Projeto");
+        colunas.add(0,"Status");
+        DefaultTableModel model = new DefaultTableModel(colunas,projetos.size());
+        this.projetoTable.setModel(model);
+        this.projetoTable.setEnabled(true);
+        this.projetoScrollPane.setVisible(true);
+    }
+    
+    public void updateTable(){
+        
+    }
 }

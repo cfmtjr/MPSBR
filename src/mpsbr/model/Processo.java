@@ -12,7 +12,8 @@ package mpsbr.model;
 public class Processo {
     private String nome;
     private String descricao;
-
+    private String nomeNivel;
+    
     public String getNome() {
         return nome;
     }
@@ -28,8 +29,18 @@ public class Processo {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public String getNomeNivel() {
+        return nomeNivel;
+    }
+
+    public void setNomeNivel(String nomeNivel) {
+        this.nomeNivel = nomeNivel;
+    }
     
-    public Processo(){
-        
+    public Processo(String nome, String descricao, String nomeNivel){
+        this.nome = nome;
+        this.descricao = descricao;
+        this.nomeNivel = nomeNivel;
     }
 }

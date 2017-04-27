@@ -5,12 +5,19 @@
  */
 package mpsbr.model;
 
+import java.util.List;
+
 /**
  *
  * @author gabriela
  */
 public class Projeto {
+
+    
+    private int id;
     private String nome;
+    private String descricao;
+    private String faseDesenv;
 
     public String getNome() {
         return nome;
@@ -35,12 +42,21 @@ public class Projeto {
     public void setFaseDesenv(String faseDesenv) {
         this.faseDesenv = faseDesenv;
     }
-    private String descricao;
-    private String faseDesenv;
     
-    public Projeto(){
-        
+    public Projeto(String nome, String descricao, String faseDesenv){
+        this.nome = nome;
+        this.descricao = descricao;
+        this.faseDesenv = faseDesenv;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     
     
 }

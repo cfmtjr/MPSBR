@@ -10,8 +10,10 @@ package mpsbr.model;
  * @author gabriela
  */
 public class AtributoDeProcesso {
+    private int id;
     private String nome;
     private String descricao;
+    private String nomeNivel;
 
     public String getNome() {
         return nome;
@@ -28,9 +30,28 @@ public class AtributoDeProcesso {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public String getNomeNivel() {
+        return nomeNivel;
+    }
+
+    public void setNomeNivel(String nomeNivel) {
+        this.nomeNivel = nomeNivel;
+    }
     
-    public AtributoDeProcesso(){
-        
+    public AtributoDeProcesso(int id, String nome, String descricao, String nomeNivel){
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.nomeNivel = nomeNivel;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
 }

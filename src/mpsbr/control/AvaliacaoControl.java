@@ -5,7 +5,9 @@
  */
 package mpsbr.control;
 
+import java.util.List;
 import mpsbr.model.Avaliacao;
+import mpsbr.view.MainView;
 import mpsbr.view.simulaAvaliacao.AvaliaProcessoView;
 import mpsbr.view.simulaAvaliacao.EscolheNivelView;
 import mpsbr.view.simulaAvaliacao.EscolheProjetoView;
@@ -23,9 +25,7 @@ public class AvaliacaoControl {
     private EscolheProjetoView epv;
     private ExibeResultadoView erv;
     private AvaliaProcessoView apv;
-    
-    private String nivelAval;
-    
+    private Avaliacao currentAval;
     
     private AvaliacaoControl()
     {
@@ -42,6 +42,16 @@ public class AvaliacaoControl {
         else
             return AvaliacaoControl.ac;
     }
+
+    public Avaliacao getCurrentAval() {
+        return currentAval;
+    }
+
+    public void setCurrentAval(Avaliacao currentAval) {
+        this.currentAval = currentAval;
+    }
+    
+    
 
     public EscolheNivelView getEnv() {
         return env;
@@ -76,21 +86,14 @@ public class AvaliacaoControl {
     }
 
     public void startAval(String nivel) {
-        this.setNivelAval(nivel);
+        Avaliacao aval = new Avaliacao(nivel,true);
+        this.setCurrentAval(aval);
         
-        Avaliacao aval = new Avaliacao();
-        //aval.getHistory(nivel);
+        List<String> prj;
+        prj = this.getCurrentAval().getProjectNames();
         
-        
+        this.getEpv().loadScr(prj);
+        MainView.showPanel(MainView.SEL_PRJ);
     }
 
-    public String getNivelAval() {
-        return nivelAval;
-    }
-
-    public void setNivelAval(String nivelAval) {
-        this.nivelAval = nivelAval;
-    }
-    
-    
 }
