@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import mpsbr.control.AvaliacaoControl;
@@ -25,7 +24,8 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     
     public static final String CADASTRA_PRJ = "cadPrj";
     public static final String BUSCA_PRJ = "srcPrj";
-    public static final String SIMULA_AVL = "simAvl";
+    public static final String NIVEL_AVL = "nivAvl";
+    public static final String DO_AVL = "doAvl";
     public static final String SEL_PRJ = "selPrj";
     public static final String CONSULTA_AVL = "consAvl";
     public static final String CADASTRA_XML = "regXML";
@@ -249,7 +249,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout)this.mainPanel.getLayout();
-        cl.show(this.mainPanel, MainView.SIMULA_AVL);
+        cl.show(this.mainPanel, MainView.NIVEL_AVL);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     public void run() 
@@ -265,8 +265,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
             mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
-            mv.mainPanel.add(ac.getEnv(),MainView.SIMULA_AVL);
+            mv.mainPanel.add(ac.getEnv(),MainView.NIVEL_AVL);
             mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
+            mv.mainPanel.add(ac.getApv(),MainView.DO_AVL);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();

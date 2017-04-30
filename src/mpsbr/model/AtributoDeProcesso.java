@@ -5,11 +5,16 @@
  */
 package mpsbr.model;
 
+import java.util.List;
+import mpsbr.DAO.AtributoDeProcessoDAO;
+import mpsbr.DAOImpl.AtributoDeProcessoDAOImpl;
+
 /**
  *
  * @author gabriela
  */
 public class AtributoDeProcesso {
+    
     private int id;
     private String nome;
     private String descricao;
@@ -54,4 +59,10 @@ public class AtributoDeProcesso {
         this.id = id;
     }
     
+    static List<AtributoDeProcesso> getAtributoDeProcessoPorNivel(Nivel n) 
+    {
+        AtributoDeProcessoDAO pd = new AtributoDeProcessoDAOImpl();
+        List<AtributoDeProcesso> processoList = pd.getAllAtributoDeProcessoPorNivel(n);
+        return processoList;
+    }
 }

@@ -10,11 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpsbr.DAO.ResultadoEsperadoDAO;
 import mpsbr.model.ConnectionDB;
 import mpsbr.model.Nivel;
+import mpsbr.model.Processo;
 import mpsbr.model.ResultadoEsperado;
 
 /**
@@ -127,6 +129,33 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
     @Override
     public boolean update(String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ResultadoEsperado> getAllResultadoEsperado(Nivel nivel, Processo p) {
+        ArrayList<ResultadoEsperado> result = new ArrayList<>();
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+
+            String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome "
+                             + "FROM re,processo"
+                             + " WHERE re.processo_id=?"
+                                + "AND re_valido_para.re_id = re.id"
+                                + "AND re_valido_para.nivel_id = ?";
+            PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
+            prepStatement.setString(1, Integer.toString(p.getId()));
+            prepStatement.setString(2, Integer.toString(nivel.getId()));
+            ResultSet rs = prepStatement.executeQuery();
+
+            while (rs.next())
+                result.add(new ResultadoEsperado(Integer.parseInt(rs.getString("re.id")),rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+            conexao.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     

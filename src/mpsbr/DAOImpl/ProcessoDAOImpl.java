@@ -58,7 +58,7 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next()) {
-                result.add(new Processo(rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
+                result.add(new Processo(Integer.parseInt(rs.getString("p.id")),rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
             }
             conexao.close();
             return result;
@@ -81,7 +81,7 @@ public class ProcessoDAOImpl implements ProcessoDAO{
                 prepStatement.setString(1, currNivel.getNome());
                 ResultSet rs = prepStatement.executeQuery();
                 while (rs.next())
-                    result.add(new Processo(rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
+                    result.add(new Processo(Integer.parseInt(rs.getString("p.id")),rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
                 currNivel = currNivel.getNivelAnterior();
             }
             conexao.close();
@@ -106,7 +106,7 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new Processo(rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome"));
+                result = new Processo(Integer.parseInt(rs.getString("p.id")),rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome"));
             conexao.close();
             return result;
         } catch (SQLException ex) {
