@@ -83,7 +83,7 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
                 
                 while (rs.next())
                     result.add(new AtributoDeProcesso(Integer.parseInt(rs.getString("ap.id")),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
-                currNivel = currNivel.getNivelAnterior();
+                currNivel = currNivel.getNivelAnteriorId();
             }
             conexao.close();
             return result;

@@ -6,7 +6,9 @@
 package mpsbr.DAO;
 
 import java.util.ArrayList;
+import java.util.List;
 import mpsbr.model.Nivel;
+import mpsbr.model.Processo;
 import mpsbr.model.ResultadoEsperado;
 
 /**
@@ -18,5 +20,6 @@ public interface ResultadoEsperadoDAO {
     public ArrayList<ResultadoEsperado> getAllResultadoEsperado();
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivel(Nivel nivel);
     public ResultadoEsperado findByNome(String nome);
-    public boolean update(String nome);    
+    public boolean update(String nome);
+    public List<ResultadoEsperado> getAllResultadoEsperado(Nivel nivel, Processo p);
 }

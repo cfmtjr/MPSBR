@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import mpsbr.DAO.ResultadoEsperadoDAO;
+import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
 import mpsbr.facade.MPSBRFacade;
 
 /**
@@ -39,8 +41,6 @@ public class Avaliacao {
     public void setNivel(Nivel nivel) {
         this.nivel = nivel;
     }
-    
-    
 
     public Boolean getStatus() {
         return status;
@@ -97,6 +97,62 @@ public class Avaliacao {
         for(Projeto p : prjAval)
             lst.add(p.getNome());
         return lst;
+    }
+
+    public void updateProjAvaliados(List<String> projetos) 
+    {    
+        List<Projeto> evalProjects = new ArrayList<Projeto>();
+        for(Projeto p : this.getProjAvaliados())
+        {
+            if(projetos.contains(p.getNome()))
+            {
+                evalProjects.add(p);
+            }
+        }
+        this.setProjAvaliados(evalProjects);
+    }
+
+    public List<Processo> listProcessos() {
+        
+        List<Processo> processos = new ArrayList<Processo>();    
+        Nivel n = this.getNivel();
+        while(n.getNivelAnterior()!=null)
+        {
+            List<Processo> procsNivel = Processo.getProcessosPorNivel(n);
+            for(Processo p : procsNivel )
+                processos.add(p);
+            n = n.getNivelAnterior();
+        }
+        return processos;
+    }
+
+    public List<AtributoDeProcesso> listAtributosDeProcesso() {
+        List<AtributoDeProcesso> aps = new ArrayList<AtributoDeProcesso>();    
+        Nivel n = this.getNivel();
+        while(n.getNivelAnterior()!=null)
+        {
+            List<AtributoDeProcesso> procsNivel = AtributoDeProcesso.getAtributoDeProcessoPorNivel(n);
+            for(AtributoDeProcesso p : procsNivel )
+                aps.add(p);
+            n = n.getNivelAnterior();
+        }
+        return aps;
+    }
+    
+    public List<ResultadoEsperado> listResultadoEsperado(List<Processo> processos)
+    {
+        ResultadoEsperadoDAO red  = new ResultadoEsperadoDAOImpl();
+        
+        for(Processo p : processos)
+        {
+            
+            for(ResultadoEsperado re : red.getAllResultadoEsperado(this.getNivel(),p)){
+                
+            }
+        }
+        
+        lst = ResultadoEsperado.getResultadoEsperado(this.getNivel(),this.get)
+        
     }
     
 }

@@ -5,11 +5,17 @@
  */
 package mpsbr.model;
 
+import java.util.List;
+import mpsbr.DAO.ProcessoDAO;
+import mpsbr.DAOImpl.ProcessoDAOImpl;
+
 /**
  *
  * @author gabriela
  */
 public class Processo {
+
+    private int id;
     private String nome;
     private String descricao;
     private String nomeNivel;
@@ -18,6 +24,14 @@ public class Processo {
         return nome;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -38,9 +52,17 @@ public class Processo {
         this.nomeNivel = nomeNivel;
     }
     
-    public Processo(String nome, String descricao, String nomeNivel){
+    public Processo(int id,String nome, String descricao, String nomeNivel){
+        this.id=id;
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;
+    }
+    
+    public static List<Processo> getProcessosPorNivel(Nivel nivel) 
+    {
+        ProcessoDAO pd = new ProcessoDAOImpl();
+        List<Processo> processoList = pd.getAllProcessoPorNivel(nivel);
+        return processoList;
     }
 }

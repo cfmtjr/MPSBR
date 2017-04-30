@@ -5,7 +5,12 @@
  */
 package mpsbr.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import mpsbr.DAO.ProjetoDAO;
+import mpsbr.DAOImpl.ProjetoDAOImpl;
 
 /**
  *
@@ -13,6 +18,9 @@ import java.util.List;
  */
 public class Projeto {
 
+    public static Map<String, String> getAllProjectNamesAndStatus() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     private int id;
     private String nome;
@@ -57,6 +65,13 @@ public class Projeto {
         this.id = id;
     }
     
-    
+    public static Map<String,String> getAllProjectNameAndStatus() {
+        ProjetoDAO pd = new ProjetoDAOImpl();
+        Map<String,String> names = new HashMap<String,String>();
+        for(Projeto p  : pd.getAllProjeto()){
+            names.put(p.getNome(), p.getDescricao());
+        }
+        return names;
+    }
     
 }
