@@ -51,12 +51,19 @@ public class Projeto {
         this.faseDesenv = faseDesenv;
     }
     
-    public Projeto(String nome, String descricao, String faseDesenv){
+    public Projeto(int id, String nome, String descricao, String faseDesenv){
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.faseDesenv = faseDesenv;
     }
 
+    public Projeto(String nome, String descricao, String faseDesenv) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.faseDesenv = faseDesenv;
+    }
+    
     public int getId() {
         return id;
     }

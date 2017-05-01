@@ -5,12 +5,16 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author gabriela
  */
 public class addREProcessoView extends javax.swing.JPanel {
 
+    private Map<String, List<String>> procs;
     /**
      * Creates new form addREProcessoView
      */
@@ -29,12 +33,11 @@ public class addREProcessoView extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        procComboBox = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        reList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
@@ -47,15 +50,14 @@ public class addREProcessoView extends javax.swing.JPanel {
         jLabel2.setText("Selecione o processo: ");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 140, -1));
-
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        procComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                procComboBoxItemStateChanged(evt);
+            }
         });
-        jScrollPane3.setViewportView(jList3);
+        add(procComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 190, -1));
+
+        jScrollPane3.setViewportView(reList);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 130, 90));
 
@@ -63,29 +65,70 @@ public class addREProcessoView extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         jButton2.setText("Cancelar");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, -1));
-
-        jButton3.setText("Carregar");
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, -1, -1));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
 
         jButton4.setText("Adicionar Novo RE");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
 
         jButton5.setText("Finalizar");
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, -1, -1));
+        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void procComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_procComboBoxItemStateChanged
+        // TODO add your handling code here:
+        int i;
+        if (evt.getStateChange() == evt.SELECTED) {
+          String item = (String) evt.getItem();
+          
+            for(String s : procs.keySet()){
+                if(item.equals(s)){
+                    String[] arrRe = new String[procs.get(s).size()];
+                    i = 0;
+                    for(String re : procs.get(s)){
+                        arrRe[i] = re;
+                        i++;
+                    }
+                    this.reList.setListData(arrRe);
+                    break;
+                }
+            }
+            this.validate();
+            this.repaint();
+       }
+    }//GEN-LAST:event_procComboBoxItemStateChanged
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JComboBox<String> procComboBox;
+    private javax.swing.JList<String> reList;
     // End of variables declaration//GEN-END:variables
+
+    public void loadScreen(Map<String, List<String>> procs) {
+        this.procs = procs;
+        
+        for(String s : procs.keySet()){
+            this.procComboBox.addItem(s);
+        }
+        
+        this.validate();
+        this.repaint();
+        
+    }
 }

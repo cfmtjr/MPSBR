@@ -14,7 +14,6 @@ import mpsbr.DAOImpl.ProcessoDAOImpl;
  * @author gabriela
  */
 public class Processo {
-
     private int id;
     private String nome;
     private String descricao;
@@ -61,8 +60,14 @@ public class Processo {
         this.status = status;
     }   
     
-    public Processo(int id,String nome, String descricao, String nomeNivel){
+    public Processo(int id, String nome, String descricao, String nomeNivel){
         this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.nomeNivel = nomeNivel;
+    }
+    
+    public Processo(String nome, String descricao, String nomeNivel) {
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;

@@ -30,6 +30,12 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     public static final String CONSULTA_AVL = "consAvl";
     public static final String CADASTRA_XML = "regXML";
     public static final String CADASTRA_USR = "regUsr";
+    public static final String SEL_NIVEL = "selNivel";
+    public static final String CADASTRA_NIVEL = "cadNivel";
+    public static final String CADASTRA_PROC = "cadProc";
+    public static final String CADASTRA_RE = "cadRE";
+    public static final String CADASTRA_AP = "cadAP";
+    public static final String ADD_RE = "addRE";
    
     public static MainView FRAME;
     
@@ -73,9 +79,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        cadastrarXMLMenulItem = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
@@ -157,25 +161,13 @@ public class MainView extends javax.swing.JFrame implements Runnable{
 
         jMenu4.setText("Níveis MPS.BR");
 
-        jMenu5.setText("Cadastrar");
-
-        cadastrarXMLMenulItem.setText("via XML");
-        cadastrarXMLMenulItem.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setText("Cadastrar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cadastrarXMLMenulItemActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu5.add(cadastrarXMLMenulItem);
-
-        jMenuItem10.setText("via Formulário");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem10);
-
-        jMenu4.add(jMenu5);
+        jMenu4.add(jMenuItem4);
 
         jMenuItem11.setText("Alterar");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
@@ -219,15 +211,6 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
-    private void cadastrarXMLMenulItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarXMLMenulItemActionPerformed
-        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
-        cl.show(this.mainPanel, MainView.CADASTRA_XML);
-    }//GEN-LAST:event_cadastrarXMLMenulItemActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
-
     private void remProjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remProjMenuItemActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout)this.mainPanel.getLayout();
@@ -252,6 +235,12 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         cl.show(this.mainPanel, MainView.NIVEL_AVL);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.SEL_NIVEL);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     public void run() 
     {
         try{
@@ -264,10 +253,15 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
-            mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
-            mv.mainPanel.add(ac.getEnv(),MainView.NIVEL_AVL);
+            //mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
+            mv.mainPanel.add(ac.getEnv(),MainView.DO_AVL);
             mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
-            mv.mainPanel.add(ac.getApv(),MainView.DO_AVL);
+            mv.mainPanel.add(nc.getSnv(),MainView.SEL_NIVEL);
+            mv.mainPanel.add(nc.getCnv(),MainView.CADASTRA_NIVEL);
+            mv.mainPanel.add(nc.getCpv(),MainView.CADASTRA_PROC);
+            mv.mainPanel.add(nc.getCrev(),MainView.CADASTRA_RE);
+            mv.mainPanel.add(nc.getCapv(),MainView.CADASTRA_AP);
+            mv.mainPanel.add(nc.getArev(),MainView.ADD_RE);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();
@@ -288,20 +282,18 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem buscProj;
     private javax.swing.JMenuItem cadProjMenuItem;
-    private javax.swing.JMenuItem cadastrarXMLMenulItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;

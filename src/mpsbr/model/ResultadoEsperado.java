@@ -5,6 +5,10 @@
  */
 package mpsbr.model;
 
+import java.util.List;
+import mpsbr.DAO.ResultadoEsperadoDAO;
+import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
+
 /**
  *
  * @author gabriela
@@ -40,7 +44,13 @@ public class ResultadoEsperado {
     }
     
     public ResultadoEsperado(int id,String nome, String descricao, String processoNome){
-        this.id=id;
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.processoNome = processoNome;
+    }
+
+    public ResultadoEsperado(String nome, String descricao, String processoNome) {
         this.nome = nome;
         this.descricao = descricao;
         this.processoNome = processoNome;
@@ -54,5 +64,9 @@ public class ResultadoEsperado {
         this.id = id;
     }
     
-    
+    public static List<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo){
+        ResultadoEsperadoDAO re = new ResultadoEsperadoDAOImpl();
+        
+        return re.getAllResultadoEsperadoPorNivelEProcesso(nivel, processo);
+    }
 }

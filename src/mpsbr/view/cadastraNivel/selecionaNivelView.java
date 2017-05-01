@@ -5,20 +5,23 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import mpsbr.control.NivelControl;
+
 /**
  *
  * @author gabriela
  */
-public class cadastraNivelView extends javax.swing.JPanel {
+public class selecionaNivelView extends javax.swing.JPanel {
     
     public static final String NOME = "cadastraNivelView";
     
     /**
      * Creates new form cadastraNivelView
      */
-    public cadastraNivelView() {
+    public selecionaNivelView() {
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,8 +34,8 @@ public class cadastraNivelView extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        nivelComboBox = new javax.swing.JComboBox<>();
+        CadastroButton = new javax.swing.JToggleButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -40,21 +43,32 @@ public class cadastraNivelView extends javax.swing.JPanel {
         jLabel1.setText("Cadastro de Nível");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         jLabel2.setText("Selecione o nível:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, -1, -1));
 
-        add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 150, -1));
+        nivelComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nível A", "Nível B", "Nível C", "Nível D", "Nível E", "Nível F", "Nível G" }));
+        add(nivelComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 150, -1));
 
-        jToggleButton1.setText("Cadastrar");
-        add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
+        CadastroButton.setText("Cadastrar");
+        CadastroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadastroButtonActionPerformed(evt);
+            }
+        });
+        add(CadastroButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 120, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroButtonActionPerformed
+        // TODO add your handling code here:
+        String nivel = (String) this.nivelComboBox.getSelectedItem();
+        NivelControl.getInstance().startCadastroNivel(nivel);
+    }//GEN-LAST:event_CadastroButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JToggleButton CadastroButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JComboBox<String> nivelComboBox;
     // End of variables declaration//GEN-END:variables
 }
