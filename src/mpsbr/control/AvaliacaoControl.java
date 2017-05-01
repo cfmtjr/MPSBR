@@ -38,7 +38,7 @@ public class AvaliacaoControl {
     private Avaliacao currentAval;
     private List<Processo> listProcessos;
     private List<AtributoDeProcesso> listAtributoDeProcessos;
-    private List<ResultadoEsperado> listResultadoEsperado;
+    private Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado;
     
     private AvaliacaoControl()
     {
@@ -114,12 +114,12 @@ public class AvaliacaoControl {
         this.listAtributoDeProcessos = listAtributoDeProcessos;
     }
 
-    public List<ResultadoEsperado> getListResultadoEsperado() {
-        return listResultadoEsperado;
+    public Map<Processo, List<ResultadoEsperado>> getMapResultadoEsperado() {
+        return mapResultadoEsperado;
     }
 
-    public void setListResultadoEsperado(List<ResultadoEsperado> listResultadoEsperado) {
-        this.listResultadoEsperado = listResultadoEsperado;
+    public void setMapResultadoEsperado(Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado) {
+        this.mapResultadoEsperado = mapResultadoEsperado;
     }
 
     public void preAval(String nivel) {
@@ -141,7 +141,7 @@ public class AvaliacaoControl {
         //Pegar os processos do nivel escolhido pra baixo
         this.setListProcessos(this.getCurrentAval().listProcessos());
         this.setListAtributoDeProcessos(this.getCurrentAval().listAtributosDeProcesso());
-        this.setListResultadoEsperado(this.getCurrentAval().listResultadoEsperado(this.getListProcessos()));
+        this.setMapResultadoEsperado(this.getCurrentAval().mapResultadoEsperado(this.getListProcessos()));
         
         MainView.showPanel(MainView.DO_AVL);   
     }

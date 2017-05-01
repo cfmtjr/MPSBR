@@ -10,25 +10,13 @@ package mpsbr.model;
  * @author gabriela
  */
 public class Nivel {
-    private int id;
     private String nome;
-    private int nivelAnteriorId; 
+    private Nivel nivelAnterior; 
 
-    public Nivel(int id,String nivel,String nivelAnterior,int nivelAnteriorId) {
-        this.nome=nivel;
-        this.id=id;
-        this.nivelAnteriorId=nivelAnteriorId;
+    public Nivel(String nome, Nivel nivelAnterior) {
+        this.nome = nome;
+        this.nivelAnterior = nivelAnterior;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    
 
     public String getNome() {
         return nome;
@@ -38,17 +26,12 @@ public class Nivel {
         this.nome = nome;
     }
 
-    public int getNivelAnteriorId() {
-        return nivelAnteriorId;
+    public Nivel getNivelAnterior() {
+        return nivelAnterior;
     }
 
-    public void setNivelAnteriorId(int nivelAnteriorId) {
-        this.nivelAnteriorId = nivelAnteriorId;
-    }
-    
-    public Nivel(String nome, int nivelAnteriorId){
-        this.nome = nome;
-        this.nivelAnteriorId = nivelAnteriorId;
+    public void setNivelAnterior(Nivel nivelAnterior) {
+        this.nivelAnterior = nivelAnterior;
     }
     
 }

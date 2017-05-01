@@ -62,12 +62,12 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT re.nome, re.descricao, p.nome FROM re JOIN processo p ON re.processo_id=p.id";
+            String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome FROM re JOIN processo p ON re.processo_id=p.id";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new ResultadoEsperado(Integer.parseInt(rs.getString("re.id")),rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+                result.add(new ResultadoEsperado(rs.getInt("re.id"), rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -83,7 +83,7 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT re.nome, re.descricao, p.nome "
+            String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome "
                              + "FROM re JOIN processo p ON re.processo_id=p.id "
                              + " WHERE re.id IN "
                                 + "(SELECT re.id "
@@ -95,7 +95,7 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new ResultadoEsperado(Integer.parseInt(rs.getString("re.id")),rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+                result.add(new ResultadoEsperado(rs.getInt("re.id"), rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -111,12 +111,12 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT re.nome, re.descricao, p.nome FROM re JOIN processo p ON re.processo_id=p.id WHERE nome=?";
+            String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome FROM re JOIN processo p ON re.processo_id=p.id WHERE nome=?";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new ResultadoEsperado(Integer.parseInt(rs.getString("re.id")),rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome"));
+                result = new ResultadoEsperado(rs.getInt("re.id"), rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome"));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -124,6 +124,7 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             return null;
         }
     }
+    
     
     
     @Override
@@ -132,24 +133,28 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
     }
 
     @Override
-    public List<ResultadoEsperado> getAllResultadoEsperado(Nivel nivel, Processo p) {
+    public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo) {
         ArrayList<ResultadoEsperado> result = new ArrayList<>();
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
             String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome "
-                             + "FROM re,processo"
-                             + " WHERE re.processo_id=?"
-                                + "AND re_valido_para.re_id = re.id"
-                                + "AND re_valido_para.nivel_id = ?";
+                    + "FROM re JOIN processo p ON re.processo_id=p.id "
+                    + "WHERE re.id IN "
+                    + "(SELECT re.id "
+                    + "FROM re JOIN re_valido_para val ON re.id=val.re_id "
+                    + "JOIN nivel n ON val.nivel_id=n.id "
+                    + "WHERE n.nome=?) "
+                    + "AND p.nome=?";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
-            prepStatement.setString(1, Integer.toString(p.getId()));
-            prepStatement.setString(2, Integer.toString(nivel.getId()));
+            prepStatement.setString(1, nivel.getNome());
+            prepStatement.setString(2, processo.getNome());
             ResultSet rs = prepStatement.executeQuery();
 
-            while (rs.next())
-                result.add(new ResultadoEsperado(Integer.parseInt(rs.getString("re.id")),rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+            while (rs.next()) {
+                result.add(new ResultadoEsperado(rs.getInt("re.id"), rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+            }
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -157,6 +162,4 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             return null;
         }
     }
-
-    
 }

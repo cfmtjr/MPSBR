@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import mpsbr.DAO.ResultadoEsperadoDAO;
 import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
 import mpsbr.facade.MPSBRFacade;
@@ -38,8 +40,8 @@ public class Avaliacao {
         return nivel;
     }
 
-    public void setNivel(Nivel nivel) {
-        this.nivel = nivel;
+    public void setNivel(String nivel) {
+        this.nivel = MPSBRFacade.nd.findByName(nivel);
     }
 
     public Boolean getStatus() {
@@ -80,7 +82,7 @@ public class Avaliacao {
             this.setDataAval(df.format(c.getTime()));
             this.setStatus(false);
         }
-        this.setNivel(new Nivel(nivel));
+        this.setNivel(nivel);
     }
 
     /**
@@ -127,32 +129,27 @@ public class Avaliacao {
     }
 
     public List<AtributoDeProcesso> listAtributosDeProcesso() {
-        List<AtributoDeProcesso> aps = new ArrayList<AtributoDeProcesso>();    
-        Nivel n = this.getNivel();
-        while(n.getNivelAnterior()!=null)
-        {
-            List<AtributoDeProcesso> procsNivel = AtributoDeProcesso.getAtributoDeProcessoPorNivel(n);
-            for(AtributoDeProcesso p : procsNivel )
-                aps.add(p);
-            n = n.getNivelAnterior();
-        }
+        List<AtributoDeProcesso> aps = AtributoDeProcesso.getAtributoDeProcessoPorNivel(this.getNivel());
         return aps;
     }
     
-    public List<ResultadoEsperado> listResultadoEsperado(List<Processo> processos)
+    public Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado(List<Processo> processos)
     {
         ResultadoEsperadoDAO red  = new ResultadoEsperadoDAOImpl();
-        
+        Map<Processo, List<ResultadoEsperado>> result = new HashMap<Processo, List<ResultadoEsperado>>();
         for(Processo p : processos)
-        {
-            
-            for(ResultadoEsperado re : red.getAllResultadoEsperado(this.getNivel(),p)){
-                
-            }
-        }
-        
-        lst = ResultadoEsperado.getResultadoEsperado(this.getNivel(),this.get)
-        
+            result.put(p, red.getAllResultadoEsperadoPorNivelEProcesso(this.getNivel(), p));
+        return result;
     }
     
+    public void avalia(){
+        ArrayList<Processo> processos = MPSBRFacade.pd.getAllProcessoPorNivel(this.getNivel());
+        ArrayList<ResultadoEsperado> REsPorNivel = MPSBRFacade.red.getAllResultadoEsperadoPorNivel(this.getNivel());
+        
+        for(int i = 0; i < processos.size(); i++){
+            
+        }
+    }
+    
+    private ArrayList<ResultadoEsperado> 
 }

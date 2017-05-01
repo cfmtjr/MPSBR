@@ -19,7 +19,7 @@ public interface ResultadoEsperadoDAO {
     public boolean create(ResultadoEsperado re);
     public ArrayList<ResultadoEsperado> getAllResultadoEsperado();
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivel(Nivel nivel);
+    public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo);
     public ResultadoEsperado findByNome(String nome);
     public boolean update(String nome);
-    public List<ResultadoEsperado> getAllResultadoEsperado(Nivel nivel, Processo p);
 }

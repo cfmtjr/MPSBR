@@ -18,9 +18,9 @@ import mpsbr.DAOImpl.ProjetoDAOImpl;
  */
 public class Projeto {
 
-    public static Map<String, String> getAllProjectNamesAndStatus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+//    public static Map<String, String> getAllProjectNamesAndStatus() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
     
     private int id;
     private String nome;
@@ -65,7 +65,7 @@ public class Projeto {
         this.id = id;
     }
     
-    public static Map<String,String> getAllProjectNameAndStatus() {
+    public static Map<String,String> getAllProjectNamesAndStatus() {
         ProjetoDAO pd = new ProjetoDAOImpl();
         Map<String,String> names = new HashMap<String,String>();
         for(Projeto p  : pd.getAllProjeto()){

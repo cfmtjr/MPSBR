@@ -71,6 +71,11 @@ public class EscolheProjetoView extends javax.swing.JPanel
         jLabel2.setText("Selecione o projeto:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
+        projetoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projetoComboBoxActionPerformed(evt);
+            }
+        });
         add(projetoComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 290, -1));
 
         addProjButton.setText("Adicionar projeto");
@@ -182,6 +187,10 @@ public class EscolheProjetoView extends javax.swing.JPanel
         this.validate();
         this.repaint();        
     }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void projetoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projetoComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_projetoComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,9 +8,13 @@ package mpsbr.facade;
 import java.util.ArrayList;
 import java.util.List;
 import mpsbr.DAO.AtributoDeProcessoDAO;
+import mpsbr.DAO.NivelDAO;
+import mpsbr.DAO.ProcessoDAO;
 import mpsbr.DAO.ProjetoDAO;
 import mpsbr.DAO.ResultadoEsperadoDAO;
 import mpsbr.DAOImpl.AtributoDeProcessoDAOImpl;
+import mpsbr.DAOImpl.NivelDAOImpl;
+import mpsbr.DAOImpl.ProcessoDAOImpl;
 import mpsbr.DAOImpl.ProjetoDAOImpl;
 import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
 import mpsbr.model.AtributoDeProcesso;
@@ -25,8 +29,10 @@ import mpsbr.model.ResultadoEsperado;
 public class MPSBRFacade {
 
     public static final AtributoDeProcessoDAO apd = new AtributoDeProcessoDAOImpl();
-    public static final ProjetoDAO pd = new ProjetoDAOImpl();
+    public static final ProjetoDAO pjd = new ProjetoDAOImpl();
+    public static final ProcessoDAO pd = new ProcessoDAOImpl();
     public static final ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();
+    public static final NivelDAO nd = new NivelDAOImpl();
     
     /**
      * Retorna todos os projetos em  um determinado nivel
@@ -40,10 +46,10 @@ public class MPSBRFacade {
         
         List<Projeto> projetos = new ArrayList<Projeto>();
         for(AtributoDeProcesso adp : adpList)
-            projetos.addAll(MPSBRFacade.pd.getAllByAtributoDeProcesso(Integer.toString(adp.getId())));
+            projetos.addAll(MPSBRFacade.pjd.getAllByAtributoDeProcesso(Integer.toString(adp.getId())));
         
         for(ResultadoEsperado re : reList)
-            projetos.addAll(MPSBRFacade.pd.getAllByAtributoDeProcesso(Integer.toString(re.getId())));
+            projetos.addAll(MPSBRFacade.pjd.getAllByAtributoDeProcesso(Integer.toString(re.getId())));
         
         return MPSBRFacade.removeDuplicate(projetos);
     }
