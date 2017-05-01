@@ -55,6 +55,11 @@ public class addREProcessoView extends javax.swing.JPanel {
                 procComboBoxItemStateChanged(evt);
             }
         });
+        procComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                procComboBoxActionPerformed(evt);
+            }
+        });
         add(procComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 190, -1));
 
         jScrollPane3.setViewportView(reList);
@@ -106,6 +111,10 @@ public class addREProcessoView extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void procComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_procComboBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
