@@ -119,7 +119,5 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
     @Override
     public boolean update(String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+    }    
 }

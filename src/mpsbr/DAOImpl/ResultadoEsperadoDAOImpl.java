@@ -26,7 +26,7 @@ import mpsbr.model.ResultadoEsperado;
 public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
 
     @Override
-    public boolean create(ResultadoEsperado re) {
+    public boolean create(ResultadoEsperado re, List<String> validoPara) {
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
@@ -39,14 +39,15 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             prepStatement.setString(2, re.getDescricao());
             prepStatement.setString(3, re.getProcessoNome());
             prepStatement.executeUpdate();
-
-            createSQL = "INSERT INTO re_valido_para(re_id, nivel_id) VALUES ((SELECT id FROM re WHERE nome=?),(SELECT nivel_id FROM processo WHERE nome=?))";
             
-            prepStatement = conexao.prepareStatement(createSQL);
-            prepStatement.setString(1, re.getNome());
-            prepStatement.setString(2, re.getProcessoNome());
-            prepStatement.executeUpdate();
-
+            for (String nomeNivel : validoPara) {
+                createSQL = "INSERT INTO re_valido_para(re_id, nivel_id) VALUES ((SELECT id FROM re WHERE nome=?),(SELECT id FROM nivel WHERE nome=?))";
+                prepStatement = conexao.prepareStatement(createSQL);
+                prepStatement.setString(1, re.getNome());
+                prepStatement.setString(2, nomeNivel);
+                prepStatement.executeUpdate();
+            }
+            
             conexao.close();
             return true;
         } catch (SQLException ex) {

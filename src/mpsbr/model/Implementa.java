@@ -40,7 +40,8 @@ public class Implementa<T> {
         this.grauImplPorProj = grauImplPorProj;
     }
     
-    public Implementa(){
-        
+    public Implementa(String dataAval, Map<Projeto, String> grauImplProProj, T caracteristicaAvaliada){
+        this.grauImplPorProj = grauImplProProj;
+        this.caracteristicaAvaliada = caracteristicaAvaliada;
     }
 }

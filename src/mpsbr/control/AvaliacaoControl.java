@@ -53,10 +53,9 @@ public class AvaliacaoControl {
     
     public static AvaliacaoControl getInstance()
     {
-        if(AvaliacaoControl.ac==null)
-            return new AvaliacaoControl();
-        else
-            return AvaliacaoControl.ac;
+        if(ac == null)
+            ac = new AvaliacaoControl();
+        return ac;
     }
 
     public Avaliacao getCurrentAval() {
@@ -65,9 +64,7 @@ public class AvaliacaoControl {
 
     public void setCurrentAval(Avaliacao currentAval) {
         this.currentAval = currentAval;
-    }
-    
-    
+    }  
 
     public EscolheNivelView getEnv() {
         return env;

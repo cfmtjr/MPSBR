@@ -16,7 +16,7 @@ import mpsbr.model.ResultadoEsperado;
  * @author gabriela
  */
 public interface ResultadoEsperadoDAO {
-    public boolean create(ResultadoEsperado re);
+    public boolean create(ResultadoEsperado re, List<String> validoPara);
     public ArrayList<ResultadoEsperado> getAllResultadoEsperado();
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivel(Nivel nivel);
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo);
