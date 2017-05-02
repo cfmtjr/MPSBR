@@ -9,12 +9,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mpsbr.DAO.ResultadoEsperadoDAO;
 import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
+import mpsbr.control.AvaliacaoControl;
 import mpsbr.facade.MPSBRFacade;
 
 /**
@@ -143,13 +143,193 @@ public class Avaliacao {
     }
     
     public void avalia(){
-        ArrayList<Processo> processos = MPSBRFacade.pd.getAllProcessoPorNivel(this.getNivel());
-        ArrayList<ResultadoEsperado> REsPorNivel = MPSBRFacade.red.getAllResultadoEsperadoPorNivel(this.getNivel());
-        
-        for(int i = 0; i < processos.size(); i++){
-            
-        }
+        AvaliacaoControl control = AvaliacaoControl.getInstance();
+        HashMap<Processo, List<Implementa<ResultadoEsperado>>> grausImplREProcI = (HashMap<Processo, List<Implementa<ResultadoEsperado>>>) control.getMapImplProjRE();
+        HashMap<Processo, List<Implementa<AtributoDeProcesso>>> grausImplAPProcI = (HashMap<Processo, List<Implementa<AtributoDeProcesso>>>) control.getMapImplProjAP();
+        Map<String, String> grausImplREUOProcI = new HashMap<>();
+        Map<String, String> grausImplAPUOProcI = new HashMap<>();
+        for (Processo p : grausImplREProcI.keySet()) {
+            ArrayList<Implementa<ResultadoEsperado>> implRE = (ArrayList<Implementa<ResultadoEsperado>>) grausImplREProcI.get(p);
+            //SALVAR NO DB
+            for (Implementa<ResultadoEsperado> implementa : implRE) {
+                grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+            }
+            ArrayList<Implementa<AtributoDeProcesso>> implAP = (ArrayList<Implementa<AtributoDeProcesso>>) grausImplAPProcI.get(p);
+            //SALVAR NO DB
+            for (Implementa<AtributoDeProcesso> implementa : implAP) {
+                grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+            }
+            if(validaApProc(grausImplAPUOProcI)){
+                if(validaReProc(grausImplREUOProcI))
+                {
+                    //TODO PROC STATUS = SATISFEITO
+                    //SALVAR NO DB
+                }
+            } else {
+                //TODO PROC STATUS = N SATISFEITO //SALVAR NO DB
+                //TODO AVAL STATUS = NAO PASSOU
+            }
+        } if(this.getStatus() != false){ //!= n passou
+            this.setStatus(true);
+            //SALVAR NO DB
+        }            
     }
     
-    private ArrayList<ResultadoEsperado> 
+    private String identificaGrauImpProcUO(Map<Projeto, String> implPorProj){
+        String result = "";
+        boolean different = false;
+        boolean isAnyF = false;
+        boolean isAnyT = false;
+        boolean isAnyL = false;
+        boolean isAnyP = false;
+        boolean isAnyN = false;
+        boolean isAnyNA = false;
+        String[] grauImpl = implPorProj.values().toArray(new String[implPorProj.size()]);
+        if(implPorProj.values().contains("N")) //CASO 6
+            result = "N";
+        else
+        {
+            for(int i = 0; i < grauImpl.length; i++){
+                if(!grauImpl[i].equals("NA") && !different){
+                    for(int j = i; j < grauImpl.length; j++)
+                    {
+                        if(!grauImpl[i].equals(grauImpl[j]) && !grauImpl[j].equals("NA")){
+                            different = true;
+                            break;
+                        }
+                        if(j == grauImpl.length)
+                            result = grauImpl[i]; //Se todos iguais (CASO 1, CASO 2 (todos iguais e existe NA) e CASO 7(todos F))
+                    }
+                    if(!different)
+                        break;
+                }
+                switch(grauImpl[i])
+                {
+                    case "F":
+                        isAnyF = true;
+                        break;
+                    case "T":
+                        isAnyT = true;
+                        break;
+                    case "L":
+                        isAnyL = true;
+                        break;
+                    case "P":
+                        isAnyP = true;
+                        break;
+                    case "N":
+                        isAnyN = true;
+                        break;
+                    default:
+                        isAnyNA = true;
+                        break;
+                }
+            }
+            if((isAnyNA && (isAnyT || isAnyL)) && !(isAnyF || isAnyP || isAnyN)) //CASO 4
+                    result = "L";
+            else if((isAnyT || isAnyL) && !(isAnyF || isAnyP || isAnyN || isAnyNA)) //CASO 3
+                result = "L";
+            else if(isAnyP && !isAnyN) //CASO 5
+                result = "P";
+        }
+        return result;
+    }
+    
+    //Verifica se todos os REs do processo para a UO estão caracterizados de forma que o processo pode ser classificado
+    // como satisfeito
+    public boolean validaReProc(Map<String, String> implREUO) {
+        boolean isValid = true;
+
+        for (String grauImpl : implREUO.values()) {
+            if(!grauImpl.equals("T") || !grauImpl.equals("L") || !grauImpl.equals("F"))
+                isValid = false;
+        }
+        return isValid;
+    }
+
+    // Verifica, de acordo com o nível, se os AP do processo estão caracterizados de forma que o processo pode ser classificado 
+    // como satisfeito
+    public boolean validaApProc(Map<String, String> grausImplAP) {
+        boolean isValid = true;
+        for(int i = 0; i < grausImplAP.size(); i++){
+            switch(this.getNivel().getNome()) {
+                case "G":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "F":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T;L")
+                            || !validaAp(grausImplAP, "AP2.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "E":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T")
+                            || !validaAp(grausImplAP, "AP2.2", "T")
+                            || !validaAp(grausImplAP, "AP3.1", "T;L")
+                            || !validaAp(grausImplAP, "AP3.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "D":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T")
+                            || !validaAp(grausImplAP, "AP2.2", "T")
+                            || !validaAp(grausImplAP, "AP3.1", "T;L")
+                            || !validaAp(grausImplAP, "AP3.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "C":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T")
+                            || !validaAp(grausImplAP, "AP2.2", "T")
+                            || !validaAp(grausImplAP, "AP3.1", "T;L")
+                            || !validaAp(grausImplAP, "AP3.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "B":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T")
+                            || !validaAp(grausImplAP, "AP2.2", "T")
+                            || !validaAp(grausImplAP, "AP3.1", "T")
+                            || !validaAp(grausImplAP, "AP3.2", "T")
+                            || !validaAp(grausImplAP, "AP4.1", "T;L")
+                            || !validaAp(grausImplAP, "AP4.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+                case "A":
+                    if (!validaAp(grausImplAP, "AP1.1", "T")
+                            || !validaAp(grausImplAP, "AP2.1", "T")
+                            || !validaAp(grausImplAP, "AP2.2", "T")
+                            || !validaAp(grausImplAP, "AP3.1", "T")
+                            || !validaAp(grausImplAP, "AP3.2", "T")
+                            || !validaAp(grausImplAP, "AP4.1", "T")
+                            || !validaAp(grausImplAP, "AP4.2", "T")
+                            || !validaAp(grausImplAP, "AP5.1", "T;L")
+                            || !validaAp(grausImplAP, "AP5.2", "T;L")) {
+                        isValid = false;
+                    }
+                    break;
+            }
+        }
+        return isValid;
+    }
+
+    
+    //Valida uma AP do processo i, de acordo com o nível escolhido (tabela 10)
+    public boolean validaAp(Map<String, String> grausImplAP, String nomeAp, String valPossiveis) {
+        String[] vals = valPossiveis.split(";");
+        List<String> valsList = new ArrayList<>();
+        for (int i = 0; i < vals.length; i++) {
+            valsList.add(vals[i]);
+        }
+        return valsList.contains(grausImplAP.get(nomeAp));
+    }
 }

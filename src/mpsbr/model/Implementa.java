@@ -5,13 +5,16 @@
  */
 package mpsbr.model;
 
+import java.util.Map;
+
 /**
  *
  * @author gabriela
  */
-public class Implementa {
+public class Implementa<T> {
     private String dataAval;
-    private String grauImpl;
+    private Map<Projeto, String> grauImplPorProj;
+    private T caracteristicaAvaliada;
 
     public String getDataAval() {
         return dataAval;
@@ -21,12 +24,20 @@ public class Implementa {
         this.dataAval = dataAval;
     }
 
-    public String getGrauImpl() {
-        return grauImpl;
+    public T getCaracteristicaAvaliada() {
+        return caracteristicaAvaliada;
     }
 
-    public void setGrauImpl(String grauImpl) {
-        this.grauImpl = grauImpl;
+    public void setCaracteristicaAvaliada(T caracteristicaAvaliada) {
+        this.caracteristicaAvaliada = caracteristicaAvaliada;
+    }
+
+    public Map<Projeto, String> getGrauImplPorProj() {
+        return grauImplPorProj;
+    }
+
+    public void setGrauImplPorProj(Map<Projeto, String> grauImplPorProj) {
+        this.grauImplPorProj = grauImplPorProj;
     }
     
     public Implementa(){

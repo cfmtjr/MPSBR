@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Avaliacao;
+import mpsbr.model.Implementa;
 import mpsbr.model.Processo;
 import mpsbr.model.Projeto;
 import mpsbr.model.ResultadoEsperado;
@@ -39,6 +40,8 @@ public class AvaliacaoControl {
     private List<Processo> listProcessos;
     private List<AtributoDeProcesso> listAtributoDeProcessos;
     private Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado;
+    private Map<Processo, List<Implementa<ResultadoEsperado>>> mapImplProjRE; 
+    private Map<Processo, List<Implementa<AtributoDeProcesso>>> mapImplProjAP; 
     
     private AvaliacaoControl()
     {
@@ -122,6 +125,22 @@ public class AvaliacaoControl {
         this.mapResultadoEsperado = mapResultadoEsperado;
     }
 
+    public Map<Processo, List<Implementa<AtributoDeProcesso>>> getMapImplProjAP() {
+        return mapImplProjAP;
+    }
+
+    public void setMapImplProjAP(Map<Processo, List<Implementa<AtributoDeProcesso>>> mapImplProjAP) {
+        this.mapImplProjAP = mapImplProjAP;
+    }
+
+    public Map<Processo, List<Implementa<ResultadoEsperado>>> getMapImplProjRE() {
+        return mapImplProjRE;
+    }
+
+    public void setMapImplProjRE(Map<Processo, List<Implementa<ResultadoEsperado>>> mapImplProjRE) {
+        this.mapImplProjRE = mapImplProjRE;
+    }
+    
     public void preAval(String nivel) {
         Avaliacao aval = new Avaliacao(nivel,true);
         this.setCurrentAval(aval);
@@ -142,7 +161,6 @@ public class AvaliacaoControl {
         this.setListProcessos(this.getCurrentAval().listProcessos());
         this.setListAtributoDeProcessos(this.getCurrentAval().listAtributosDeProcesso());
         this.setMapResultadoEsperado(this.getCurrentAval().mapResultadoEsperado(this.getListProcessos()));
-        
         MainView.showPanel(MainView.DO_AVL);   
     }
     
