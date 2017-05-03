@@ -67,9 +67,7 @@ public class NivelControl {
 
     public void setProcessos(Map<Processo, List<ResultadoEsperado>> processos) {
         this.processos = processos;
-    }
-    
-    
+    }    
 
     public selecionaNivelView getSnv() {
         return snv;
@@ -126,8 +124,6 @@ public class NivelControl {
     public void setAp(List<AtributoDeProcesso> ap) {
         this.ap = ap;
     }
-    
-    
       
     public static NivelControl getInstance()
     {

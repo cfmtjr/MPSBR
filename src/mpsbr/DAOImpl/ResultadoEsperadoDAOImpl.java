@@ -133,14 +133,17 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+
     @Override
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo) {
         ArrayList<ResultadoEsperado> result = new ArrayList<>();
+
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
             String selectSQL = "SELECT re.id, re.nome, re.descricao, p.nome "
+
                     + "FROM re JOIN processo p ON re.processo_id=p.id "
                     + "WHERE re.id IN "
                     + "(SELECT re.id "
