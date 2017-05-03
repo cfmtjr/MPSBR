@@ -53,11 +53,7 @@ public class cadastraAPView extends javax.swing.JPanel {
 
         jLabel5.setText("Descrição: ");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
-
-        jTextField1.setText("jTextField1");
         add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 350, -1));
-
-        jTextField2.setText("jTextField1");
         add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
         jTextArea1.setColumns(20);
@@ -67,8 +63,8 @@ public class cadastraAPView extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel2.setText("Cadastro de Processo");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
+        jLabel2.setText("Cadastro de Atributo de Processo");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, -1, -1));
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

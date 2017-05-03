@@ -6,6 +6,8 @@
 package mpsbr.view.cadastraNivel;
 
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
 
 /**
@@ -92,7 +94,14 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
 
     private void changeProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeProcButtonActionPerformed
         // TODO add your handling code here:
-        NivelControl.getInstance().addREProcess();
+        String process = this.processoList.getSelectedValue();
+        if(process.isEmpty()){
+            JOptionPane.showMessageDialog(new JFrame(), "Escolha um processo");
+        }
+        else{
+            NivelControl.getInstance().addREProcess(process);
+        }
+        
     }//GEN-LAST:event_changeProcButtonActionPerformed
 
     private void addProcessoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProcessoButtonActionPerformed

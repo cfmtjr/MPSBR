@@ -7,6 +7,7 @@ package mpsbr.view.cadastraNivel;
 
 import java.util.List;
 import java.util.Map;
+import mpsbr.control.NivelControl;
 
 /**
  *
@@ -38,7 +39,7 @@ public class addREProcessoView extends javax.swing.JPanel {
         reList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        novoREButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,17 +71,27 @@ public class addREProcessoView extends javax.swing.JPanel {
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
         jButton2.setText("Cancelar");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
-
-        jButton4.setText("Adicionar Novo RE");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
+
+        novoREButton.setText("Adicionar Novo RE");
+        novoREButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novoREButtonActionPerformed(evt);
+            }
+        });
+        add(novoREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
 
         jButton5.setText("Finalizar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
         add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -107,10 +118,19 @@ public class addREProcessoView extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_procComboBoxItemStateChanged
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void novoREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoREButtonActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
+        String processo = (String) this.procComboBox.getSelectedItem();
+        NivelControl.getInstance().cadastroRE(processo);
+    }//GEN-LAST:event_novoREButtonActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void procComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procComboBoxActionPerformed
         // TODO add your handling code here:
@@ -119,12 +139,12 @@ public class addREProcessoView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton novoREButton;
     private javax.swing.JComboBox<String> procComboBox;
     private javax.swing.JList<String> reList;
     // End of variables declaration//GEN-END:variables

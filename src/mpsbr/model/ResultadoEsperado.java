@@ -55,7 +55,7 @@ public class ResultadoEsperado {
         this.descricao = descricao;
         this.processoNome = processoNome;
     }
-
+    
     public int getId() {
         return id;
     }

@@ -5,6 +5,8 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import mpsbr.control.NivelControl;
+
 /**
  *
  * @author Kildare Silveira
@@ -40,9 +42,9 @@ public class cadastraProcessoView extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         cadastroRETextField = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        addREButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
+        finalizaButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -79,20 +81,34 @@ public class cadastraProcessoView extends javax.swing.JPanel {
         jLabel6.setText("REs Cadastrados:");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
-        jButton4.setText("Adicionar Novo RE");
-        add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
-
-        jButton2.setText("Cancelar");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 410, -1, -1));
-
-        jButton5.setText("Finalizar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        addREButton.setText("Adicionar Novo RE");
+        addREButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                addREButtonActionPerformed(evt);
             }
         });
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, -1, -1));
+        add(addREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
+
+        cancelButton.setText("Cancelar");
+        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 410, -1, -1));
+
+        finalizaButton.setText("Finalizar");
+        finalizaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finalizaButtonActionPerformed(evt);
+            }
+        });
+        add(finalizaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 410, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addREButtonActionPerformed
+        // TODO add your handling code here:
+        NivelControl.getInstance().addREProcess();
+    }//GEN-LAST:event_addREButtonActionPerformed
+
+    private void finalizaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizaButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_finalizaButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -100,12 +116,12 @@ public class cadastraProcessoView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addREButton;
     private javax.swing.JList<String> cadastroRETextField;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JTextField codigoTextField;
     private javax.swing.JTextArea descricaoTextField;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton finalizaButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

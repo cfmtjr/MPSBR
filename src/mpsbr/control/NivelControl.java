@@ -43,6 +43,8 @@ public class NivelControl {
     private Map<Processo,List<ResultadoEsperado>> processos;
     private List<AtributoDeProcesso> ap;
     
+    private Processo proprietaria;
+    
     private NivelControl()
     {
         this.setSnv(new selecionaNivelView());
@@ -124,7 +126,15 @@ public class NivelControl {
     public void setAp(List<AtributoDeProcesso> ap) {
         this.ap = ap;
     }
-      
+
+    public Processo getProprietaria() {
+        return proprietaria;
+    }
+
+    public void setProprietaria(Processo proprietaria) {
+        this.proprietaria = proprietaria;
+    }
+          
     public static NivelControl getInstance()
     {
         if(NivelControl.nc == null)
@@ -165,7 +175,14 @@ public class NivelControl {
         this.getCpv().loadScreen();
         MainView.showPanel(MainView.CADASTRA_PROC);
     }
-
+    
+    public void addProcess(){
+        
+    }
+    
+    /**
+     *  Adiciona Resultado Esperado para um pro
+     */
     public void addREProcess() {
         int i;
         Map<String,List<String>> procs = new HashMap<>();
@@ -182,5 +199,42 @@ public class NivelControl {
         
         this.getArev().loadScreen(procs);
         MainView.showPanel(MainView.ADD_RE);
+    }
+
+    public void cadastroRE()
+    {
+        this.getCrev().loadScreen();
+        MainView.showPanel(MainView.CADASTRA_RE);
+    }
+
+    public void cadastroRE(String codigo, String nome, String desc, List<String> niveis) 
+    {    
+        ResultadoEsperado re = new ResultadoEsperado(Integer.parseInt(codigo),nome,desc,this.getProprietaria().getNome());
+        for(Processo p : this.getProcessos().keySet())
+        {
+            if(this.getProprietaria().equals(p))
+            {
+                List<ResultadoEsperado> lst = this.getProcessos().get(p);
+                lst.add(re);
+                this.getProcessos().put(p, lst);
+            }
+        }
+        this.setProprietaria(null);
+    }
+
+    public void addREProcess(String process) {
+        
+        for(Processo p : this.getProcessos().keySet())
+        {
+            if(p.getNome().equals(process)){
+                this.setProprietaria(p);
+            }
+        }
+        this.getCrev().loadScreen();
+        MainView.showPanel(MainView.CADASTRA_RE);
+    }
+
+    public void cadastroRE(String processo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
