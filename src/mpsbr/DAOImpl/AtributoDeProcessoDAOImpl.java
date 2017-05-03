@@ -54,12 +54,12 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id";
+            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new AtributoDeProcesso(Integer.parseInt(rs.getString("ap.id")),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
+                result.add(new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -75,14 +75,14 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
-            String selectSQL = "SELECT ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id where n.nome=?";
+            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id where n.nome=?";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             while (null != currNivel){
                 prepStatement.setString(1, currNivel.getNome());
                 ResultSet rs = prepStatement.executeQuery();
                 
                 while (rs.next())
-                    result.add(new AtributoDeProcesso(Integer.parseInt(rs.getString("ap.id")),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
+                    result.add(new AtributoDeProcesso(rs.getInt("ap.id"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
                 currNivel = currNivel.getNivelAnterior();
             }
             conexao.close();
@@ -100,14 +100,14 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id WHERE ap.nome=?";
+            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id WHERE ap.nome=?";
 
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             prepStatement.setString(1, nome);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new AtributoDeProcesso(Integer.parseInt(rs.getString("p.id")),rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome"));
+                result = new AtributoDeProcesso(rs.getInt("ap.id"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome"));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -119,7 +119,5 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
     @Override
     public boolean update(String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+    }    
 }

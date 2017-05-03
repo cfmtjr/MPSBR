@@ -5,9 +5,16 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import mpsbr.control.AvaliacaoControl;
 import mpsbr.view.MainView;
 
 /**
@@ -17,11 +24,21 @@ import mpsbr.view.MainView;
 public class EscolheProjetoView extends javax.swing.JPanel 
 {
     
+    private Map<String,String> projetosMap;
+    
     /**
      * Creates new form EscolheProjetoView
      */
     public EscolheProjetoView() {
         initComponents();
+    }
+
+    public Map<String, String> getProjetosMap() {
+        return projetosMap;
+    }
+
+    public void setProjetosMap(Map<String, String> projetosMap) {
+        this.projetosMap = projetosMap;
     }
         
 
@@ -37,12 +54,13 @@ public class EscolheProjetoView extends javax.swing.JPanel
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         projetoComboBox = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        addProjButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         projetoScrollPane = new javax.swing.JScrollPane();
         projetoTable = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         continuaButton = new javax.swing.JButton();
+        removeButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -53,10 +71,20 @@ public class EscolheProjetoView extends javax.swing.JPanel
         jLabel2.setText("Selecione o projeto:");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
 
+        projetoComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                projetoComboBoxActionPerformed(evt);
+            }
+        });
         add(projetoComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 290, -1));
 
-        jButton1.setText("Adicionar projeto");
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
+        addProjButton.setText("Adicionar projeto");
+        addProjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addProjButtonActionPerformed(evt);
+            }
+        });
+        add(addProjButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Projetos adicionados:");
@@ -87,17 +115,87 @@ public class EscolheProjetoView extends javax.swing.JPanel
             }
         });
         add(continuaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 420, -1, -1));
+
+        removeButton.setText("Remover Projeto");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
+        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 420, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void continuaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuaButtonActionPerformed
         // TODO add your handling code here:
+        TableModel table = this.projetoTable.getModel();
+        Map<String,String> projetos = new HashMap<String,String>();
+        for(int i=0;i<table.getRowCount();i++)
+            projetos.put((String) table.getValueAt(i, 0),(String) table.getValueAt(i, 1));
+        
+        AvaliacaoControl.getInstance().startAval(projetos);
         
     }//GEN-LAST:event_continuaButtonActionPerformed
 
+    private void addProjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProjButtonActionPerformed
+        // TODO add your handling code here:
+        String nomePrj = (String) this.projetoComboBox.getSelectedItem();
+        boolean isAdded = false;
+        for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
+        {
+            if(nomePrj.equals(this.projetoTable.getModel().getValueAt(i, 0))){
+                isAdded=true;
+                JOptionPane.showMessageDialog(new JFrame(), "Projeto já cadastrado para avaliação");
+            }
+        }
+        if(!isAdded)
+        {
+            DefaultTableModel dtm = new DefaultTableModel();
+            for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
+            {
+                String[] row = new String[2];
+                row[0] = (String) this.projetoTable.getModel().getValueAt(i, 0);
+                row[1] = (String) this.projetoTable.getModel().getValueAt(i, 1);
+                
+                dtm.addRow(row);
+            }
+            String[] row = new String[2];
+            row[0] = (String) this.projetoComboBox.getSelectedItem();
+            row[1] = (String) this.getProjetosMap().get(row[0]);
+            dtm.addRow(row);
+            
+            this.projetoTable.setModel(dtm);
+            this.validate();
+            this.repaint();
+        }
+    }//GEN-LAST:event_addProjButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        // TODO add your handling code here:
+        int delRow = this.projetoTable.getSelectedRow();
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
+        {
+            if(i!=delRow){
+                String[] row = new String[2];
+                row[0] = (String) this.projetoTable.getModel().getValueAt(i, 0);
+                row[1] = (String) this.projetoTable.getModel().getValueAt(i, 1);        
+                dtm.addRow(row);
+            }
+        }
+        this.projetoTable.setModel(dtm);
+        this.validate();
+        this.repaint();        
+    }//GEN-LAST:event_removeButtonActionPerformed
+
+    private void projetoComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_projetoComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_projetoComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addProjButton;
     private javax.swing.JButton continuaButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -105,24 +203,22 @@ public class EscolheProjetoView extends javax.swing.JPanel
     private javax.swing.JComboBox<String> projetoComboBox;
     private javax.swing.JScrollPane projetoScrollPane;
     private javax.swing.JTable projetoTable;
+    private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScr(List<String> projetos) 
+    public void loadScr(Map<String,String> projetos) 
     {
+        this.setProjetosMap(projetos);
         this.projetoComboBox.removeAllItems();
-        for(String prj : projetos)
+        for(String prj : projetos.keySet())
             this.projetoComboBox.addItem(prj);
         
         Vector<String> colunas = new Vector<String>();
         colunas.add(0,"Nome do Projeto");
         colunas.add(0,"Status");
-        DefaultTableModel model = new DefaultTableModel(colunas,projetos.size());
+        DefaultTableModel model = new DefaultTableModel(colunas,projetos.size());;
         this.projetoTable.setModel(model);
         this.projetoTable.setEnabled(true);
         this.projetoScrollPane.setVisible(true);
-    }
-    
-    public void updateTable(){
-        
     }
 }

@@ -11,10 +11,11 @@ package mpsbr.model;
  */
 public class Nivel {
     private String nome;
-    private Nivel nivelAnterior;
+    private Nivel nivelAnterior; 
 
-    public Nivel(String nivel) {
-        this.nome=nivel;
+    public Nivel(String nome, Nivel nivelAnterior) {
+        this.nome = nome;
+        this.nivelAnterior = nivelAnterior;
     }
 
     public String getNome() {
@@ -30,11 +31,6 @@ public class Nivel {
     }
 
     public void setNivelAnterior(Nivel nivelAnterior) {
-        this.nivelAnterior = nivelAnterior;
-    }
-    
-    public Nivel(String nome, Nivel nivelAnterior){
-        this.nome = nome;
         this.nivelAnterior = nivelAnterior;
     }
     
