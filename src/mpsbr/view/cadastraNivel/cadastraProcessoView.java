@@ -5,20 +5,36 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
 
 /**
  *
  * @author Kildare Silveira
  */
-public class cadastraProcessoView extends javax.swing.JPanel {
+public class cadastraProcessoView extends javax.swing.JPanel 
+{
 
+    private List<String> resultados;
     /**
      * Creates new form cadastraProcessoView
      */
     public cadastraProcessoView() {
         initComponents();
     }
+
+    public List<String> getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(List<String> resultados) {
+        this.resultados = resultados;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,11 +52,11 @@ public class cadastraProcessoView extends javax.swing.JPanel {
         nomeTextField = new javax.swing.JTextField();
         codigoTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        descricaoTextField = new javax.swing.JTextArea();
+        descricaoTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
-        cadastroRETextField = new javax.swing.JList<>();
+        cadastroREList = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
         addREButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
@@ -63,9 +79,9 @@ public class cadastraProcessoView extends javax.swing.JPanel {
         add(nomeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 350, -1));
         add(codigoTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
-        descricaoTextField.setColumns(20);
-        descricaoTextField.setRows(5);
-        jScrollPane1.setViewportView(descricaoTextField);
+        descricaoTextArea.setColumns(20);
+        descricaoTextArea.setRows(5);
+        jScrollPane1.setViewportView(descricaoTextArea);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));
 
@@ -74,7 +90,7 @@ public class cadastraProcessoView extends javax.swing.JPanel {
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 460, 10));
 
-        jScrollPane3.setViewportView(cadastroRETextField);
+        jScrollPane3.setViewportView(cadastroREList);
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 130, 90));
 
@@ -108,6 +124,20 @@ public class cadastraProcessoView extends javax.swing.JPanel {
 
     private void finalizaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizaButtonActionPerformed
         // TODO add your handling code here:
+        String codigo = this.codigoTextField.getText();
+        String desc = this.descricaoTextArea.getText();
+        String nome = this.nomeTextField.getText();
+        
+        if(codigo.equals("")||desc.equals("")||nome.equals(""))
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Preencha todos os campos");
+        }
+        
+        else
+        {
+            NivelControl.getInstance().cadastroRE(codigo,nome,desc,this.getResultados());
+        }        
+        
     }//GEN-LAST:event_finalizaButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -117,10 +147,10 @@ public class cadastraProcessoView extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addREButton;
-    private javax.swing.JList<String> cadastroRETextField;
+    private javax.swing.JList<String> cadastroREList;
     private javax.swing.JButton cancelButton;
     private javax.swing.JTextField codigoTextField;
-    private javax.swing.JTextArea descricaoTextField;
+    private javax.swing.JTextArea descricaoTextArea;
     private javax.swing.JButton finalizaButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -136,8 +166,9 @@ public class cadastraProcessoView extends javax.swing.JPanel {
 
     public void loadScreen() 
     {
-        this.cadastroRETextField.setListData(new String[0]);
-        this.descricaoTextField.setText("");
+        this.setResultados(new ArrayList<String>());
+        this.cadastroREList.setListData(new String[0]);
+        this.descricaoTextArea.setText("");
         this.codigoTextField.setText("");
         this.nomeTextField.setText("");
     }

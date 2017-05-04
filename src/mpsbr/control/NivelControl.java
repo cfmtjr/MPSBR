@@ -154,21 +154,7 @@ public class NivelControl {
         List<AtributoDeProcesso> aps = new ArrayList<AtributoDeProcesso>();
         this.setAp(aps);
         
-        String[] arrAps = new String[this.getAp().size()];
-        for(int i=0;i<this.getAp().size();i++){
-            arrAps[i] = this.getAp().get(i).getNome();
-        }
-        
-        String[] arrProcs = new String[this.getProcessos().keySet().size()];
-        
-        int i=0;
-        for(Processo p : this.getProcessos().keySet()){
-            arrProcs[i] = p.getNome();
-            i++;
-        }
-        
-        this.getCnv().loadScreen(arrProcs, arrAps);
-        MainView.showPanel(MainView.CADASTRA_NIVEL);
+        this.cadastroNivel();
     }
 
     public void cadastroProcesso() {
@@ -220,6 +206,7 @@ public class NivelControl {
             }
         }
         this.setProprietaria(null);
+        this.cadastroNivel();
     }
 
     public void addREProcess(String process) {
@@ -236,5 +223,28 @@ public class NivelControl {
 
     public void cadastroRE(String processo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    /**
+     * Carrega os valores para serem exibidos na tela de cadastro de nivel
+     */
+    private void cadastroNivel() {
+        
+        String[] arrAps = new String[this.getAp().size()];
+        for(int i=0;i<this.getAp().size();i++){
+            arrAps[i] = this.getAp().get(i).getNome();
+        }
+        
+        String[] arrProcs = new String[this.getProcessos().keySet().size()];
+        
+        int i=0;
+        for(Processo p : this.getProcessos().keySet()){
+            arrProcs[i] = p.getNome();
+            i++;
+        }
+        
+        this.getCnv().loadScreen(arrProcs, arrAps);
+        MainView.showPanel(MainView.CADASTRA_NIVEL);
     }
 }
