@@ -8,6 +8,7 @@ package mpsbr.control;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import mpsbr.DAOImpl.AvaliacaoDAOImpl;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Avaliacao;
 import mpsbr.model.Implementa;
@@ -161,5 +162,11 @@ public class AvaliacaoControl {
         MainView.showPanel(MainView.DO_AVL);   
     }
     
-
+    public void saveAval(){
+        AvaliacaoDAOImpl av = new AvaliacaoDAOImpl();
+        av.update(currentAval);
+        av.saveProcessoSatisfazAvaliacao(currentAval, listProcessos);
+        av.saveResultAvaliacaoRE(currentAval, mapImplProjRE);
+        av.saveResultAvaliacaoAP(currentAval, mapImplProjAP);
+    }
 }

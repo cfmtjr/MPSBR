@@ -6,7 +6,14 @@
 package mpsbr.DAO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Avaliacao;
+import mpsbr.model.Implementa;
+import mpsbr.model.Processo;
+import mpsbr.model.ResultadoEsperado;
 
 /**
  *
@@ -14,6 +21,8 @@ import mpsbr.model.Avaliacao;
  */
 public interface AvaliacaoDAO {
     public boolean create(Avaliacao av);
-    public ArrayList<Avaliacao> getAllAvaliacao();
-    public boolean update(String nome);    
+    public boolean saveResultAvaliacaoRE(Avaliacao av, Map<Processo, List<Implementa<ResultadoEsperado>>> grauImplPorProc);
+    public boolean saveResultAvaliacaoAP(Avaliacao av, Map<Processo, List<Implementa<AtributoDeProcesso>>> grauImplPorProc);
+    public boolean saveProcessoSatisfazAvaliacao(Avaliacao av, List<Processo> processos);    
+    public boolean update(Avaliacao av);    
 }

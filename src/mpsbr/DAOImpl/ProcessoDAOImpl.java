@@ -10,9 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpsbr.DAO.ProcessoDAO;
+import mpsbr.facade.MPSBRFacade;
+import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.ConnectionDB;
 import mpsbr.model.Nivel;
 import mpsbr.model.Processo;
@@ -38,6 +41,17 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             prepStatement.setString(3, processo.getNomeNivel());
             prepStatement.executeUpdate();
 
+            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES (?,(SELECT id FROM processo WHERE nome=?))";
+
+            prepStatement = conexao.prepareStatement(createSQL);
+
+            List<AtributoDeProcesso> aps = MPSBRFacade.apd.getAllAtributoDeProcesso();
+            for (AtributoDeProcesso ap : aps) {
+                prepStatement.setInt(1, ap.getId());
+                prepStatement.setString(2, processo.getNome());
+                prepStatement.executeUpdate();
+            }
+            
             conexao.close();
             return true;
         } catch (SQLException ex) {

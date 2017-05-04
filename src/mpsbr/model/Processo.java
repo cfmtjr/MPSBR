@@ -19,6 +19,7 @@ public class Processo {
     private String nome;
     private String descricao;
     private String nomeNivel;
+    private String status;
     
     public String getNome() {
         return nome;
@@ -51,9 +52,17 @@ public class Processo {
     public void setNomeNivel(String nomeNivel) {
         this.nomeNivel = nomeNivel;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }   
     
     public Processo(int id,String nome, String descricao, String nomeNivel){
-        this.id=id;
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;

@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpsbr.DAO.AtributoDeProcessoDAO;
+import mpsbr.facade.MPSBRFacade;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.ConnectionDB;
 import mpsbr.model.Nivel;
+import mpsbr.model.Processo;
 
 /**
  *
@@ -39,6 +41,17 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
             prepStatement.setString(3, ap.getNomeNivel());
             prepStatement.executeUpdate();
 
+            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES ((SELECT id FROM ap_id WHERE nome=?),?)";
+
+            prepStatement = conexao.prepareStatement(createSQL);
+
+            List<Processo> processos = MPSBRFacade.pd.getAllProcesso();
+            for (Processo processo : processos) {
+                prepStatement.setString(1, ap.getNome());
+                prepStatement.setInt(2, processo.getId());
+                prepStatement.executeUpdate();
+            }
+            
             conexao.close();
             return true;
         } catch (SQLException ex) {

@@ -23,11 +23,20 @@ import mpsbr.facade.MPSBRFacade;
  * @author gabriela
  */
 public class Avaliacao {
+    private int id;
     private String dataAval;
-    private Boolean status;
+    private String status;
     private Nivel nivel;
     
     private List<Projeto> projAvaliados;  
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
     public String getDataAval() {
         return dataAval;
@@ -45,11 +54,11 @@ public class Avaliacao {
         this.nivel = MPSBRFacade.nd.findByName(nivel);
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -80,8 +89,8 @@ public class Avaliacao {
         {
             DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             Calendar c = Calendar.getInstance();
-            this.setDataAval(df.format(c.getTime()));
-            this.setStatus(false);
+            this.dataAval = df.format(c.getTime());
+            this.status = "";
         }
         this.setNivel(nivel);
     }
@@ -143,28 +152,25 @@ public class Avaliacao {
         Map<String, String> grausImplAPUOProcI = new HashMap<>();
         for (Processo p : grausImplREProcI.keySet()) {
             ArrayList<Implementa<ResultadoEsperado>> implRE = (ArrayList<Implementa<ResultadoEsperado>>) grausImplREProcI.get(p);
-            //SALVAR NO DB
             for (Implementa<ResultadoEsperado> implementa : implRE) {
                 grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             ArrayList<Implementa<AtributoDeProcesso>> implAP = (ArrayList<Implementa<AtributoDeProcesso>>) grausImplAPProcI.get(p);
-            //SALVAR NO DB
             for (Implementa<AtributoDeProcesso> implementa : implAP) {
                 grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             if(validaApProc(grausImplAPUOProcI)){
-                if(validaReProc(grausImplREUOProcI))
-                {
-                    //TODO PROC STATUS = SATISFEITO
-                    //SALVAR NO DB
+                if(validaReProc(grausImplREUOProcI)){
+                    p.setStatus("SATISFEITO");
+                } else {
+                    p.setStatus("N_SATISFEITO");
                 }
             } else {
-                //TODO PROC STATUS = N SATISFEITO //SALVAR NO DB
-                //TODO AVAL STATUS = NAO PASSOU
+                p.setStatus("N_SATISFEITO");
+                this.setStatus("N_PASSOU");
             }
-        } if(this.getStatus() != false){ //!= n passou
-            this.setStatus(true);
-            //SALVAR NO DB
+        } if(!this.getStatus().equals("N_PASSOU")){ //!= n passou
+            this.setStatus("PASSOU");
         }            
     }
     
