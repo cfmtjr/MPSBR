@@ -253,11 +253,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             NivelControl nc = NivelControl.getInstance();
             AvaliacaoControl ac = AvaliacaoControl.getInstance();
             
+            mv.mainPanel.add(ac.getEnv(),MainView.DO_AVL);
+            mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
             //mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
-            mv.mainPanel.add(ac.getEnv(),MainView.DO_AVL);
-            mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
             mv.mainPanel.add(nc.getSnv(),MainView.SEL_NIVEL);
             mv.mainPanel.add(nc.getCnv(),MainView.CADASTRA_NIVEL);
             mv.mainPanel.add(nc.getCpv(),MainView.CADASTRA_PROC);
@@ -265,7 +265,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(nc.getCapv(),MainView.CADASTRA_AP);
             mv.mainPanel.add(nc.getArev(),MainView.ADD_RE);
             mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_PROC);
-            mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_RE);
+//            mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_RE);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();

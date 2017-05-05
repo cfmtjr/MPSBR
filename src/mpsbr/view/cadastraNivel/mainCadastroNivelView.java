@@ -47,7 +47,6 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         addAPButton = new javax.swing.JToggleButton();
         addProcessoButton = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -69,7 +68,7 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
                 changeProcButtonActionPerformed(evt);
             }
         });
-        add(changeProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 240, 30));
+        add(changeProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 240, -1));
         add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 360, 10));
 
         jScrollPane5.setViewportView(APList);
@@ -86,7 +85,7 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
                 addAPButtonActionPerformed(evt);
             }
         });
-        add(addAPButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 300, 140, -1));
+        add(addAPButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 140, -1));
 
         addProcessoButton.setText("Adicionar Novo Processo");
         addProcessoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -95,26 +94,11 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
             }
         });
         add(addProcessoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 190, -1));
-
-        jButton1.setText("Consultar Processo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeProcButtonActionPerformed
         // TODO add your handling code here:
-        String process = this.processoList.getSelectedValue();
-        if(process.isEmpty()){
-            JOptionPane.showMessageDialog(new JFrame(), "Escolha um processo");
-        }
-        else{
-            NivelControl.getInstance().addREProcess(process);
-        }
-        
+        NivelControl.getInstance().addREProcess();
     }//GEN-LAST:event_changeProcButtonActionPerformed
 
     private void addProcessoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProcessoButtonActionPerformed
@@ -126,22 +110,12 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
         NivelControl.getInstance().cadastroAP();
     }//GEN-LAST:event_addAPButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String process = this.processoList.getSelectedValue();
-        if (process.isEmpty()) {
-            JOptionPane.showMessageDialog(new JFrame(), "Escolha um processo");
-        } else {
-            NivelControl.getInstance().consultaProc(process);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> APList;
     private javax.swing.JToggleButton addAPButton;
     private javax.swing.JToggleButton addProcessoButton;
     private javax.swing.JToggleButton changeProcButton;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

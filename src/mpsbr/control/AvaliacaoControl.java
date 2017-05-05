@@ -139,14 +139,16 @@ public class AvaliacaoControl {
         this.mapImplProjRE = mapImplProjRE;
     }
     
+    
+    
     public void preAval(String nivel) {
         Avaliacao aval = new Avaliacao(nivel,true);
         this.setCurrentAval(aval);
         Map<String,String> prj;
         //TODO descomentar a linha abaixo e comentar a seguinte quando estiver concluido
         prj = Projeto.getAllProjectNamesAndStatus();
-        this.getEpv().loadScr(prj);
-        MainView.showPanel(MainView.SEL_PRJ);
+        this.getEnv().loadScr();
+        MainView.showPanel(MainView.SEL_NIVEL);
     }
     
     /**

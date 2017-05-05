@@ -8,6 +8,9 @@ package mpsbr.view.cadastraNivel;
 import java.util.List;
 import java.util.Map;
 import mpsbr.control.NivelControl;
+import mpsbr.model.Processo;
+import mpsbr.model.ResultadoEsperado;
+import mpsbr.view.MainView;
 
 /**
  *
@@ -15,7 +18,7 @@ import mpsbr.control.NivelControl;
  */
 public class addREProcessoView extends javax.swing.JPanel {
 
-    private Map<String, List<String>> procs;
+    private Map<Processo, List<ResultadoEsperado>> procs;
     /**
      * Creates new form addREProcessoView
      */
@@ -38,7 +41,7 @@ public class addREProcessoView extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         reList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         novoREButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
@@ -70,13 +73,13 @@ public class addREProcessoView extends javax.swing.JPanel {
         jLabel3.setText("REs Cadastrados:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancelar");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
+        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
 
         novoREButton.setText("Adicionar Novo RE");
         novoREButton.addActionListener(new java.awt.event.ActionListener() {
@@ -101,12 +104,12 @@ public class addREProcessoView extends javax.swing.JPanel {
         if (evt.getStateChange() == evt.SELECTED) {
           String item = (String) evt.getItem();
           
-            for(String s : procs.keySet()){
-                if(item.equals(s)){
-                    String[] arrRe = new String[procs.get(s).size()];
+            for(Processo p : procs.keySet()){
+                if(item.equals(p.getCodigo())){
+                    String[] arrRe = new String[procs.get(p).size()];
                     i = 0;
-                    for(String re : procs.get(s)){
-                        arrRe[i] = re;
+                    for (ResultadoEsperado re : procs.get(p)) {
+                        arrRe[i] = re.getCodigo();
                         i++;
                     }
                     this.reList.setListData(arrRe);
@@ -121,16 +124,18 @@ public class addREProcessoView extends javax.swing.JPanel {
     private void novoREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoREButtonActionPerformed
         // TODO add your handling code here:
         String processo = (String) this.procComboBox.getSelectedItem();
-        NivelControl.getInstance().cadastroRE(processo);
+        NivelControl.getInstance().addREProcess(processo);
     }//GEN-LAST:event_novoREButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        NivelControl nc = NivelControl.getInstance();
+        nc.getCnv().loadScreen(nc.getProcessos(), nc.getAp());
+        MainView.showPanel(MainView.CADASTRA_NIVEL);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void procComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procComboBoxActionPerformed
         // TODO add your handling code here:
@@ -138,7 +143,7 @@ public class addREProcessoView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton cancelButton;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -149,13 +154,12 @@ public class addREProcessoView extends javax.swing.JPanel {
     private javax.swing.JList<String> reList;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScreen(Map<String, List<String>> procs) {
-        this.procs = procs;
-        
-        for(String s : procs.keySet()){
-            this.procComboBox.addItem(s);
-        }
-        
+    public void loadScreen(Map<Processo, List<ResultadoEsperado>> processos) {
+        procs = processos;
+        procComboBox.removeAllItems();
+        for(Processo p : procs.keySet()){
+            this.procComboBox.addItem(p.getCodigo());
+        }        
         this.validate();
         this.repaint();
         

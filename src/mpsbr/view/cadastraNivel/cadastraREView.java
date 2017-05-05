@@ -170,8 +170,7 @@ public class cadastraREView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        NivelControl.getInstance().setProprietaria(null);
-        MainView.showPanel(MainView.CONSULTA_PROC);
+        MainView.showPanel(MainView.CADASTRA_PROC);
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void finalizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarButtonActionPerformed
@@ -217,7 +216,6 @@ public class cadastraREView extends javax.swing.JPanel {
 
     private void NivDComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivDComboBoxActionPerformed
         // TODO add your handling code here:
-        
         this.changeNivel("D",this.NivDComboBox.isSelected());
     }//GEN-LAST:event_NivDComboBoxActionPerformed
 

@@ -47,8 +47,10 @@ public class NivelControl {
     private Map<Processo,List<ResultadoEsperado>> processos;
     private List<AtributoDeProcesso> ap;
     
-    private Processo proprietaria;
-    
+    private String codNovoProcesso;
+    private Map<ResultadoEsperado, List<String>> novoProcesso;
+    private Processo proprietario;
+        
     private NivelControl()
     {
         this.setSnv(new selecionaNivelView());
@@ -150,16 +152,30 @@ public class NivelControl {
         this.ap = ap;
     }
 
-    
-    
-    public Processo getProprietaria() {
-        return proprietaria;
+    public Map<ResultadoEsperado, List<String>> getNovoProcesso() {
+        return novoProcesso;
     }
 
-    public void setProprietaria(Processo proprietaria) {
-        this.proprietaria = proprietaria;
+    public void setNovoProcesso(Map<ResultadoEsperado, List<String>> novoProcesso) {
+        this.novoProcesso = novoProcesso;
     }
-          
+    
+    public String getCodNovoProcesso() {
+        return codNovoProcesso;
+    }
+
+    public void setCodNovoProcesso(String codNovoProcesso) {
+        this.codNovoProcesso = codNovoProcesso;
+    }
+
+    public Processo getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Processo proprietario) {
+        this.proprietario = proprietario;
+    }
+    
     public static NivelControl getInstance()
     {
         if(nc == null)
@@ -175,7 +191,7 @@ public class NivelControl {
         Map<Processo,List<ResultadoEsperado>> procs = new HashMap<>();
         List<Processo> allProcs = Processo.getProcessosPorNivel(this.getNivel());
         for (Processo p : allProcs) {
-            procs.put(p, ResultadoEsperado.getAllResultadoEsperadoPorNivelEProcesso(this.getNivel(), p));
+            procs.put(p, ResultadoEsperado.getAllResultadoEsperadoPorProcesso(p));
         }
         this.setProcessos(procs);
     
@@ -192,8 +208,17 @@ public class NivelControl {
     
     public void cadastroProcesso(String codigo, String nome, String descricao){
         Processo p = new Processo(codigo, nome, descricao, this.getNivel().getNome());
+        List<ResultadoEsperado> lst = new ArrayList<>();
         if(Processo.createProcessoInDB(p))
-            this.processos.put(p, new ArrayList<>());
+            this.processos.put(p, lst);
+        if(novoProcesso != null){
+            for (ResultadoEsperado re : novoProcesso.keySet()) {
+                if(ResultadoEsperado.createREInDB(re, novoProcesso.get(re)))
+                    lst.add(re);
+            }
+        }
+        novoProcesso = null;
+        codNovoProcesso = null;
         this.getCnv().loadScreen(this.processos, this.ap);
         MainView.showPanel(MainView.CADASTRA_NIVEL);
     }
@@ -211,59 +236,66 @@ public class NivelControl {
         MainView.showPanel(MainView.CADASTRA_NIVEL);
     }
 
-    public void cadastroRE()
+    public void cadastroRE(String codProcesso)
     {
+        if(this.codNovoProcesso == null)
+            codNovoProcesso = codProcesso;
         this.getCrev().loadScreen();
         MainView.showPanel(MainView.CADASTRA_RE);
     }
 
     public void cadastroRE(String codigo, String nome, String desc, List<String> niveis) 
-    {    
-        ResultadoEsperado re = new ResultadoEsperado(codigo, nome, desc, this.getProprietaria().getCodigo());
-        if(ResultadoEsperado.createREInDB(re, niveis))
-            this.processos.get(this.getProprietaria()).add(re);
-        this.getConspv().loadScreen(this.processos.get(this.getProprietaria()));
-        this.setProprietaria(null);
-        MainView.showPanel(MainView.CONSULTA_PROC);
+    {   
+        ResultadoEsperado re = null;
+        if(codNovoProcesso != null){
+            if(novoProcesso == null)
+                novoProcesso = new HashMap<>();
+            re = new ResultadoEsperado(codigo, nome, desc, codNovoProcesso);
+            novoProcesso.put(re, niveis);
+            this.getCpv().getResultados().add(re.getCodigo());
+            this.getCpv().setREList(this.getCpv().getResultados());
+            MainView.showPanel(MainView.CADASTRA_PROC);
+        } else {
+            re = new ResultadoEsperado(codigo, nome, desc, getProprietario().getCodigo());
+            if(ResultadoEsperado.createREInDB(re, niveis))
+                processos.get(proprietario).add(re);
+            setProprietario(null);
+            this.getArev().loadScreen(processos);
+            MainView.showPanel(MainView.ADD_RE);
+        }
     }
 
     /**
      *  Adiciona Resultado Esperado para um pro
      */
     public void addREProcess() {
-        int i;
-        Map<String,List<String>> procs = new HashMap<>();
-        List<Processo> processos = Processo.getProcessosPorNivel(this.getNivel());
-        
-        for(Processo p : processos){
-            List<ResultadoEsperado> lst = ResultadoEsperado.getAllResultadoEsperadoPorNivelEProcesso(this.getNivel(), p);
-            List<String> res = new ArrayList<String>();
-            for(ResultadoEsperado r : lst){
-                res.add(r.getCodigo());
-            }
-            procs.put(p.getCodigo(),res);
-        }        
-        
-        this.getArev().loadScreen(procs);
+//        int i;    
+//        Map<String,List<String>> procs = new HashMap<>();
+//        List<Processo> processos = Processo.getProcessosPorNivel(this.getNivel());
+//        
+//        for(Processo p : processos){
+//            List<ResultadoEsperado> lst = ResultadoEsperado.getAllResultadoEsperadoPorNivelEProcesso(this.getNivel(), p);
+//            List<String> res = new ArrayList<String>();
+//            for(ResultadoEsperado r : lst){
+//                res.add(r.getCodigo());
+//            }
+//            procs.put(p.getCodigo(),res);
+//        }        
+//        
+        this.getArev().loadScreen(processos);
         MainView.showPanel(MainView.ADD_RE);
     }
-
-
 
     public void addREProcess(String codProcesso) {
         
         for(Processo p : this.getProcessos().keySet())
         {
             if(p.getCodigo().equals(codProcesso)){
-                this.setProprietaria(p);
+                this.setProprietario(p);
             }
         }
         this.getCrev().loadScreen();
         MainView.showPanel(MainView.CADASTRA_RE);
-    }
-
-    public void cadastroRE(String processo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void consultaProc(String processo){
@@ -271,12 +303,12 @@ public class NivelControl {
         for (Processo p : this.getProcessos().keySet()) {
             if(p.getCodigo().equals(processo)){
                 lst = this.getProcessos().get(p);
-                this.setProprietaria(p);
+//                this.setProprietaria(p);
                 break;
             }
         }
         this.getConspv().loadScreen(lst);
-        MainView.showPanel(MainView.CONSULTA_PROC);
+            MainView.showPanel(MainView.CONSULTA_PROC);
     }
     
     /**
