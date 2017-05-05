@@ -10,20 +10,22 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
+import mpsbr.model.Processo;
+import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;
 
 /**
  *
  * @author gabriela
  */
-public class cadastraProcessoView extends javax.swing.JPanel 
+public class consultaProcessoView extends javax.swing.JPanel 
 {
 
     private List<String> resultados;
     /**
      * Creates new form cadastraProcessoView
      */
-    public cadastraProcessoView() {
+    public consultaProcessoView() {
         initComponents();
     }
 
@@ -34,9 +36,7 @@ public class cadastraProcessoView extends javax.swing.JPanel
     public void setResultados(List<String> resultados) {
         this.resultados = resultados;
     }
-    
-    
-
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,8 +55,13 @@ public class cadastraProcessoView extends javax.swing.JPanel
         jScrollPane1 = new javax.swing.JScrollPane();
         descricaoTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
-        finalizaButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        cadastroREList = new javax.swing.JList<>();
+        jLabel6 = new javax.swing.JLabel();
+        addREButton = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
+        consultREButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -72,9 +77,14 @@ public class cadastraProcessoView extends javax.swing.JPanel
 
         jLabel5.setText("Descrição: ");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+
+        nomeTextField.setEditable(false);
         add(nomeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 350, -1));
+
+        codigoTextField.setEditable(false);
         add(codigoTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
+        descricaoTextArea.setEditable(false);
         descricaoTextArea.setColumns(20);
         descricaoTextArea.setRows(5);
         jScrollPane1.setViewportView(descricaoTextArea);
@@ -82,73 +92,94 @@ public class cadastraProcessoView extends javax.swing.JPanel
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel2.setText("Cadastro de Processo");
+        jLabel2.setText("Consulta de Processo");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 460, 10));
 
-        cancelButton.setText("Cancelar");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+        jScrollPane3.setViewportView(cadastroREList);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 130, 90));
+
+        jLabel6.setText("REs Cadastrados:");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+
+        addREButton.setText("Adicionar Novo RE");
+        addREButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
+                addREButtonActionPerformed(evt);
             }
         });
-        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, -1, -1));
+        add(addREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
 
-        finalizaButton.setText("Finalizar");
-        finalizaButton.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                finalizaButtonActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
-        add(finalizaButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, -1, -1));
+        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, -1, -1));
+
+        consultREButton.setText("Consultar RE");
+        consultREButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultREButtonActionPerformed(evt);
+            }
+        });
+        add(consultREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void finalizaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizaButtonActionPerformed
+    private void addREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addREButtonActionPerformed
         // TODO add your handling code here:
-        String codigo = this.codigoTextField.getText();
-        String desc = this.descricaoTextArea.getText();
-        String nome = this.nomeTextField.getText();
-        
-        if(codigo.equals("")||desc.equals("")||nome.equals(""))
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Preencha todos os campos");
-        }
-        
-        else
-        {
-            NivelControl.getInstance().cadastroProcesso(codigo, nome, desc);
-        }        
-        
-    }//GEN-LAST:event_finalizaButtonActionPerformed
+        NivelControl.getInstance().cadastroRE();
+    }//GEN-LAST:event_addREButtonActionPerformed
+
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
+        // TODO add your handling code here:
+        NivelControl nc = NivelControl.getInstance();
+        nc.getCnv().loadScreen(nc.getProcessos(), nc.getAp());
+        MainView.showPanel(MainView.CADASTRA_NIVEL);
+    }//GEN-LAST:event_okButtonActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        NivelControl nc = NivelControl.getInstance();
-        nc.getCnv().loadScreen(nc.getProcessos(), nc.getAp());
-        MainView.showPanel(MainView.CADASTRA_NIVEL);
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    private void consultREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultREButtonActionPerformed
+        
+    }//GEN-LAST:event_consultREButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
+    private javax.swing.JButton addREButton;
+    private javax.swing.JList<String> cadastroREList;
     private javax.swing.JTextField codigoTextField;
+    private javax.swing.JButton consultREButton;
     private javax.swing.JTextArea descricaoTextArea;
-    private javax.swing.JButton finalizaButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField nomeTextField;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScreen() 
+    public void loadScreen(List<ResultadoEsperado> lstRe) 
     {
-        this.descricaoTextArea.setText("");
-        this.codigoTextField.setText("");
-        this.nomeTextField.setText("");
+        int i = 0;
+        String[] codsRE = new String[lstRe.size()];
+        for (ResultadoEsperado re : lstRe) {
+            codsRE[i] = re.getCodigo();
+            i++;
+        }
+        Processo p = NivelControl.getInstance().getProprietaria();
+        this.cadastroREList.setListData(codsRE);
+        this.descricaoTextArea.setText(p.getDescricao());
+        this.codigoTextField.setText(p.getCodigo());
+        this.nomeTextField.setText(p.getNome());
     }
 }

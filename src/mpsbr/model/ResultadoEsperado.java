@@ -80,6 +80,11 @@ public class ResultadoEsperado {
         return red.getAllResultadoEsperadoPorNivelEProcesso(nivel, processo);
     }
     
+    public static List<ResultadoEsperado> getAllResultadoEsperadoPorProcesso(Processo processo){
+        ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();        
+        return red.getAllResultadoEsperadoPorProcesso(processo);
+    }
+    
     public static boolean createREInDB(ResultadoEsperado re, List<String> validoPara) {
         ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();
         return red.create(re, validoPara);

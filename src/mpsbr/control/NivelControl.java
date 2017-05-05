@@ -18,6 +18,8 @@ import mpsbr.view.cadastraNivel.addREProcessoView;
 import mpsbr.view.cadastraNivel.cadastraAPView;
 import mpsbr.view.cadastraNivel.cadastraProcessoView;
 import mpsbr.view.cadastraNivel.cadastraREView;
+import mpsbr.view.cadastraNivel.consultaProcessoView;
+import mpsbr.view.cadastraNivel.consultaREView;
 import mpsbr.view.cadastraNivel.mainCadastroNivelView;
 import mpsbr.view.cadastraNivel.selecionaNivelView;
 
@@ -37,6 +39,8 @@ public class NivelControl {
     private cadastraAPView capv;
     private cadastraREView crev;
     private addREProcessoView arev;
+    private consultaProcessoView conspv;
+    private consultaREView consrev;
     
     //Atributos do nivel sendo cadastrado
     private Nivel nivel;
@@ -53,6 +57,9 @@ public class NivelControl {
         this.setCrev(new cadastraREView());
         this.setCapv(new cadastraAPView());
         this.setArev(new addREProcessoView());
+        this.setArev(new addREProcessoView());
+        this.setConspv(new consultaProcessoView());
+        this.setConsrev(new consultaREView());
     }
 
     public Nivel getNivel() {
@@ -119,6 +126,22 @@ public class NivelControl {
         this.arev = arev;
     }
 
+    public consultaProcessoView getConspv() {
+        return conspv;
+    }
+
+    public void setConspv(consultaProcessoView conspv) {
+        this.conspv = conspv;
+    }
+
+    public void setConsrev(consultaREView consrev) {
+        this.consrev = consrev;
+    }
+
+    public consultaREView getConsrev() {
+        return consrev;
+    }
+
     public List<AtributoDeProcesso> getAp() {
         return ap;
     }
@@ -127,6 +150,8 @@ public class NivelControl {
         this.ap = ap;
     }
 
+    
+    
     public Processo getProprietaria() {
         return proprietaria;
     }
@@ -197,9 +222,9 @@ public class NivelControl {
         ResultadoEsperado re = new ResultadoEsperado(codigo, nome, desc, this.getProprietaria().getCodigo());
         if(ResultadoEsperado.createREInDB(re, niveis))
             this.processos.get(this.getProprietaria()).add(re);
+        this.getConspv().loadScreen(this.processos.get(this.getProprietaria()));
         this.setProprietaria(null);
-        this.getCnv().loadScreen(this.processos, this.ap);
-        MainView.showPanel(MainView.CADASTRA_NIVEL);
+        MainView.showPanel(MainView.CONSULTA_PROC);
     }
 
     /**
@@ -239,6 +264,19 @@ public class NivelControl {
 
     public void cadastroRE(String processo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void consultaProc(String processo){
+        List<ResultadoEsperado> lst = new ArrayList<>();
+        for (Processo p : this.getProcessos().keySet()) {
+            if(p.getCodigo().equals(processo)){
+                lst = this.getProcessos().get(p);
+                this.setProprietaria(p);
+                break;
+            }
+        }
+        this.getConspv().loadScreen(lst);
+        MainView.showPanel(MainView.CONSULTA_PROC);
     }
     
     /**

@@ -36,6 +36,8 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     public static final String CADASTRA_RE = "cadRE";
     public static final String CADASTRA_AP = "cadAP";
     public static final String ADD_RE = "addRE";
+    public static final String CONSULTA_PROC = "consProc";
+    public static final String CONSULTA_RE = "consRE";
    
     public static MainView FRAME;
     
@@ -262,6 +264,8 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(nc.getCrev(),MainView.CADASTRA_RE);
             mv.mainPanel.add(nc.getCapv(),MainView.CADASTRA_AP);
             mv.mainPanel.add(nc.getArev(),MainView.ADD_RE);
+            mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_PROC);
+            mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_RE);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();

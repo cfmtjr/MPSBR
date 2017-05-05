@@ -167,4 +167,28 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             return null;
         }
     }
+    
+    public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorProcesso(Processo processo) {
+        ArrayList<ResultadoEsperado> result = new ArrayList<>();
+
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+
+            String selectSQL = "SELECT re.id, re.codigo, re.nome, re.descricao, p.nome FROM re JOIN processo p ON re.processo_id=p.id WHERE p.codigo=?";
+            PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
+            prepStatement.setString(1, processo.getCodigo());
+            ResultSet rs = prepStatement.executeQuery();
+
+            while (rs.next()) {
+                result.add(new ResultadoEsperado(rs.getInt("re.id"), rs.getString("re.codigo"), rs.getString("re.nome"), rs.getString("re.descricao"), rs.getString("p.nome")));
+            }
+            conexao.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }

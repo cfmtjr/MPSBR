@@ -16,7 +16,7 @@ import mpsbr.view.MainView;
  *
  * @author gabriela
  */
-public class cadastraREView extends javax.swing.JPanel {
+public class consultaREView extends javax.swing.JPanel {
 
     private List<String> niveis;
     
@@ -24,7 +24,7 @@ public class cadastraREView extends javax.swing.JPanel {
     /**
      * Creates new form cadastraREview
      */
-    public cadastraREView() {
+    public consultaREView() {
         this.setNiveis(new ArrayList<String>());
         initComponents();
     }
@@ -55,8 +55,7 @@ public class cadastraREView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         descricaoTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        cancelarButton = new javax.swing.JButton();
-        finalizarButton = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         NivGComboBox = new javax.swing.JCheckBox();
         NivAComboBox = new javax.swing.JCheckBox();
@@ -80,9 +79,14 @@ public class cadastraREView extends javax.swing.JPanel {
 
         jLabel5.setText("Descrição: ");
         add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+
+        nomeTextField.setEditable(false);
         add(nomeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 350, -1));
+
+        codigoTextField.setEditable(false);
         add(codigoTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
+        descricaoTextArea.setEditable(false);
         descricaoTextArea.setColumns(20);
         descricaoTextArea.setRows(5);
         jScrollPane1.setViewportView(descricaoTextArea);
@@ -93,26 +97,19 @@ public class cadastraREView extends javax.swing.JPanel {
         jLabel2.setText("Cadastro de Resultado Esperado");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, -1, -1));
 
-        cancelarButton.setText("Cancelar");
-        cancelarButton.addActionListener(new java.awt.event.ActionListener() {
+        okButton.setText("OK");
+        okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarButtonActionPerformed(evt);
+                okButtonActionPerformed(evt);
             }
         });
-        add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, -1, -1));
-
-        finalizarButton.setText("Finalizar");
-        finalizarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                finalizarButtonActionPerformed(evt);
-            }
-        });
-        add(finalizarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 400, -1, -1));
+        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, -1, -1));
 
         jLabel6.setText("RE válido para os níveis: ");
         add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         NivGComboBox.setText("G");
+        NivGComboBox.setEnabled(false);
         NivGComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivGComboBoxActionPerformed(evt);
@@ -121,6 +118,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivGComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 330, -1, -1));
 
         NivAComboBox.setText("A");
+        NivAComboBox.setEnabled(false);
         NivAComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivAComboBoxActionPerformed(evt);
@@ -129,6 +127,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivAComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
 
         NivBComboBox.setText("B");
+        NivBComboBox.setEnabled(false);
         NivBComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivBComboBoxActionPerformed(evt);
@@ -137,6 +136,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivBComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, -1, -1));
 
         NivCComboBox.setText("C");
+        NivCComboBox.setEnabled(false);
         NivCComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivCComboBoxActionPerformed(evt);
@@ -145,6 +145,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivCComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, -1, -1));
 
         NivDComboBox.setText("D");
+        NivDComboBox.setEnabled(false);
         NivDComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivDComboBoxActionPerformed(evt);
@@ -153,6 +154,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivDComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, -1, -1));
 
         NivEComboBox.setText("E");
+        NivEComboBox.setEnabled(false);
         NivEComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivEComboBoxActionPerformed(evt);
@@ -161,6 +163,7 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivEComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, -1, -1));
 
         NivFComboBox.setText("F");
+        NivFComboBox.setEnabled(false);
         NivFComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NivFComboBoxActionPerformed(evt);
@@ -169,31 +172,10 @@ public class cadastraREView extends javax.swing.JPanel {
         add(NivFComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
+    private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         NivelControl.getInstance().setProprietaria(null);
         MainView.showPanel(MainView.CONSULTA_PROC);
-    }//GEN-LAST:event_cancelarButtonActionPerformed
-
-    private void finalizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarButtonActionPerformed
-        
-        String codigo = this.codigoTextField.getText();
-        String desc = this.descricaoTextArea.getText();
-        String nome = this.nomeTextField.getText();
-        
-        if(codigo.equals("")||desc.equals("")||nome.equals(""))
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Preencha todos os campos");
-        }
-        else if(this.getNiveis().isEmpty())
-        {
-            JOptionPane.showMessageDialog(new JFrame(), "Escolha ao menos um nivel");
-        }
-        else
-        {
-            NivelControl.getInstance().cadastroRE(codigo,nome,desc,this.getNiveis());
-        }
-        
-    }//GEN-LAST:event_finalizarButtonActionPerformed
+    }//GEN-LAST:event_okButtonActionPerformed
 
     private void NivGComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivGComboBoxActionPerformed
         // TODO add your handling code here:
@@ -240,10 +222,8 @@ public class cadastraREView extends javax.swing.JPanel {
     private javax.swing.JCheckBox NivEComboBox;
     private javax.swing.JCheckBox NivFComboBox;
     private javax.swing.JCheckBox NivGComboBox;
-    private javax.swing.JButton cancelarButton;
     private javax.swing.JTextField codigoTextField;
     private javax.swing.JTextArea descricaoTextArea;
-    private javax.swing.JButton finalizarButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -252,6 +232,7 @@ public class cadastraREView extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nomeTextField;
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
     public void loadScreen() 
