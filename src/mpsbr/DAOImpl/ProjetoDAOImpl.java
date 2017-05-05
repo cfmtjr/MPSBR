@@ -31,12 +31,14 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             Connection conexao = conn.getConnection();
             String createSQL = "";
 
-            createSQL = "INSERT INTO projeto(nome, descricao, fase_desenv) VALUES (?,?,?)";
+            createSQL = "INSERT INTO projeto(nome, descricao, fase_desenv, cliente, gerente) VALUES (?,?,?,?,?)";
 
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
             prepStatement.setString(1, projeto.getNome());
             prepStatement.setString(2, projeto.getDescricao());
             prepStatement.setString(3, projeto.getFaseDesenv());
+            prepStatement.setString(4, projeto.getCliente());
+            prepStatement.setString(5, projeto.getGerente());
             prepStatement.executeUpdate();
 
             conexao.close();
@@ -59,7 +61,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv")));
+                result.add(new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -82,7 +84,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"));
+                result = new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente"));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -105,14 +107,14 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             Connection conexao = conn.getConnection();
             String createSQL = "";
 
-            createSQL = "SELECT DISTINCT * FROM projeto, proj_implementa_ap, ap WHERE projeto.id = proj_implementa_ap.projeto AND proj_implementa_ap.ap_id = ?";
+            createSQL = "SELECT DISTINCT * FROM projeto, proj_implementa_ap, ap WHERE projeto.id = proj_implementa_ap.projeto AND proj_implementa_ap.ap_id=?";
 
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
             prepStatement.setString(1, atributoProcessoID);
             ResultSet rs = prepStatement.executeQuery();
             
             while(rs.next())
-                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv")));
+                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv"), rs.getString("projeto.cliente"), rs.getString("projeto.gerente")));
             conexao.close();
             return projects;
             
@@ -139,7 +141,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             ResultSet rs = prepStatement.executeQuery();
             
             while(rs.next())
-                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv")));
+                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv"), rs.getString("projeto.cliente"), rs.getString("projeto.gerente")));
             conexao.close();
             return projects;
             

@@ -253,8 +253,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             NivelControl nc = NivelControl.getInstance();
             AvaliacaoControl ac = AvaliacaoControl.getInstance();
             
-            mv.mainPanel.add(ac.getEnv(),MainView.DO_AVL);
+            mv.mainPanel.add(ac.getEnv(),MainView.NIVEL_AVL);
             mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
+            mv.mainPanel.add(ac.getApv(),MainView.DO_AVL);
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
             //mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);

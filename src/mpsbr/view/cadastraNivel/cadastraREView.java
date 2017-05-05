@@ -170,7 +170,14 @@ public class cadastraREView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        MainView.showPanel(MainView.CADASTRA_PROC);
+        NivelControl nc = NivelControl.getInstance();
+        if(nc.getProprietario() != null){
+            nc.setProprietario(null);
+            MainView.showPanel(MainView.ADD_RE);
+
+        } else {
+            MainView.showPanel(MainView.CADASTRA_PROC);
+        }
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void finalizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizarButtonActionPerformed

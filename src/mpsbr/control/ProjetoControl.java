@@ -5,8 +5,10 @@
  */
 package mpsbr.control;
 
+import mpsbr.model.Projeto;
 import mpsbr.view.BuscaProjetoView;
 import mpsbr.view.CadastraProjetoView;
+import mpsbr.view.MainView;
 
 /**
  *
@@ -53,6 +55,10 @@ public class ProjetoControl {
         this.bpv = bpv;
     }
     
-    
+    public void cadastraProj(Projeto proj){
+        Projeto.create(proj);
+        this.getCpv().loadScreen();
+        MainView.showPanel(MainView.CADASTRA_PRJ);
+    }
     
 }

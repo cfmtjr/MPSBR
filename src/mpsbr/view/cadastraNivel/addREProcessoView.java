@@ -41,9 +41,8 @@ public class addREProcessoView extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         reList = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
-        cancelButton = new javax.swing.JButton();
+        oklButton = new javax.swing.JButton();
         novoREButton = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -73,13 +72,13 @@ public class addREProcessoView extends javax.swing.JPanel {
         jLabel3.setText("REs Cadastrados:");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, -1));
 
-        cancelButton.setText("Cancelar");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+        oklButton.setText("OK");
+        oklButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
+                oklButtonActionPerformed(evt);
             }
         });
-        add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, -1));
+        add(oklButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, -1, -1));
 
         novoREButton.setText("Adicionar Novo RE");
         novoREButton.addActionListener(new java.awt.event.ActionListener() {
@@ -88,14 +87,6 @@ public class addREProcessoView extends javax.swing.JPanel {
             }
         });
         add(novoREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, -1, -1));
-
-        jButton5.setText("Finalizar");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void procComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_procComboBoxItemStateChanged
@@ -127,15 +118,11 @@ public class addREProcessoView extends javax.swing.JPanel {
         NivelControl.getInstance().addREProcess(processo);
     }//GEN-LAST:event_novoREButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+    private void oklButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oklButtonActionPerformed
         NivelControl nc = NivelControl.getInstance();
         nc.getCnv().loadScreen(nc.getProcessos(), nc.getAp());
         MainView.showPanel(MainView.CADASTRA_NIVEL);
-    }//GEN-LAST:event_cancelButtonActionPerformed
+    }//GEN-LAST:event_oklButtonActionPerformed
 
     private void procComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_procComboBoxActionPerformed
         // TODO add your handling code here:
@@ -143,13 +130,12 @@ public class addREProcessoView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton novoREButton;
+    private javax.swing.JButton oklButton;
     private javax.swing.JComboBox<String> procComboBox;
     private javax.swing.JList<String> reList;
     // End of variables declaration//GEN-END:variables

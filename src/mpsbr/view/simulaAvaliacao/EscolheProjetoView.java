@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import mpsbr.control.AvaliacaoControl;
@@ -128,10 +129,9 @@ public class EscolheProjetoView extends javax.swing.JPanel
     private void continuaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuaButtonActionPerformed
         // TODO add your handling code here:
         TableModel table = this.projetoTable.getModel();
-        Map<String,String> projetos = new HashMap<String,String>();
+        List<String> projetos = new ArrayList<>();
         for(int i=0;i<table.getRowCount();i++)
-            projetos.put((String) table.getValueAt(i, 0),(String) table.getValueAt(i, 1));
-        
+            projetos.add((String) table.getValueAt(i, 0));
         AvaliacaoControl.getInstance().startAval(projetos);
         
     }//GEN-LAST:event_continuaButtonActionPerformed
@@ -139,31 +139,21 @@ public class EscolheProjetoView extends javax.swing.JPanel
     private void addProjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProjButtonActionPerformed
         // TODO add your handling code here:
         String nomePrj = (String) this.projetoComboBox.getSelectedItem();
+        DefaultTableModel model = (DefaultTableModel) this.projetoTable.getModel();
         boolean isAdded = false;
-        for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
+        for(int i=0;i<model.getRowCount();i++)
         {
-            if(nomePrj.equals(this.projetoTable.getModel().getValueAt(i, 0))){
+            if(nomePrj.equals(model.getValueAt(i, 0))){
                 isAdded=true;
                 JOptionPane.showMessageDialog(new JFrame(), "Projeto já cadastrado para avaliação");
             }
         }
         if(!isAdded)
         {
-            DefaultTableModel dtm = new DefaultTableModel();
-            for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
-            {
-                String[] row = new String[2];
-                row[0] = (String) this.projetoTable.getModel().getValueAt(i, 0);
-                row[1] = (String) this.projetoTable.getModel().getValueAt(i, 1);
-                
-                dtm.addRow(row);
-            }
             String[] row = new String[2];
             row[0] = (String) this.projetoComboBox.getSelectedItem();
             row[1] = (String) this.getProjetosMap().get(row[0]);
-            dtm.addRow(row);
-            
-            this.projetoTable.setModel(dtm);
+            model.addRow(row);
             this.validate();
             this.repaint();
         }
@@ -172,18 +162,8 @@ public class EscolheProjetoView extends javax.swing.JPanel
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
         int delRow = this.projetoTable.getSelectedRow();
-        
-        DefaultTableModel dtm = new DefaultTableModel();
-        for(int i=0;i<this.projetoTable.getModel().getRowCount();i++)
-        {
-            if(i!=delRow){
-                String[] row = new String[2];
-                row[0] = (String) this.projetoTable.getModel().getValueAt(i, 0);
-                row[1] = (String) this.projetoTable.getModel().getValueAt(i, 1);        
-                dtm.addRow(row);
-            }
-        }
-        this.projetoTable.setModel(dtm);
+        DefaultTableModel model = (DefaultTableModel) this.projetoTable.getModel();
+        model.removeRow(delRow);
         this.validate();
         this.repaint();        
     }//GEN-LAST:event_removeButtonActionPerformed
@@ -216,7 +196,7 @@ public class EscolheProjetoView extends javax.swing.JPanel
         Vector<String> colunas = new Vector<String>();
         colunas.add(0,"Nome do Projeto");
         colunas.add(0,"Status");
-        DefaultTableModel model = new DefaultTableModel(colunas,projetos.size());;
+        DefaultTableModel model = new DefaultTableModel(colunas,0);;
         this.projetoTable.setModel(model);
         this.projetoTable.setEnabled(true);
         this.projetoScrollPane.setVisible(true);

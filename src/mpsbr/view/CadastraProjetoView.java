@@ -5,6 +5,13 @@
  */
 package mpsbr.view;
 
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import mpsbr.control.NivelControl;
+import mpsbr.control.ProjetoControl;
+import mpsbr.model.Projeto;
+
 /**
  *
  * @author gabriela
@@ -79,12 +86,23 @@ public class CadastraProjetoView extends javax.swing.JPanel {
         add(cancelarButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, -1, -1));
 
         cadastrarbutton.setText("Cadastrar");
+        cadastrarbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastrarbuttonActionPerformed(evt);
+            }
+        });
         add(cadastrarbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
 
         faseLabel.setText("Fase de Desenvolvimento:");
         add(faseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));
 
-        faseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        faseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CONCLUIDO", "EM DESENVOLVIMENTO" }));
+        faseComboBox.setSelectedItem("CONCLUIDO");
+        faseComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                faseComboBoxActionPerformed(evt);
+            }
+        });
         add(faseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 440, -1));
 
         removerButton.setText("Remover");
@@ -94,6 +112,26 @@ public class CadastraProjetoView extends javax.swing.JPanel {
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void faseComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faseComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faseComboBoxActionPerformed
+
+    private void cadastrarbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastrarbuttonActionPerformed
+        String nome = this.nomeTextField.getText();
+        String desc = this.descricaoTextField.getText();
+        String cliente = this.clienteTextField.getText();
+        String gerente = this.gerenteTextField.getText();
+        String faseDesenv = (String) this.faseComboBox.getSelectedItem();
+        if(nome.equals("")||desc.equals("")||cliente.equals("")||gerente.equals("")||faseDesenv.equals(""))
+        {
+            JOptionPane.showMessageDialog(new JFrame(), "Preencha todos os campos");
+        }
+        else
+        {
+            ProjetoControl.getInstance().cadastraProj(new Projeto(nome, desc, faseDesenv, cliente, gerente));
+        }
+    }//GEN-LAST:event_cadastrarbuttonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -113,4 +151,15 @@ public class CadastraProjetoView extends javax.swing.JPanel {
     private javax.swing.JButton removerButton;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
+
+    public void loadScreen() {
+        this.nomeTextField.setText("");
+        this.descricaoTextField.setText("");
+        this.clienteTextField.setText("");
+        this.gerenteTextField.setText("");
+        this.faseComboBox.setSelectedItem("CONCLUIDO");
+        this.validate();
+        this.repaint();
+    }
+
 }

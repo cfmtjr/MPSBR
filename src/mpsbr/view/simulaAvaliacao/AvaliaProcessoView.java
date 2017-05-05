@@ -5,6 +5,22 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import mpsbr.control.AvaliacaoControl;
+import mpsbr.model.AtributoDeProcesso;
+import mpsbr.model.Implementa;
+import mpsbr.model.Processo;
+import mpsbr.model.Projeto;
+import mpsbr.model.ResultadoEsperado;
+
 /**
  *
  * @author gabriela
@@ -17,7 +33,11 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     public AvaliaProcessoView() {
         initComponents();
     }
-
+    
+    private Processo currProc = null;
+    private ResultadoEsperado[] listRe = null;
+    private AtributoDeProcesso[] listAp = null;
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,13 +48,13 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        procLabel = new javax.swing.JLabel();
         ReScrollPane = new javax.swing.JScrollPane();
         ReTable = new javax.swing.JTable();
         ApScrollPane = new javax.swing.JScrollPane();
         ApTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        proxProcButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -42,8 +62,8 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         jLabel1.setText("Simulação de Avaliação");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
-        jLabel2.setText("Processo X");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
+        procLabel.setText("Processo X");
+        add(procLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
         ReTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -78,18 +98,51 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         jButton1.setText("Processo Anterior");
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, -1, -1));
 
-        jButton2.setText("Próximo Processo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        proxProcButton.setText("Próximo Processo");
+        proxProcButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                proxProcButtonActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, -1, -1));
+        add(proxProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void proxProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxProcButtonActionPerformed
+        AvaliacaoControl ac = AvaliacaoControl.getInstance();
+        Map<Processo, List<Implementa<ResultadoEsperado>>> mapGrausRE = ac.getMapImplProjRE();
+        Map<Processo, List<Implementa<AtributoDeProcesso>>> mapGrausAP = ac.getMapImplProjAP();
+        
+        mapGrausRE.put(currProc, new ArrayList<>());
+        List<Implementa<ResultadoEsperado>> lstRe = mapGrausRE.get(currProc);
+        
+        DefaultTableModel reModel = (DefaultTableModel) ReTable.getModel();
+        DefaultTableModel apModel = (DefaultTableModel) ApTable.getModel();
+        
+        List<Projeto> projsAvaliados = ac.getProjsAvaliados();
+        Map<Projeto, String> grauPorProj;
+        
+        ResultadoEsperado re = null;
+        for(int i = 0; i < ReTable.getRowCount(); i++){
+            re = this.listRe[i];
+            grauPorProj = new HashMap<>();
+            for(int j = 1; j <= projsAvaliados.size(); j++)
+                grauPorProj.put(projsAvaliados.get(j-1),(String) reModel.getValueAt(i, j));
+            lstRe.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, re));
+        }
+            
+        mapGrausAP.put(currProc, new ArrayList<>());
+        List<Implementa<AtributoDeProcesso>> lstAp = mapGrausAP.get(currProc);
+
+        AtributoDeProcesso ap = null;
+        for (int i = 0; i < ApTable.getRowCount(); i++) {
+            ap = this.listAp[i];
+            grauPorProj = new HashMap<>();
+            for (int j = 1; j <= projsAvaliados.size(); j++) 
+                grauPorProj.put(projsAvaliados.get(j-1), (String) apModel.getValueAt(i, j));
+            lstAp.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, ap));
+        }
+        ac.nextProcessAval();
+    }//GEN-LAST:event_proxProcButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -98,8 +151,61 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     private javax.swing.JScrollPane ReScrollPane;
     private javax.swing.JTable ReTable;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel procLabel;
+    private javax.swing.JButton proxProcButton;
     // End of variables declaration//GEN-END:variables
+
+    public void loadScreen(List<Projeto> projs, Processo pAtual) {
+        
+        this.currProc = pAtual;
+        this.procLabel.setText("Processo " + pAtual.getCodigo());
+        Vector<String> colunas = new Vector<>();
+        
+        colunas.add("Código");
+        for (Projeto proj : projs) {
+            colunas.add(proj.getNome());
+        }
+        
+        DefaultTableModel modelRe = new DefaultTableModel(colunas, 0);
+        DefaultTableModel modelAp = new DefaultTableModel(colunas, 0);
+        this.ReTable.setModel(modelRe);
+        this.ReTable.setEnabled(true);
+        this.ReScrollPane.setVisible(true);
+        this.ApTable.setModel(modelAp);
+        this.ApTable.setEnabled(true);
+        this.ApScrollPane.setVisible(true);
+        
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("T");
+        comboBox.addItem("L");
+        comboBox.addItem("P");
+        comboBox.addItem("N");
+        comboBox.addItem("F");
+        comboBox.addItem("NA");
+        
+        for (int i = 1; i <= projs.size(); i++) {
+            this.ReTable.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
+            this.ApTable.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(comboBox));
+        }
+        
+        DefaultTableModel reModel = (DefaultTableModel) this.ReTable.getModel();
+        DefaultTableModel apModel = (DefaultTableModel) this.ApTable.getModel();
+
+        AvaliacaoControl ac = AvaliacaoControl.getInstance();
+        Map<Processo, List<ResultadoEsperado>> map = ac.getMapResultadoEsperado();
+        List<ResultadoEsperado> res = map.get(this.currProc);
+        List<AtributoDeProcesso> aps = ac.getListAtributoDeProcessos();
+        
+        this.listRe = res.toArray(new ResultadoEsperado[res.size()]);
+        for (int i = 0; i < this.listRe.length; i++) {
+            
+            reModel.addRow(new String[] {this.listRe[i].getCodigo()});
+        }
+        this.listAp = aps.toArray(new AtributoDeProcesso[aps.size()]);
+        for (int i = 0; i < this.listAp.length; i++) {
+            apModel.addRow(new String[] {this.listAp[i].getCodigo()});
+        }
+    }
+
 }

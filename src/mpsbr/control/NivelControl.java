@@ -224,7 +224,7 @@ public class NivelControl {
     }
     
     public void cadastroAP() {
-        this.getCpv().loadScreen();
+        this.getCapv().loadScreen();
         MainView.showPanel(MainView.CADASTRA_AP);
     }
 

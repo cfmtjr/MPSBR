@@ -57,7 +57,7 @@ public class EscolheNivelView extends javax.swing.JPanel {
 
     private void nivelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nivelButtonActionPerformed
         // TODO add your handling code here:
-//        AvaliacaoControl.getInstance().preAval((String) nivelComboBox.getSelectedItem());
+        AvaliacaoControl.getInstance().preAval((String) nivelComboBox.getSelectedItem());
     }//GEN-LAST:event_nivelButtonActionPerformed
 
 
