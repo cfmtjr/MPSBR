@@ -13,7 +13,7 @@ import mpsbr.control.NivelControl;
 
 /**
  *
- * @author Kildare Silveira
+ * @author gabriela
  */
 public class cadastraREView extends javax.swing.JPanel {
 
@@ -195,7 +195,7 @@ public class cadastraREView extends javax.swing.JPanel {
 
     private void NivGComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivGComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("G",this.NivAComboBox.isSelected());
+        this.changeNivel("G",this.NivGComboBox.isSelected());
     }//GEN-LAST:event_NivGComboBoxActionPerformed
 
     private void NivAComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivAComboBoxActionPerformed
@@ -205,28 +205,28 @@ public class cadastraREView extends javax.swing.JPanel {
 
     private void NivBComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivBComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("B",this.NivAComboBox.isSelected());
+        this.changeNivel("B",this.NivBComboBox.isSelected());
     }//GEN-LAST:event_NivBComboBoxActionPerformed
 
     private void NivCComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivCComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("C",this.NivAComboBox.isSelected());
+        this.changeNivel("C",this.NivCComboBox.isSelected());
     }//GEN-LAST:event_NivCComboBoxActionPerformed
 
     private void NivDComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivDComboBoxActionPerformed
         // TODO add your handling code here:
         
-        this.changeNivel("D",this.NivAComboBox.isSelected());
+        this.changeNivel("D",this.NivDComboBox.isSelected());
     }//GEN-LAST:event_NivDComboBoxActionPerformed
 
     private void NivEComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivEComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("E",this.NivAComboBox.isSelected());
+        this.changeNivel("E",this.NivEComboBox.isSelected());
     }//GEN-LAST:event_NivEComboBoxActionPerformed
 
     private void NivFComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivFComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("F",this.NivAComboBox.isSelected());
+        this.changeNivel("F",this.NivFComboBox.isSelected());
     }//GEN-LAST:event_NivFComboBoxActionPerformed
 
 

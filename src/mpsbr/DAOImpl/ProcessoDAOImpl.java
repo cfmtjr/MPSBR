@@ -33,22 +33,23 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             Connection conexao = conn.getConnection();
             String createSQL = "";
 
-            createSQL = "INSERT INTO processo(nome, descricao, nivel_id) VALUES (?,?,(SELECT id FROM nivel WHERE nome=?))";
+            createSQL = "INSERT INTO processo(codigo, nome, descricao, nivel_id) VALUES (?,?,?,(SELECT id FROM nivel WHERE nome=?))";
 
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
-            prepStatement.setString(1, processo.getNome());
-            prepStatement.setString(2, processo.getDescricao());
-            prepStatement.setString(3, processo.getNomeNivel());
+            prepStatement.setString(1, processo.getCodigo());
+            prepStatement.setString(2, processo.getNome());
+            prepStatement.setString(3, processo.getDescricao());
+            prepStatement.setString(4, processo.getNomeNivel());
             prepStatement.executeUpdate();
 
-            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES (?,(SELECT id FROM processo WHERE nome=?))";
+            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES (?,(SELECT id FROM processo WHERE codigo=?))";
 
             prepStatement = conexao.prepareStatement(createSQL);
 
             List<AtributoDeProcesso> aps = MPSBRFacade.apd.getAllAtributoDeProcesso();
             for (AtributoDeProcesso ap : aps) {
                 prepStatement.setInt(1, ap.getId());
-                prepStatement.setString(2, processo.getNome());
+                prepStatement.setString(2, processo.getCodigo());
                 prepStatement.executeUpdate();
             }
             
@@ -67,12 +68,12 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT p.id, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id";
+            String selectSQL = "SELECT p.id, p.codigo, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next()) {
-                result.add(new Processo(rs.getInt("p.id"), rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
+                result.add(new Processo(rs.getInt("p.id"), rs.getString("p.codigo"), rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
             }
             conexao.close();
             return result;
@@ -89,13 +90,13 @@ public class ProcessoDAOImpl implements ProcessoDAO{
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
-            String selectSQL = "SELECT p.id, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id where n.nome=?";
+            String selectSQL = "SELECT p.id, p.codigo, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id where n.nome=?";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             while (null != currNivel) {
                 prepStatement.setString(1, currNivel.getNome());
                 ResultSet rs = prepStatement.executeQuery();
                 while (rs.next())
-                    result.add(new Processo(rs.getInt("p.id"), rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
+                    result.add(new Processo(rs.getInt("p.id"), rs.getString("p.codigo"), rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome")));
                 currNivel = currNivel.getNivelAnterior();
             }
             conexao.close();
@@ -107,20 +108,20 @@ public class ProcessoDAOImpl implements ProcessoDAO{
     }
 
     @Override
-    public Processo findByNome(String nome) {
+    public Processo findByCodigo(String codigo) {
         Processo result = null;
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT p.id, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id WHERE p.nome=?";
+            String selectSQL = "SELECT p.id, p.codigo, p.nome, p.descricao, n.nome FROM processo AS p JOIN nivel n ON p.nivel_id=n.id WHERE p.codigo=?";
 
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
-            prepStatement.setString(1, nome);
+            prepStatement.setString(1, codigo);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new Processo(rs.getInt("p.id"), rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome"));
+                result = new Processo(rs.getInt("p.id"), rs.getString("p.codigo"),rs.getString("p.nome"), rs.getString("p.descricao"), rs.getString("n.nome"));
             conexao.close();
             return result;
         } catch (SQLException ex) {

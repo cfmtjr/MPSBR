@@ -6,9 +6,13 @@
 package mpsbr.view.cadastraNivel;
 
 import java.util.List;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
+import mpsbr.model.AtributoDeProcesso;
+import mpsbr.model.Processo;
+import mpsbr.model.ResultadoEsperado;
 
 /**
  *
@@ -110,7 +114,7 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
     }//GEN-LAST:event_addProcessoButtonActionPerformed
 
     private void addAPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAPButtonActionPerformed
-        // TODO add your handling code here:
+        NivelControl.getInstance().cadastroAP();
     }//GEN-LAST:event_addAPButtonActionPerformed
 
 
@@ -128,10 +132,21 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
     private javax.swing.JList<String> processoList;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScreen(String[] processos,String[] aps){
-        
-        this.processoList.setListData(processos);
-        this.APList.setListData(aps);
+    public void loadScreen(Map<Processo, List<ResultadoEsperado>>processos, List<AtributoDeProcesso> aps){
+        String[] processosCods = new String[processos.size()];
+        String[] apsCods = new String[aps.size()];
+        int i = 0;
+        for (Processo p : processos.keySet()) {
+            processosCods[i] = p.getCodigo();
+            i++;
+        }
+        i = 0;
+        for (AtributoDeProcesso ap : aps) {
+            apsCods[i] = ap.getCodigo();
+            i++;
+        }
+        this.processoList.setListData(processosCods);
+        this.APList.setListData(apsCods);
         this.validate();
         this.repaint();
     }

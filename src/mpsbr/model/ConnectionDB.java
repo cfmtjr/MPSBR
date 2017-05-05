@@ -11,8 +11,6 @@ import java.io.IOException;
 import static java.lang.System.lineSeparator;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;

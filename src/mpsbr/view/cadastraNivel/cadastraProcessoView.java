@@ -13,7 +13,7 @@ import mpsbr.control.NivelControl;
 
 /**
  *
- * @author Kildare Silveira
+ * @author gabriela
  */
 public class cadastraProcessoView extends javax.swing.JPanel 
 {
@@ -135,7 +135,7 @@ public class cadastraProcessoView extends javax.swing.JPanel
         
         else
         {
-            NivelControl.getInstance().cadastroRE(codigo,nome,desc,this.getResultados());
+            NivelControl.getInstance().cadastroProcesso(codigo, nome, desc);
         }        
         
     }//GEN-LAST:event_finalizaButtonActionPerformed

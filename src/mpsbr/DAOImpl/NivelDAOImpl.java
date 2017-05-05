@@ -58,7 +58,7 @@ public class NivelDAOImpl implements NivelDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT * FROM nivel order by nome desc";
+            String selectSQL = "SELECT * FROM nivel ORDER BY nome DESC";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
             

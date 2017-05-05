@@ -16,6 +16,7 @@ import mpsbr.DAOImpl.AtributoDeProcessoDAOImpl;
 public class AtributoDeProcesso {
     
     private int id;
+    private String codigo;
     private String nome;
     private String descricao;
     private String nomeNivel;
@@ -43,9 +44,25 @@ public class AtributoDeProcesso {
     public void setNomeNivel(String nomeNivel) {
         this.nomeNivel = nomeNivel;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
     
-    public AtributoDeProcesso(int id, String nome, String descricao, String nomeNivel){
+    public AtributoDeProcesso(int id, String codigo, String nome, String descricao, String nomeNivel){
         this.id = id;
+        this.codigo = codigo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.nomeNivel = nomeNivel;
+    }
+
+    public AtributoDeProcesso(String codigo, String nome, String descricao, String nomeNivel) {
+        this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;
@@ -59,10 +76,14 @@ public class AtributoDeProcesso {
         this.id = id;
     }
     
-    static List<AtributoDeProcesso> getAtributoDeProcessoPorNivel(Nivel n) 
-    {
-        AtributoDeProcessoDAO pd = new AtributoDeProcessoDAOImpl();
-        List<AtributoDeProcesso> processoList = pd.getAllAtributoDeProcessoPorNivel(n);
+    public static List<AtributoDeProcesso> getAtributoDeProcessoPorNivel(Nivel n) {
+        AtributoDeProcessoDAO apd = new AtributoDeProcessoDAOImpl();
+        List<AtributoDeProcesso> processoList = apd.getAllAtributoDeProcessoPorNivel(n);
         return processoList;
+    }
+
+    public static boolean createAPInDB(AtributoDeProcesso ap) {
+        AtributoDeProcessoDAO apd = new AtributoDeProcessoDAOImpl();
+        return apd.create(ap);
     }
 }

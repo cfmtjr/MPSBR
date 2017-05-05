@@ -15,9 +15,10 @@ import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
  */
 public class ResultadoEsperado {
     private int id;
+    private String codigo;
     private String nome;
     private String descricao;
-    private String processoNome;
+    private String processoCodigo;
 
     public String getNome() {
         return nome;
@@ -35,25 +36,35 @@ public class ResultadoEsperado {
         this.descricao = descricao;
     }
 
-    public String getProcessoNome() {
-        return processoNome;
+    public String getProcessoCodigo() {
+        return processoCodigo;
     }
 
-    public void setProcessoNome(String processoNome) {
-        this.processoNome = processoNome;
+    public void setProcessoNome(String processoCodigo) {
+        this.processoCodigo = processoCodigo;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
     
-    public ResultadoEsperado(int id,String nome, String descricao, String processoNome){
+    public ResultadoEsperado(int id, String codigo, String nome, String descricao, String processoCodigo){
         this.id = id;
         this.nome = nome;
+        this.codigo = codigo;
         this.descricao = descricao;
-        this.processoNome = processoNome;
+        this.processoCodigo = processoCodigo;
     }
 
-    public ResultadoEsperado(String nome, String descricao, String processoNome) {
+    public ResultadoEsperado(String codigo, String nome, String descricao, String processoCodigo) {
+        this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
-        this.processoNome = processoNome;
+        this.processoCodigo = processoCodigo;
     }
     
     public int getId() {
@@ -65,8 +76,12 @@ public class ResultadoEsperado {
     }
     
     public static List<ResultadoEsperado> getAllResultadoEsperadoPorNivelEProcesso(Nivel nivel, Processo processo){
-        ResultadoEsperadoDAO re = new ResultadoEsperadoDAOImpl();
-        
-        return re.getAllResultadoEsperadoPorNivelEProcesso(nivel, processo);
+        ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();        
+        return red.getAllResultadoEsperadoPorNivelEProcesso(nivel, processo);
+    }
+    
+    public static boolean createREInDB(ResultadoEsperado re, List<String> validoPara) {
+        ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();
+        return red.create(re, validoPara);
     }
 }

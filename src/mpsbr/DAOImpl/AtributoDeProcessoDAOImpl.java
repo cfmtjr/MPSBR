@@ -33,21 +33,22 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
             Connection conexao = conn.getConnection();
             String createSQL = "";
 
-            createSQL = "INSERT INTO ap(nome, descricao, nivel_id) VALUES (?,?,(SELECT id FROM nivel WHERE nome=?))";
+            createSQL = "INSERT INTO ap(codigo, nome, descricao, nivel_id) VALUES (?,?,?,(SELECT id FROM nivel WHERE nome=?))";
 
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
-            prepStatement.setString(1, ap.getNome());
-            prepStatement.setString(2, ap.getDescricao());
-            prepStatement.setString(3, ap.getNomeNivel());
+            prepStatement.setString(1, ap.getCodigo());
+            prepStatement.setString(2, ap.getNome());
+            prepStatement.setString(3, ap.getDescricao());
+            prepStatement.setString(4, ap.getNomeNivel());
             prepStatement.executeUpdate();
 
-            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES ((SELECT id FROM ap_id WHERE nome=?),?)";
+            createSQL = "INSERT INTO proc_possui_ap(ap_id, processo_id) VALUES ((SELECT id FROM ap WHERE codigo=?),?)";
 
             prepStatement = conexao.prepareStatement(createSQL);
 
             List<Processo> processos = MPSBRFacade.pd.getAllProcesso();
             for (Processo processo : processos) {
-                prepStatement.setString(1, ap.getNome());
+                prepStatement.setString(1, ap.getCodigo());
                 prepStatement.setInt(2, processo.getId());
                 prepStatement.executeUpdate();
             }
@@ -67,12 +68,12 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id";
+            String selectSQL = "SELECT ap.id, ap.codigo, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
+                result.add(new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.codigo"), rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -88,14 +89,14 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
-            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id where n.nome=?";
+            String selectSQL = "SELECT ap.id, ap.codigo, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id where n.nome=?";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             while (null != currNivel){
                 prepStatement.setString(1, currNivel.getNome());
                 ResultSet rs = prepStatement.executeQuery();
                 
                 while (rs.next())
-                    result.add(new AtributoDeProcesso(rs.getInt("ap.id"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
+                    result.add(new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.codigo"), rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome")));
                 currNivel = currNivel.getNivelAnterior();
             }
             conexao.close();
@@ -107,20 +108,20 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
     }
     
     @Override
-    public AtributoDeProcesso findByNome(String nome) {
+    public AtributoDeProcesso findByCodigo(String codigo) {
         AtributoDeProcesso result = null;
         try {
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT ap.id, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id WHERE ap.nome=?";
+            String selectSQL = "SELECT ap.id, ap.codigo, ap.nome, ap.descricao, n.nome FROM ap JOIN nivel n ON ap.nivel_id=n.id WHERE ap.codigo=?";
 
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
-            prepStatement.setString(1, nome);
+            prepStatement.setString(1, codigo);
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new AtributoDeProcesso(rs.getInt("ap.id"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome"));
+                result = new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.codigo"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome"));
             conexao.close();
             return result;
         } catch (SQLException ex) {

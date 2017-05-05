@@ -15,10 +15,13 @@ import mpsbr.DAOImpl.ProcessoDAOImpl;
  */
 public class Processo {
     private int id;
+    private String codigo;
     private String nome;
     private String descricao;
     private String nomeNivel;
     private String status;
+    private static ProcessoDAO pd = new ProcessoDAOImpl();
+
     
     public String getNome() {
         return nome;
@@ -59,15 +62,25 @@ public class Processo {
     public void setStatus(String status) {
         this.status = status;
     }   
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
     
-    public Processo(int id, String nome, String descricao, String nomeNivel){
+    public Processo(int id, String codigo, String nome,String descricao, String nomeNivel){
         this.id = id;
+        this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;
     }
     
-    public Processo(String nome, String descricao, String nomeNivel) {
+    public Processo(String codigo, String nome, String descricao, String nomeNivel) {
+        this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.nomeNivel = nomeNivel;
@@ -75,8 +88,11 @@ public class Processo {
     
     public static List<Processo> getProcessosPorNivel(Nivel nivel) 
     {
-        ProcessoDAO pd = new ProcessoDAOImpl();
         List<Processo> processoList = pd.getAllProcessoPorNivel(nivel);
         return processoList;
+    }
+    
+    public static boolean createProcessoInDB(Processo processo){
+        return pd.create(processo);
     }
 }

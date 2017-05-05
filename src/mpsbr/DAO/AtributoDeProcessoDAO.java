@@ -18,6 +18,6 @@ public interface AtributoDeProcessoDAO {
     public boolean create(AtributoDeProcesso ap);
     public ArrayList<AtributoDeProcesso> getAllAtributoDeProcesso();
     public List<AtributoDeProcesso> getAllAtributoDeProcessoPorNivel(Nivel nivel);
-    public AtributoDeProcesso findByNome(String nome);
+    public AtributoDeProcesso findByCodigo(String codigo);
     public boolean update(String nome);    
 }

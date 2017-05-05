@@ -153,11 +153,11 @@ public class Avaliacao {
         for (Processo p : grausImplREProcI.keySet()) {
             ArrayList<Implementa<ResultadoEsperado>> implRE = (ArrayList<Implementa<ResultadoEsperado>>) grausImplREProcI.get(p);
             for (Implementa<ResultadoEsperado> implementa : implRE) {
-                grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+                grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getCodigo(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             ArrayList<Implementa<AtributoDeProcesso>> implAP = (ArrayList<Implementa<AtributoDeProcesso>>) grausImplAPProcI.get(p);
             for (Implementa<AtributoDeProcesso> implementa : implAP) {
-                grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+                grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getCodigo(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             if(validaApProc(grausImplAPUOProcI)){
                 if(validaReProc(grausImplREUOProcI)){
@@ -305,8 +305,8 @@ public class Avaliacao {
 
     
     //Valida uma AP do processo i, de acordo com o nível escolhido (tabela 10)
-    public boolean validaAp(Map<String, String> grausImplAP, String nomeAp, String valPossiveis) {
+    public boolean validaAp(Map<String, String> grausImplAP, String codAp, String valPossiveis) {
         List<String> valsList = Arrays.asList(valPossiveis.split(";"));
-        return valsList.contains(grausImplAP.get(nomeAp));
+        return valsList.contains(grausImplAP.get(codAp));
     }
 }
