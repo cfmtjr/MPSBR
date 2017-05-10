@@ -84,7 +84,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             ResultSet rs = prepStatement.executeQuery();
 
             if (rs.next())
-                result = new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente"));
+                result = new Projeto(rs.getInt("id"), rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente"));
             conexao.close();
             return result;
         } catch (SQLException ex) {

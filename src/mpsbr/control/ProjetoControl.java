@@ -58,7 +58,6 @@ public class ProjetoControl {
     public void cadastraProj(Projeto proj){
         Projeto.create(proj);
         this.getCpv().loadScreen();
-        MainView.showPanel(MainView.CADASTRA_PRJ);
     }
     
 }

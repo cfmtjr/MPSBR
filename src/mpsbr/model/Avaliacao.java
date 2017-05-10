@@ -163,13 +163,13 @@ public class Avaliacao {
                 if(validaReProc(grausImplREUOProcI)){
                     p.setStatus("SATISFEITO");
                 } else {
-                    p.setStatus("N_SATISFEITO");
+                    p.setStatus("NAO SATISFEITO");
                 }
             } else {
-                p.setStatus("N_SATISFEITO");
-                this.setStatus("N_PASSOU");
+                p.setStatus("NAO SATISFEITO");
+                this.setStatus("NAO PASSOU");
             }
-        } if(!this.getStatus().equals("N_PASSOU")){ //!= n passou
+        } if(!this.getStatus().equals("NAO PASSOU")){ //!= n passou
             this.setStatus("PASSOU");
         }            
     }

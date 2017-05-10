@@ -176,7 +176,7 @@ public class consultaProcessoView extends javax.swing.JPanel
             codsRE[i] = re.getCodigo();
             i++;
         }
-        Processo p = NivelControl.getInstance().getProprietaria();
+        Processo p = NivelControl.getInstance().getProprietario();
         this.cadastroREList.setListData(codsRE);
         this.descricaoTextArea.setText(p.getDescricao());
         this.codigoTextField.setText(p.getCodigo());

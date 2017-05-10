@@ -130,6 +130,7 @@ public class CadastraProjetoView extends javax.swing.JPanel {
         else
         {
             ProjetoControl.getInstance().cadastraProj(new Projeto(nome, desc, faseDesenv, cliente, gerente));
+            loadScreen();
         }
     }//GEN-LAST:event_cadastrarbuttonActionPerformed
 

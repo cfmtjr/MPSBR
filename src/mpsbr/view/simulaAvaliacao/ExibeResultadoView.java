@@ -5,6 +5,19 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+import mpsbr.control.AvaliacaoControl;
+import mpsbr.model.AtributoDeProcesso;
+import mpsbr.model.Processo;
+import mpsbr.model.Projeto;
+import mpsbr.model.ResultadoEsperado;
+import mpsbr.view.MainView;
+
 /**
  *
  * @author gabriela
@@ -30,12 +43,12 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        resultProcessoTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        resultadoLabel = new javax.swing.JLabel();
+        nivelLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        salvaAvalButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -46,7 +59,7 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         jLabel2.setText("Resultado de Avaliação");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        resultProcessoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,36 +70,70 @@ public class ExibeResultadoView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(resultProcessoTable);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 640, 160));
 
         jLabel3.setText("Resultado Final");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
 
-        jLabel4.setText("Satisfeito");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, -1, -1));
+        resultadoLabel.setText("Satisfeito");
+        add(resultadoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, -1, -1));
 
-        jLabel5.setText("Nível X");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
+        nivelLabel.setText("Nível X");
+        add(nivelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
 
         jButton1.setText("Cancelar");
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
 
-        jButton2.setText("Salvar Avaliação");
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, -1, -1));
+        salvaAvalButton.setText("Salvar Avaliação");
+        salvaAvalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvaAvalButtonActionPerformed(evt);
+            }
+        });
+        add(salvaAvalButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void salvaAvalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvaAvalButtonActionPerformed
+        AvaliacaoControl ac = AvaliacaoControl.getInstance();
+        ac.saveAval();
+        MainView.showPanel(MainView.NIVEL_AVL);
+    }//GEN-LAST:event_salvaAvalButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel nivelLabel;
+    private javax.swing.JTable resultProcessoTable;
+    private javax.swing.JLabel resultadoLabel;
+    private javax.swing.JButton salvaAvalButton;
     // End of variables declaration//GEN-END:variables
+
+    public void loadScreen() {
+
+        AvaliacaoControl ac = AvaliacaoControl.getInstance();
+        this.nivelLabel.setText("Nivel " + ac.getCurrentAval().getNivel().getNome());
+        Vector<String> colunas = new Vector<>();
+
+        colunas.add("Processo");
+        colunas.add("Resultado");
+
+        DefaultTableModel modelResults = new DefaultTableModel(colunas, 0);
+
+        this.resultProcessoTable.setModel(modelResults);
+        this.resultProcessoTable.setEnabled(true);
+        this.jScrollPane1.setVisible(true);
+        
+        for (Processo processo : ac.getListProcessos()) {
+            modelResults.addRow(new String[] {"Processo " + processo.getCodigo(), processo.getStatus()});
+        }
+        
+        resultadoLabel.setText(ac.getCurrentAval().getStatus());
+    }
 }
+

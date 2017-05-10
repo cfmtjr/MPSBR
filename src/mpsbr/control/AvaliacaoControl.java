@@ -174,7 +174,7 @@ public class AvaliacaoControl {
         this.setMapResultadoEsperado(this.getCurrentAval().mapResultadoEsperado(this.getListProcessos()));
         this.setMapImplProjRE(new HashMap<>());
         this.setMapImplProjAP(new HashMap<>());
-        
+        this.currentProcesso = 0;
         nextProcessAval();
     }
 
@@ -183,17 +183,19 @@ public class AvaliacaoControl {
             this.getApv().loadScreen(projsAvaliados, listProcessos.get(currentProcesso));
             currentProcesso++;
             MainView.showPanel(MainView.DO_AVL);
-        } else {
+        } else { //avalia, envia pra tela o resultado e, caso queira salvar o resultado, chamar saveAval
             currentAval.avalia();
-//            MainView.showPanel(MainView.DO_AVL); //finaliza
+            this.getErv().loadScreen();
+            MainView.showPanel(MainView.RESULT_AVL); //finaliza
         }
     }
     
     public void saveAval(){
         AvaliacaoDAOImpl av = new AvaliacaoDAOImpl();
-        av.update(currentAval);
+        av.create(currentAval);
         av.saveProcessoSatisfazAvaliacao(currentAval, listProcessos);
         av.saveResultAvaliacaoRE(currentAval, mapImplProjRE);
         av.saveResultAvaliacaoAP(currentAval, mapImplProjAP);
     }
 }
+    

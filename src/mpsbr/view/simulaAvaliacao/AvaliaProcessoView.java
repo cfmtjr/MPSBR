@@ -96,6 +96,11 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         add(ApScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 570, 100));
 
         jButton1.setText("Processo Anterior");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, -1, -1));
 
         proxProcButton.setText("Próximo Processo");
@@ -143,6 +148,10 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         }
         ac.nextProcessAval();
     }//GEN-LAST:event_proxProcButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

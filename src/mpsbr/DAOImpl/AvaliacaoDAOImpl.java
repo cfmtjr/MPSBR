@@ -42,14 +42,14 @@ public class AvaliacaoDAOImpl implements AvaliacaoDAO{
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
             prepStatement.setString(1, av.getNivel().getNome());
             prepStatement.setString(2, av.getDataAval());
-            prepStatement.setNull(3, java.sql.Types.VARCHAR);
+            prepStatement.setString(3, av.getStatus());
             prepStatement.executeUpdate();
-
+            
             selectSQL = "SELECT id FROM avaliacao ORDER BY id DESC LIMIT 1";
             prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
-            
-            av.setId(rs.getInt("id"));
+            if(rs.next())
+                av.setId(rs.getInt("id"));
             conexao.close();
             return true;
         } catch (SQLException ex) {
@@ -100,8 +100,8 @@ public class AvaliacaoDAOImpl implements AvaliacaoDAO{
             Map<Projeto, String> grauImplProj = new HashMap<>();
             String createSQL = "";
 
-            createSQL = "INSERT INTO avalia(avaliacao_id, projeto_id, proc_possui_ap_id, grau_implementacao) VALUES (?,?,"
-                    + "(SELECT id FROM proc_possui_ap WHERE ap_id=? AND proc_id=?),?)";
+            createSQL = "INSERT INTO avalia(avaliacao_id, projeto_id, proc_possui_ap_id, grau_implementacao) "
+                    + "VALUES (?,?,(SELECT id FROM proc_possui_ap WHERE ap_id=? AND processo_id=?),?)";
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
 
             for (Processo processo : grauImplPorProc.keySet()) {
@@ -111,8 +111,8 @@ public class AvaliacaoDAOImpl implements AvaliacaoDAO{
                     for (Projeto projeto : grauImplProj.keySet()) {
                         prepStatement.setInt(1, av.getId());
                         prepStatement.setInt(2, projeto.getId());
-                        prepStatement.setInt(3, processo.getId());
-                        prepStatement.setInt(4, implementa.getCaracteristicaAvaliada().getId());
+                        prepStatement.setInt(3, implementa.getCaracteristicaAvaliada().getId());
+                        prepStatement.setInt(4, processo.getId());
                         prepStatement.setString(5, grauImplProj.get(projeto));
                         prepStatement.executeUpdate();
                     }
@@ -157,7 +157,7 @@ public class AvaliacaoDAOImpl implements AvaliacaoDAO{
 
             String createSQL = "";
 
-            createSQL = "INSERT INTO proc_satizfaz_avaliacao(avaliacao_id, processo_id, status) VALUES (?,?,?)";
+            createSQL = "INSERT INTO proc_satisfaz_avaliacao(avaliacao_id, processo_id, status) VALUES (?,?,?)";
 
             PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
             for (Processo processo : processos) {

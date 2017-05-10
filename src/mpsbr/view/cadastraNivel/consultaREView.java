@@ -173,7 +173,7 @@ public class consultaREView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        NivelControl.getInstance().setProprietaria(null);
+        NivelControl.getInstance().setProprietario(null);
         MainView.showPanel(MainView.CONSULTA_PROC);
     }//GEN-LAST:event_okButtonActionPerformed
 

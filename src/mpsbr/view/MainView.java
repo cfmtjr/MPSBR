@@ -26,6 +26,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     public static final String BUSCA_PRJ = "srcPrj";
     public static final String NIVEL_AVL = "nivAvl";
     public static final String DO_AVL = "doAvl";
+    public static final String RESULT_AVL = "resultAvl";
     public static final String SEL_PRJ = "selPrj";
     public static final String CONSULTA_AVL = "consAvl";
     public static final String CADASTRA_XML = "regXML";
@@ -256,6 +257,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(ac.getEnv(),MainView.NIVEL_AVL);
             mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
             mv.mainPanel.add(ac.getApv(),MainView.DO_AVL);
+            mv.mainPanel.add(ac.getErv(),MainView.RESULT_AVL);
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
             //mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
