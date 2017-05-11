@@ -39,9 +39,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     public static final String ADD_RE = "addRE";
     public static final String CONSULTA_PROC = "consProc";
     public static final String CONSULTA_RE = "consRE";
+    public static final String CONFIG = "configDB";
    
     public static MainView FRAME;
     
+    private ServerConfigPanel configPanel;
     /**
      * Creates new form mainView
      */
@@ -67,8 +69,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu5 = new javax.swing.JMenu();
         mainPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -81,17 +86,31 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+
+        jMenu5.setText("jMenu5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAutoRequestFocus(false);
 
         mainPanel.setLayout(new java.awt.CardLayout());
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
+
+        jMenu6.setText("Arquivo");
+
+        jMenuItem6.setText("Configurações");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu6);
 
         jMenu1.setText("Usuários");
 
@@ -162,7 +181,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
 
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Níveis MPS.BR");
+        jMenu7.setText("Níveis MPS.BR");
 
         jMenuItem4.setText("Cadastrar");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +189,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem4);
+        jMenu7.add(jMenuItem4);
 
         jMenuItem11.setText("Alterar");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
@@ -178,10 +197,10 @@ public class MainView extends javax.swing.JFrame implements Runnable{
                 jMenuItem11ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem11);
+        jMenu7.add(jMenuItem11);
 
         jMenuItem12.setText("Consultar");
-        jMenu4.add(jMenuItem12);
+        jMenu7.add(jMenuItem12);
 
         jMenuItem13.setText("Remover");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
@@ -189,9 +208,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
                 jMenuItem13ActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem13);
+        jMenu7.add(jMenuItem13);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -244,6 +263,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         cl.show(this.mainPanel, MainView.SEL_NIVEL);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        CardLayout cl = (CardLayout) this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.CONFIG);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     public void run() 
     {
         try{
@@ -253,6 +277,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             ProjetoControl pc = ProjetoControl.getInstance();
             NivelControl nc = NivelControl.getInstance();
             AvaliacaoControl ac = AvaliacaoControl.getInstance();
+            this.setConfigPanel(new ServerConfigPanel());
             
             mv.mainPanel.add(ac.getEnv(),MainView.NIVEL_AVL);
             mv.mainPanel.add(ac.getEpv(),MainView.SEL_PRJ);
@@ -268,7 +293,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(nc.getCapv(),MainView.CADASTRA_AP);
             mv.mainPanel.add(nc.getArev(),MainView.ADD_RE);
             mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_PROC);
-//            mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_RE);
+            mv.mainPanel.add(this.getConfigPanel(),MainView.CONFIG);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));
             mv.pack();
@@ -292,7 +317,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem11;
@@ -302,9 +329,19 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuItem remProjMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    public ServerConfigPanel getConfigPanel() {
+        return configPanel;
+    }
+
+    public void setConfigPanel(ServerConfigPanel configPanel) {
+        this.configPanel = configPanel;
+    }
+
 }

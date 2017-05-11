@@ -39,8 +39,12 @@ public class Nivel {
     
     public static Nivel getNivelFromDB(String nivel){
         NivelDAO nv = new NivelDAOImpl();
-        
         return nv.findByName(nivel);
+    }
+    
+    public static boolean cadastraAllNivel(){
+        NivelDAO nv = new NivelDAOImpl();
+        return nv.createAllNivel();
     }
     
 }

@@ -59,8 +59,9 @@ public class selecionaNivelView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroButtonActionPerformed
-        // TODO add your handling code here:
         String nivel = (String) this.nivelComboBox.getSelectedItem();
+        if(!NivelControl.getInstance().checaCadastroNivel(nivel.split(" ")[1]))
+            NivelControl.getInstance().cadastraNiveis();
         NivelControl.getInstance().startCadastroNivel(nivel);
     }//GEN-LAST:event_CadastroButtonActionPerformed
 

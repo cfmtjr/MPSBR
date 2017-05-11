@@ -11,6 +11,8 @@ import java.io.IOException;
 import static java.lang.System.lineSeparator;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.apache.commons.lang3.StringUtils;
@@ -23,11 +25,11 @@ public class ConnectionDB {
     
     public ConnectionDB(){
         
-//        try {
-//            this.loadValues();
-//        } catch (IOException ex) {
-//            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            this.loadValues();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     private static String driverName = "com.mysql.jdbc.Driver";

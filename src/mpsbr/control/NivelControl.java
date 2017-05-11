@@ -319,4 +319,12 @@ public class NivelControl {
         this.getCnv().loadScreen(this.getProcessos(), this.getAp());
         MainView.showPanel(MainView.CADASTRA_NIVEL);
     }
+    
+    public boolean checaCadastroNivel(String nivel){
+        return (Nivel.getNivelFromDB(nivel) != null);
+    }
+    
+    public boolean cadastraNiveis(){
+        return Nivel.cadastraAllNivel();
+    }
 }

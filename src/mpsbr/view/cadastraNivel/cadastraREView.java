@@ -271,6 +271,7 @@ public class cadastraREView extends javax.swing.JPanel {
         this.NivEComboBox.setSelected(false);
         this.NivFComboBox.setSelected(false);
         this.NivGComboBox.setSelected(false);
+        this.getNiveis().clear();
     }
 
     private void changeNivel(String nivel, boolean isSelected) {
