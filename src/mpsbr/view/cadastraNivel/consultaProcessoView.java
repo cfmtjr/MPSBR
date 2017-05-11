@@ -130,7 +130,6 @@ public class consultaProcessoView extends javax.swing.JPanel
 
     private void addREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addREButtonActionPerformed
         // TODO add your handling code here:
-        NivelControl.getInstance().cadastroRE();
     }//GEN-LAST:event_addREButtonActionPerformed
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
