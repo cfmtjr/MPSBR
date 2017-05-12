@@ -14,10 +14,13 @@ import mpsbr.model.Nivel;
 import mpsbr.model.Processo;
 import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;
+import mpsbr.view.cadastraNivel.ConsultaNivelView;
+import mpsbr.view.cadastraNivel.SelecionaNivelConsultaView;
 import mpsbr.view.cadastraNivel.addREProcessoView;
 import mpsbr.view.cadastraNivel.cadastraAPView;
 import mpsbr.view.cadastraNivel.cadastraProcessoView;
 import mpsbr.view.cadastraNivel.cadastraREView;
+import mpsbr.view.cadastraNivel.consultaAPView;
 import mpsbr.view.cadastraNivel.consultaProcessoView;
 import mpsbr.view.cadastraNivel.consultaREView;
 import mpsbr.view.cadastraNivel.mainCadastroNivelView;
@@ -41,6 +44,9 @@ public class NivelControl {
     private addREProcessoView arev;
     private consultaProcessoView conspv;
     private consultaREView consrev;
+    private SelecionaNivelConsultaView snconsv;
+    private ConsultaNivelView consnv;
+    private consultaAPView consapv;
     
     //Atributos do nivel sendo cadastrado
     private Nivel nivel;
@@ -62,6 +68,9 @@ public class NivelControl {
         this.setArev(new addREProcessoView());
         this.setConspv(new consultaProcessoView());
         this.setConsrev(new consultaREView());
+        this.setConsnv(new ConsultaNivelView());
+        this.setSnconsv(new SelecionaNivelConsultaView());
+        this.setConsapv(new consultaAPView());
     }
 
     public Nivel getNivel() {
@@ -144,6 +153,30 @@ public class NivelControl {
         return consrev;
     }
 
+    public ConsultaNivelView getConsnv() {
+        return consnv;
+    }
+
+    public void setConsnv(ConsultaNivelView consnv) {
+        this.consnv = consnv;
+    }
+
+    public SelecionaNivelConsultaView getSnconsv() {
+        return snconsv;
+    }
+
+    public void setSnconsv(SelecionaNivelConsultaView snconsv) {
+        this.snconsv = snconsv;
+    }
+
+    public consultaAPView getConsapv() {
+        return consapv;
+    }
+
+    public void setConsapv(consultaAPView consapv) {
+        this.consapv = consapv;
+    }
+
     public List<AtributoDeProcesso> getAp() {
         return ap;
     }
@@ -190,15 +223,45 @@ public class NivelControl {
         
         Map<Processo,List<ResultadoEsperado>> procs = new HashMap<>();
         List<Processo> allProcs = Processo.getProcessosPorNivel(this.getNivel());
+        List<ResultadoEsperado> res = null;
         for (Processo p : allProcs) {
-            procs.put(p, ResultadoEsperado.getAllResultadoEsperadoPorProcesso(p));
+            res = ResultadoEsperado.getAllResultadoEsperadoPorProcesso(p);
+            if(res == null)
+                res = new ArrayList<>();
+            procs.put(p, res);
         }
         this.setProcessos(procs);
     
         List<AtributoDeProcesso> aps = AtributoDeProcesso.getAtributoDeProcessoPorNivel(this.getNivel());
+        if(aps == null)
+            aps = new ArrayList<>();
         this.setAp(aps);
         
         this.cadastroNivel();
+    }
+    
+    public void startConsultaNivel(String nivel) {
+        
+        Nivel nv = Nivel.getNivelFromDB(nivel.split(" ")[1]);
+        this.setNivel(nv);
+        
+        Map<Processo,List<ResultadoEsperado>> procs = new HashMap<>();
+        List<Processo> allProcs = Processo.getProcessosPorNivel(this.getNivel());
+        List<ResultadoEsperado> res = null;
+        for (Processo p : allProcs) {
+            res = ResultadoEsperado.getAllResultadoEsperadoPorNivelEProcesso(this.getNivel(), p);
+            if(res == null)
+                res = new ArrayList<>();
+            procs.put(p, res);
+        }
+        this.setProcessos(procs);
+    
+        List<AtributoDeProcesso> aps = AtributoDeProcesso.getAtributoDeProcessoPorNivel(this.getNivel());
+        if(aps == null)
+            aps = new ArrayList<>();
+        this.setAp(aps);
+        
+        this.consultaNivel();
     }
 
     public void cadastroProcesso() {
@@ -298,26 +361,32 @@ public class NivelControl {
         MainView.showPanel(MainView.CADASTRA_RE);
     }
     
-    public void consultaProc(String processo){
-        List<ResultadoEsperado> lst = new ArrayList<>();
-        for (Processo p : this.getProcessos().keySet()) {
-            if(p.getCodigo().equals(processo)){
-                lst = this.getProcessos().get(p);
-//                this.setProprietaria(p);
-                break;
-            }
-        }
-        this.getConspv().loadScreen(lst);
-            MainView.showPanel(MainView.CONSULTA_PROC);
+    public void consultaProc(Processo processo, List<ResultadoEsperado> lst){
+        this.getConspv().loadScreen(processo, lst);
+        MainView.showPanel(MainView.CONSULTA_PROC);
+    }
+    
+    public void consultaRe(ResultadoEsperado re){
+        this.getConsrev().loadScreen(re);
+        MainView.showPanel(MainView.CONSULTA_RE);
+    }
+    
+    public void consultaAp(AtributoDeProcesso ap){
+        this.getConsapv().loadScreen(ap);
+        MainView.showPanel(MainView.CONSULTA_AP);
     }
     
     /**
      * Carrega os valores para serem exibidos na tela de cadastro de nivel
      */
     private void cadastroNivel() {
-        
         this.getCnv().loadScreen(this.getProcessos(), this.getAp());
         MainView.showPanel(MainView.CADASTRA_NIVEL);
+    }
+    
+    private void consultaNivel() {
+        this.getConsnv().loadScreen();
+        MainView.showPanel(MainView.CONSULTA_NIVEL);
     }
     
     public boolean checaCadastroNivel(String nivel){

@@ -6,38 +6,25 @@
 package mpsbr.view.cadastraNivel;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
-import mpsbr.model.Processo;
-import mpsbr.model.ResultadoEsperado;
+import mpsbr.model.AtributoDeProcesso;
 import mpsbr.view.MainView;
 
 /**
  *
  * @author gabriela
  */
-public class consultaProcessoView extends javax.swing.JPanel 
-{
+public class consultaAPView extends javax.swing.JPanel {
 
-    private List<String> resultados;
-    private List<ResultadoEsperado> lstRe;
     /**
-     * Creates new form cadastraProcessoView
+     * Creates new form cadastraAPView
      */
-    public consultaProcessoView() {
+    public consultaAPView() {
         initComponents();
     }
 
-    public List<String> getResultados() {
-        return resultados;
-    }
-
-    public void setResultados(List<String> resultados) {
-        this.resultados = resultados;
-    }
- 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,12 +43,7 @@ public class consultaProcessoView extends javax.swing.JPanel
         jScrollPane1 = new javax.swing.JScrollPane();
         descricaoTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        cadastroREList = new javax.swing.JList<>();
-        jLabel6 = new javax.swing.JLabel();
         okButton = new javax.swing.JButton();
-        consultREButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -82,6 +64,11 @@ public class consultaProcessoView extends javax.swing.JPanel
         add(nomeTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 350, -1));
 
         codigoTextField.setEditable(false);
+        codigoTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codigoTextFieldActionPerformed(evt);
+            }
+        });
         add(codigoTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
         descricaoTextArea.setEditable(false);
@@ -92,90 +79,44 @@ public class consultaProcessoView extends javax.swing.JPanel
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel2.setText("Consulta de Processo");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 460, 10));
+        jLabel2.setText("Consulta de Atributo de Processo");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, -1, -1));
 
-        jScrollPane3.setViewportView(cadastroREList);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 130, 90));
-
-        jLabel6.setText("REs Cadastrados:");
-        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
-
-        okButton.setText("OK");
+        okButton.setText("Ok");
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okButtonActionPerformed(evt);
             }
         });
-        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 410, -1, -1));
-
-        consultREButton.setText("Consultar RE");
-        consultREButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultREButtonActionPerformed(evt);
-            }
-        });
-        add(consultREButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
+        add(okButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        // TODO add your handling code here:
         MainView.showPanel(MainView.CONSULTA_NIVEL);
     }//GEN-LAST:event_okButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void codigoTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void consultREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultREButtonActionPerformed
-        String cod = cadastroREList.getSelectedValue();
-        if(cod != null){
-            ResultadoEsperado re = null;
-            for (ResultadoEsperado resultado : lstRe) {
-                if(resultado.getCodigo().equals(cod)){
-                    re = resultado;
-                    break;
-                }
-            }
-            NivelControl.getInstance().consultaRe(re);
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione pelo menos um Resultado Esperado");
-        }
-    }//GEN-LAST:event_consultREButtonActionPerformed
+    }//GEN-LAST:event_codigoTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> cadastroREList;
     private javax.swing.JTextField codigoTextField;
-    private javax.swing.JButton consultREButton;
     private javax.swing.JTextArea descricaoTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField nomeTextField;
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScreen(Processo p, List<ResultadoEsperado> lstRe) 
-    {
-        int i = 0;
-        String[] codsRE = new String[lstRe.size()];
-        for (ResultadoEsperado re : lstRe) {
-            codsRE[i] = re.getCodigo();
-            i++;
-        }
-        this.lstRe = lstRe;
-        this.cadastroREList.setListData(codsRE);
-        this.descricaoTextArea.setText(p.getDescricao());
-        this.codigoTextField.setText(p.getCodigo());
-        this.nomeTextField.setText(p.getNome());
+    public void loadScreen(AtributoDeProcesso ap) {
+        this.descricaoTextArea.setText(ap.getDescricao());
+        this.codigoTextField.setText(ap.getCodigo());
+        this.nomeTextField.setText(ap.getNome());
     }
+
 }

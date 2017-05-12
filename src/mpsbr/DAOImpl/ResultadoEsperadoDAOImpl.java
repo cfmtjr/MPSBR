@@ -191,4 +191,27 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
         }
     }
     
+    @Override
+    public ArrayList<String> getAllNivelValidoParaRE(ResultadoEsperado re) {
+        ArrayList<String> result = new ArrayList<>();
+
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+
+            String selectSQL = "SELECT n.nome FROM nivel n JOIN re_valido_para val ON n.id=val.nivel_id WHERE re_id=?";
+            PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
+            prepStatement.setInt(1, re.getId());
+            ResultSet rs = prepStatement.executeQuery();
+
+            while (rs.next()) {
+                result.add(rs.getString("n.nome"));
+            }
+            conexao.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 }

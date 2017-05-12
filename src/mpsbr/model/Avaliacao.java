@@ -95,22 +95,6 @@ public class Avaliacao {
         this.setNivel(nivel);
     }
 
-    /**
-     * Retorna uma lista com os nomes dos projetos utilizados
-     * @return 
-     */
-    public List<String> getProjectNames() 
-    {
-        List<Projeto> prjAval = this.getProjAvaliados(); 
-        if(prjAval==null)
-            prjAval = MPSBRFacade.getProjectsByNivel(this.getNivel());
-        
-        List<String> lst = new ArrayList<String>();
-        for(Projeto p : prjAval)
-            lst.add(p.getNome());
-        return lst;
-    }
-
     public void updateProjAvaliados(List<String> projetos) 
     {    
         List<Projeto> evalProjects = new ArrayList<Projeto>();

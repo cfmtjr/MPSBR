@@ -10,31 +10,21 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
+import mpsbr.facade.MPSBRFacade;
+import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;
 
 /**
  *
  * @author gabriela
  */
-public class consultaREView extends javax.swing.JPanel {
-
-    private List<String> niveis;
-    
+public class consultaREView extends javax.swing.JPanel {    
     
     /**
      * Creates new form cadastraREview
      */
     public consultaREView() {
-        this.setNiveis(new ArrayList<String>());
         initComponents();
-    }
-
-    public List<String> getNiveis() {
-        return niveis;
-    }
-
-    public void setNiveis(List<String> niveis) {
-        this.niveis = niveis;
     }
 
     /**
@@ -68,7 +58,7 @@ public class consultaREView extends javax.swing.JPanel {
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Cadastro de Nível");
+        jLabel1.setText("Consulta de Nível");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
         jLabel3.setText("Código:");
@@ -173,44 +163,35 @@ public class consultaREView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
-        NivelControl.getInstance().setProprietario(null);
         MainView.showPanel(MainView.CONSULTA_PROC);
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void NivGComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivGComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("G",this.NivGComboBox.isSelected());
     }//GEN-LAST:event_NivGComboBoxActionPerformed
 
     private void NivAComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivAComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("A",this.NivAComboBox.isSelected());
     }//GEN-LAST:event_NivAComboBoxActionPerformed
 
     private void NivBComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivBComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("B",this.NivBComboBox.isSelected());
     }//GEN-LAST:event_NivBComboBoxActionPerformed
 
     private void NivCComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivCComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("C",this.NivCComboBox.isSelected());
     }//GEN-LAST:event_NivCComboBoxActionPerformed
 
     private void NivDComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivDComboBoxActionPerformed
         // TODO add your handling code here:
-        
-        this.changeNivel("D",this.NivDComboBox.isSelected());
     }//GEN-LAST:event_NivDComboBoxActionPerformed
 
     private void NivEComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivEComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("E",this.NivEComboBox.isSelected());
     }//GEN-LAST:event_NivEComboBoxActionPerformed
 
     private void NivFComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NivFComboBoxActionPerformed
         // TODO add your handling code here:
-        this.changeNivel("F",this.NivFComboBox.isSelected());
     }//GEN-LAST:event_NivFComboBoxActionPerformed
 
 
@@ -235,26 +216,19 @@ public class consultaREView extends javax.swing.JPanel {
     private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 
-    public void loadScreen() 
+    public void loadScreen(ResultadoEsperado re) 
     {
-        this.codigoTextField.setText("");
-        this.descricaoTextArea.setText("");
-        this.nomeTextField.setText("");
-        this.NivAComboBox.setSelected(false);
-        this.NivBComboBox.setSelected(false);
-        this.NivCComboBox.setSelected(false);
-        this.NivDComboBox.setSelected(false);
-        this.NivEComboBox.setSelected(false);
-        this.NivFComboBox.setSelected(false);
-        this.NivGComboBox.setSelected(false);
+        List<String> niveis = MPSBRFacade.red.getAllNivelValidoParaRE(re);
+        this.codigoTextField.setText(re.getCodigo());
+        this.descricaoTextArea.setText(re.getDescricao());
+        this.nomeTextField.setText(re.getNome());
+        this.NivAComboBox.setSelected(niveis.contains("A"));
+        this.NivBComboBox.setSelected(niveis.contains("B"));
+        this.NivCComboBox.setSelected(niveis.contains("C"));
+        this.NivDComboBox.setSelected(niveis.contains("D"));
+        this.NivEComboBox.setSelected(niveis.contains("E"));
+        this.NivFComboBox.setSelected(niveis.contains("F"));
+        this.NivGComboBox.setSelected(niveis.contains("G"));
     }
 
-    private void changeNivel(String nivel, boolean isSelected) {
-        List<String> lst = this.getNiveis();
-        if(isSelected&&(!lst.contains(nivel)))
-            lst.add(nivel);
-        else if(lst.contains(nivel))
-            lst.remove(nivel);
-        this.setNiveis(lst);
-    }
 }

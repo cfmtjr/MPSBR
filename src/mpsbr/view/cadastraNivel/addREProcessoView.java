@@ -142,7 +142,7 @@ public class addREProcessoView extends javax.swing.JPanel {
 
     public void loadScreen(Map<Processo, List<ResultadoEsperado>> processos) {
         procs = processos;
-        procComboBox.removeAllItems();
+        this.procComboBox.removeAllItems();
         for(Processo p : procs.keySet()){
             this.procComboBox.addItem(p.getCodigo());
         }        

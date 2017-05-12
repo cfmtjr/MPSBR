@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Kildare
+ * @author gabriela
  */
 public class ServerConfigPanel extends javax.swing.JPanel {
 

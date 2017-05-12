@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mpsbr.DAO.ProjetoDAO;
-import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.ConnectionDB;
 import mpsbr.model.Projeto;
 
@@ -61,7 +60,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next())
-                result.add(new Projeto(rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente")));
+                result.add(new Projeto(rs.getInt("id"), rs.getString("nome"), rs.getString("descricao"), rs.getString("fase_desenv"), rs.getString("cliente"), rs.getString("gerente")));
             conexao.close();
             return result;
         } catch (SQLException ex) {
@@ -96,58 +95,5 @@ public class ProjetoDAOImpl implements ProjetoDAO {
     @Override
     public boolean update(String nome) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Projeto> getAllByAtributoDeProcesso(String atributoProcessoID) {
-        try 
-        {
-            List<Projeto> projects = new ArrayList<Projeto>();
-            ConnectionDB conn = new ConnectionDB();
-            Connection conexao = conn.getConnection();
-            String createSQL = "";
-
-            createSQL = "SELECT DISTINCT * FROM projeto, proj_implementa_ap, ap WHERE projeto.id = proj_implementa_ap.projeto AND proj_implementa_ap.ap_id=?";
-
-            PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
-            prepStatement.setString(1, atributoProcessoID);
-            ResultSet rs = prepStatement.executeQuery();
-            
-            while(rs.next())
-                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv"), rs.getString("projeto.cliente"), rs.getString("projeto.gerente")));
-            conexao.close();
-            return projects;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-    
-    
-    @Override
-    public List<Projeto> getAllByResultadoEsperado(String resultadoEsperadoID) {
-        try 
-        {
-            List<Projeto> projects = new ArrayList<Projeto>();
-            ConnectionDB conn = new ConnectionDB();
-            Connection conexao = conn.getConnection();
-            String createSQL = "";
-
-            createSQL = "SELECT DISTINCT * FROM projeto, proj_implementa_re, re WHERE projeto.id = proj_implementa_re.projeto AND proj_implementa_re.re_id = ?";
-
-            PreparedStatement prepStatement = conexao.prepareStatement(createSQL);
-            prepStatement.setString(1, resultadoEsperadoID);
-            ResultSet rs = prepStatement.executeQuery();
-            
-            while(rs.next())
-                projects.add(new Projeto(rs.getString("projeto.nome"),rs.getString("projeto.descricao"),rs.getString("projeto.fase_desenv"), rs.getString("projeto.cliente"), rs.getString("projeto.gerente")));
-            conexao.close();
-            return projects;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
     }
 }

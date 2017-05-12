@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import mpsbr.control.AvaliacaoControl;
@@ -24,6 +25,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     
     public static final String CADASTRA_PRJ = "cadPrj";
     public static final String BUSCA_PRJ = "srcPrj";
+    public static final String CONSULTA_PRJ = "consPrj";
     public static final String NIVEL_AVL = "nivAvl";
     public static final String DO_AVL = "doAvl";
     public static final String RESULT_AVL = "resultAvl";
@@ -39,6 +41,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     public static final String ADD_RE = "addRE";
     public static final String CONSULTA_PROC = "consProc";
     public static final String CONSULTA_RE = "consRE";
+    public static final String CONSULTA_AP = "consAP";
+    public static final String SEL_CONS_NIVEL = "selConsNivel";
+    public static final String CONSULTA_NIVEL = "consNivel";
     public static final String CONFIG = "configDB";
    
     public static MainView FRAME;
@@ -55,10 +60,8 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     
     public static void showPanel(String panelName){                
         CardLayout cl = (CardLayout)MainView.FRAME.mainPanel.getLayout();
-        cl.show(MainView.FRAME.mainPanel, panelName);
-        
+        cl.show(MainView.FRAME.mainPanel, panelName);        
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,16 +83,16 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         cadProjMenuItem = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         buscProj = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         remProjMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
 
         jMenu5.setText("jMenu5");
@@ -123,9 +126,19 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Alterar Senha");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem3.setText("Remover");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -140,14 +153,6 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         });
         jMenu2.add(cadProjMenuItem);
 
-        jMenuItem5.setText("Alterar");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem5);
-
         buscProj.setText("Consultar");
         buscProj.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,6 +160,14 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             }
         });
         jMenu2.add(buscProj);
+
+        jMenuItem5.setText("Alterar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
 
         remProjMenuItem.setText("Remover");
         remProjMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +190,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         jMenu3.add(jMenuItem8);
 
         jMenuItem9.setText("Consultar Avaliações Anteriores");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -191,6 +209,14 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         });
         jMenu7.add(jMenuItem4);
 
+        jMenuItem12.setText("Consultar");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem12);
+
         jMenuItem11.setText("Alterar");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,9 +224,6 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             }
         });
         jMenu7.add(jMenuItem11);
-
-        jMenuItem12.setText("Consultar");
-        jMenu7.add(jMenuItem12);
 
         jMenuItem13.setText("Remover");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
@@ -218,25 +241,25 @@ public class MainView extends javax.swing.JFrame implements Runnable{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void remProjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remProjMenuItemActionPerformed
-        // TODO add your handling code here:
-        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
-        cl.show(this.mainPanel, "REM PROJ");
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
+//        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
+//        cl.show(this.mainPanel, "REM PROJ");
     }//GEN-LAST:event_remProjMenuItemActionPerformed
 
     private void cadProjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadProjMenuItemActionPerformed
@@ -247,8 +270,9 @@ public class MainView extends javax.swing.JFrame implements Runnable{
 
     private void buscProjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscProjActionPerformed
         // TODO add your handling code here:
-        CardLayout cl = (CardLayout)this.mainPanel.getLayout();
-        cl.show(this.mainPanel, MainView.BUSCA_PRJ);
+        ProjetoControl pc = ProjetoControl.getInstance();
+        pc.getBpv().loadScreen();
+        showPanel(MainView.BUSCA_PRJ);
     }//GEN-LAST:event_buscProjActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
@@ -268,6 +292,23 @@ public class MainView extends javax.swing.JFrame implements Runnable{
         cl.show(this.mainPanel, MainView.CONFIG);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        CardLayout cl = (CardLayout) this.mainPanel.getLayout();
+        cl.show(this.mainPanel, MainView.SEL_CONS_NIVEL);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     public void run() 
     {
         try{
@@ -285,6 +326,7 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(ac.getErv(),MainView.RESULT_AVL);
             mv.mainPanel.add(pc.getBpv(),MainView.BUSCA_PRJ);
             mv.mainPanel.add(pc.getCpv(),MainView.CADASTRA_PRJ);
+            mv.mainPanel.add(pc.getCopv(),MainView.CONSULTA_PRJ);
             //mv.mainPanel.add(nc.getCnxv(),MainView.CADASTRA_XML);
             mv.mainPanel.add(nc.getSnv(),MainView.SEL_NIVEL);
             mv.mainPanel.add(nc.getCnv(),MainView.CADASTRA_NIVEL);
@@ -292,7 +334,11 @@ public class MainView extends javax.swing.JFrame implements Runnable{
             mv.mainPanel.add(nc.getCrev(),MainView.CADASTRA_RE);
             mv.mainPanel.add(nc.getCapv(),MainView.CADASTRA_AP);
             mv.mainPanel.add(nc.getArev(),MainView.ADD_RE);
+            mv.mainPanel.add(nc.getSnconsv(),MainView.SEL_CONS_NIVEL);
+            mv.mainPanel.add(nc.getConsnv(),MainView.CONSULTA_NIVEL);
             mv.mainPanel.add(nc.getConspv(),MainView.CONSULTA_PROC);
+            mv.mainPanel.add(nc.getConsrev(),MainView.CONSULTA_RE);
+            mv.mainPanel.add(nc.getConsapv(),MainView.CONSULTA_AP);
             mv.mainPanel.add(this.getConfigPanel(),MainView.CONFIG);
             mv.setVisible(true);
             mv.setPreferredSize(new Dimension(960,720));

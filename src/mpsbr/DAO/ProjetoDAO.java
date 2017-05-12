@@ -17,8 +17,5 @@ public interface ProjetoDAO {
     public boolean create(Projeto projeto);
     public List<Projeto> getAllProjeto();
     public Projeto findByNome(String nome);
-    public boolean update(String nome);    
-    public List<Projeto> getAllByAtributoDeProcesso(String atributoProcessoID);
-    public List<Projeto> getAllByResultadoEsperado(String resultadoEsperadoID);
-    
+    public boolean update(String nome);        
 }

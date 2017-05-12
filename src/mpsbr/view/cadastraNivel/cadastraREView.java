@@ -174,7 +174,6 @@ public class cadastraREView extends javax.swing.JPanel {
         if(nc.getProprietario() != null){
             nc.setProprietario(null);
             MainView.showPanel(MainView.ADD_RE);
-
         } else {
             MainView.showPanel(MainView.CADASTRA_PROC);
         }
