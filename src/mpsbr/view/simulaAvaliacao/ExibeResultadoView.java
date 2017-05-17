@@ -5,17 +5,10 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Vector;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import mpsbr.control.AvaliacaoControl;
-import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Processo;
-import mpsbr.model.Projeto;
-import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;
 
 /**
@@ -84,6 +77,11 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         add(nivelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, -1, -1));
 
         salvaAvalButton.setText("Salvar Avaliação");
@@ -100,6 +98,10 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         ac.saveAval();
         MainView.showPanel(MainView.NIVEL_AVL);
     }//GEN-LAST:event_salvaAvalButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        MainView.showPanel(MainView.NIVEL_AVL);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

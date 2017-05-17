@@ -5,10 +5,6 @@
  */
 package mpsbr.view;
 
-import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import mpsbr.control.NivelControl;
 import mpsbr.control.ProjetoControl;
 import mpsbr.model.Projeto;
 

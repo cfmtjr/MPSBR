@@ -5,8 +5,6 @@
  */
 package mpsbr;
 
-import java.awt.Dimension;
-import javax.swing.JFrame;
 import mpsbr.view.MainView;
 
 /**

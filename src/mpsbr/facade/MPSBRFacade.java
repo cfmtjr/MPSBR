@@ -5,8 +5,6 @@
  */
 package mpsbr.facade;
 
-import java.util.ArrayList;
-import java.util.List;
 import mpsbr.DAO.AtributoDeProcessoDAO;
 import mpsbr.DAO.NivelDAO;
 import mpsbr.DAO.ProcessoDAO;
@@ -17,10 +15,6 @@ import mpsbr.DAOImpl.NivelDAOImpl;
 import mpsbr.DAOImpl.ProcessoDAOImpl;
 import mpsbr.DAOImpl.ProjetoDAOImpl;
 import mpsbr.DAOImpl.ResultadoEsperadoDAOImpl;
-import mpsbr.model.AtributoDeProcesso;
-import mpsbr.model.Nivel;
-import mpsbr.model.Projeto;
-import mpsbr.model.ResultadoEsperado;
 
 /**
  *

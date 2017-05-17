@@ -5,11 +5,7 @@
  */
 package mpsbr.view.cadastraNivel;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import mpsbr.control.NivelControl;
 import mpsbr.facade.MPSBRFacade;
 import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;

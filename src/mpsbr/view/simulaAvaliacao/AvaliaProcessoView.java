@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.Vector;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import mpsbr.control.AvaliacaoControl;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Implementa;
@@ -150,7 +150,7 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     }//GEN-LAST:event_proxProcButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

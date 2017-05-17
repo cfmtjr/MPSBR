@@ -7,8 +7,6 @@ package mpsbr.view.cadastraNivel;
 
 import java.util.List;
 import java.util.Map;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Processo;

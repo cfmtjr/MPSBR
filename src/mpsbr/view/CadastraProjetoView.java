@@ -5,10 +5,8 @@
  */
 package mpsbr.view;
 
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import mpsbr.control.NivelControl;
 import mpsbr.control.ProjetoControl;
 import mpsbr.model.Projeto;
 
@@ -48,7 +46,6 @@ public class CadastraProjetoView extends javax.swing.JPanel {
         cadastrarbutton = new javax.swing.JButton();
         faseLabel = new javax.swing.JLabel();
         faseComboBox = new javax.swing.JComboBox<>();
-        removerButton = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -104,9 +101,6 @@ public class CadastraProjetoView extends javax.swing.JPanel {
             }
         });
         add(faseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 440, -1));
-
-        removerButton.setText("Remover");
-        add(removerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 470, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
@@ -149,7 +143,6 @@ public class CadastraProjetoView extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JTextField nomeTextField;
-    private javax.swing.JButton removerButton;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 

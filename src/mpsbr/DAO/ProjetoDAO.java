@@ -6,7 +6,6 @@
 package mpsbr.DAO;
 
 import java.util.List;
-import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Projeto;
 
 /**

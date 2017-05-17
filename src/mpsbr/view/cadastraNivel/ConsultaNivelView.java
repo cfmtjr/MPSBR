@@ -6,21 +6,9 @@
 package mpsbr.view.cadastraNivel;
 
 import mpsbr.view.*;
-import java.util.List;
-import java.util.Map;
-import mpsbr.DAO.ProcessoDAO;
-import mpsbr.DAO.ProjetoDAO;
-import mpsbr.DAO.ResultadoEsperadoDAO;
-import mpsbr.DAOImpl.ProcessoDAOImpl;
-import mpsbr.DAOImpl.ProjetoDAOImpl;
 import mpsbr.control.NivelControl;
-import mpsbr.control.ProjetoControl;
-import mpsbr.facade.MPSBRFacade;
 import mpsbr.model.AtributoDeProcesso;
-import mpsbr.model.Nivel;
 import mpsbr.model.Processo;
-import mpsbr.model.Projeto;
-import mpsbr.model.ResultadoEsperado;
 
 /**
  *

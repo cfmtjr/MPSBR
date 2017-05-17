@@ -9,7 +9,6 @@ import mpsbr.model.Projeto;
 import mpsbr.view.BuscaProjetoView;
 import mpsbr.view.CadastraProjetoView;
 import mpsbr.view.ConsultaProjetoView;
-import mpsbr.view.MainView;
 
 /**
  *

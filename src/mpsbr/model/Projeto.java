@@ -98,7 +98,7 @@ public class Projeto {
         ProjetoDAO pd = new ProjetoDAOImpl();
         Map<String,String> names = new HashMap<String,String>();
         for(Projeto p  : pd.getAllProjeto()){
-            names.put(p.getNome(), p.getDescricao());
+            names.put(p.getNome(), p.getFaseDesenv());
         }
         return names;
     }
