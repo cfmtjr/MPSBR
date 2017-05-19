@@ -17,6 +17,6 @@ public interface ProcessoDAO {
     public boolean create(Processo processo);
     public ArrayList<Processo> getAllProcesso();
     public ArrayList<Processo> getAllProcessoPorNivel(Nivel nivel);
-    public Processo findByNome(String nome);
+    public Processo findByCodigo(String codigo);
     public boolean update(String nome);    
 }

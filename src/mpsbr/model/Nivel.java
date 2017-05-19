@@ -5,6 +5,9 @@
  */
 package mpsbr.model;
 
+import mpsbr.DAO.NivelDAO;
+import mpsbr.DAOImpl.NivelDAOImpl;
+
 /**
  *
  * @author gabriela
@@ -32,6 +35,16 @@ public class Nivel {
 
     public void setNivelAnterior(Nivel nivelAnterior) {
         this.nivelAnterior = nivelAnterior;
+    }
+    
+    public static Nivel getNivelFromDB(String nivel){
+        NivelDAO nv = new NivelDAOImpl();
+        return nv.findByName(nivel);
+    }
+    
+    public static boolean cadastraAllNivel(){
+        NivelDAO nv = new NivelDAOImpl();
+        return nv.createAllNivel();
     }
     
 }

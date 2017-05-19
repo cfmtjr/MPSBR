@@ -25,11 +25,11 @@ public class ConnectionDB {
     
     public ConnectionDB(){
         
-//        try {
-//            this.loadValues();
-//        } catch (IOException ex) {
-//            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            this.loadValues();
+        } catch (IOException ex) {
+            Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     private static String driverName = "com.mysql.jdbc.Driver";

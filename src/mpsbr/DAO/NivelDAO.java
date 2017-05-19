@@ -14,6 +14,7 @@ import mpsbr.model.Nivel;
  */
 public interface NivelDAO {
     public boolean create(Nivel nivel);
+    public boolean createAllNivel();
     public ArrayList<Nivel> getAllNivel();
     public Nivel findByName(String name);
     public boolean update(Nivel nivel);

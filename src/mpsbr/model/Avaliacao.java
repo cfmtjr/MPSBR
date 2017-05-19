@@ -95,22 +95,6 @@ public class Avaliacao {
         this.setNivel(nivel);
     }
 
-    /**
-     * Retorna uma lista com os nomes dos projetos utilizados
-     * @return 
-     */
-    public List<String> getProjectNames() 
-    {
-        List<Projeto> prjAval = this.getProjAvaliados(); 
-        if(prjAval==null)
-            prjAval = MPSBRFacade.getProjectsByNivel(this.getNivel());
-        
-        List<String> lst = new ArrayList<String>();
-        for(Projeto p : prjAval)
-            lst.add(p.getNome());
-        return lst;
-    }
-
     public void updateProjAvaliados(List<String> projetos) 
     {    
         List<Projeto> evalProjects = new ArrayList<Projeto>();
@@ -153,23 +137,23 @@ public class Avaliacao {
         for (Processo p : grausImplREProcI.keySet()) {
             ArrayList<Implementa<ResultadoEsperado>> implRE = (ArrayList<Implementa<ResultadoEsperado>>) grausImplREProcI.get(p);
             for (Implementa<ResultadoEsperado> implementa : implRE) {
-                grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+                grausImplREUOProcI.put(implementa.getCaracteristicaAvaliada().getCodigo(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             ArrayList<Implementa<AtributoDeProcesso>> implAP = (ArrayList<Implementa<AtributoDeProcesso>>) grausImplAPProcI.get(p);
             for (Implementa<AtributoDeProcesso> implementa : implAP) {
-                grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getNome(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
+                grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getCodigo(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
             if(validaApProc(grausImplAPUOProcI)){
                 if(validaReProc(grausImplREUOProcI)){
                     p.setStatus("SATISFEITO");
                 } else {
-                    p.setStatus("N_SATISFEITO");
+                    p.setStatus("NAO SATISFEITO");
                 }
             } else {
-                p.setStatus("N_SATISFEITO");
-                this.setStatus("N_PASSOU");
+                p.setStatus("NAO SATISFEITO");
+                this.setStatus("NAO PASSOU");
             }
-        } if(!this.getStatus().equals("N_PASSOU")){ //!= n passou
+        } if(!this.getStatus().equals("NAO PASSOU")){ //!= n passou
             this.setStatus("PASSOU");
         }            
     }
@@ -305,8 +289,8 @@ public class Avaliacao {
 
     
     //Valida uma AP do processo i, de acordo com o nível escolhido (tabela 10)
-    public boolean validaAp(Map<String, String> grausImplAP, String nomeAp, String valPossiveis) {
+    public boolean validaAp(Map<String, String> grausImplAP, String codAp, String valPossiveis) {
         List<String> valsList = Arrays.asList(valPossiveis.split(";"));
-        return valsList.contains(grausImplAP.get(nomeAp));
+        return valsList.contains(grausImplAP.get(codAp));
     }
 }

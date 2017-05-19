@@ -5,7 +5,7 @@
  */
 package mpsbr.control;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import mpsbr.DAOImpl.AvaliacaoDAOImpl;
@@ -39,10 +39,13 @@ public class AvaliacaoControl {
     //Referencia ao objeto da avaliacao
     private Avaliacao currentAval;
     private List<Processo> listProcessos;
+    private List<Projeto> projsAvaliados;
     private List<AtributoDeProcesso> listAtributoDeProcessos;
     private Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado;
     private Map<Processo, List<Implementa<ResultadoEsperado>>> mapImplProjRE; 
     private Map<Processo, List<Implementa<AtributoDeProcesso>>> mapImplProjAP; 
+    
+    private int currentProcesso = 0;
     
     private AvaliacaoControl()
     {
@@ -138,9 +141,17 @@ public class AvaliacaoControl {
     public void setMapImplProjRE(Map<Processo, List<Implementa<ResultadoEsperado>>> mapImplProjRE) {
         this.mapImplProjRE = mapImplProjRE;
     }
+
+    public List<Projeto> getProjsAvaliados() {
+        return projsAvaliados;
+    }
+
+    public void setProjsAvaliados(List<Projeto> projsAvaliados) {
+        this.projsAvaliados = projsAvaliados;
+    }
     
     public void preAval(String nivel) {
-        Avaliacao aval = new Avaliacao(nivel,true);
+        Avaliacao aval = new Avaliacao(nivel.split(" ")[1],true);
         this.setCurrentAval(aval);
         Map<String,String> prj;
         //TODO descomentar a linha abaixo e comentar a seguinte quando estiver concluido
@@ -148,25 +159,42 @@ public class AvaliacaoControl {
         this.getEpv().loadScr(prj);
         MainView.showPanel(MainView.SEL_PRJ);
     }
-    
+        
     /**
      * Inicia o processo de avaliacao com os projetos escolhidos pelo usuario
      * @param projetos 
      */
-    public void startAval(Map<String,String> projetos)
+    public void startAval(List<String> projetos)
     {
         //Pegar os processos do nivel escolhido pra baixo
+        this.setProjsAvaliados(Projeto.getProjsAvaliados(projetos));
         this.setListProcessos(this.getCurrentAval().listProcessos());
         this.setListAtributoDeProcessos(this.getCurrentAval().listAtributosDeProcesso());
         this.setMapResultadoEsperado(this.getCurrentAval().mapResultadoEsperado(this.getListProcessos()));
-        MainView.showPanel(MainView.DO_AVL);   
+        this.setMapImplProjRE(new HashMap<>());
+        this.setMapImplProjAP(new HashMap<>());
+        this.currentProcesso = 0;
+        nextProcessAval();
+    }
+
+    public void nextProcessAval(){
+        if(currentProcesso < listProcessos.size()){
+            this.getApv().loadScreen(projsAvaliados, listProcessos.get(currentProcesso));
+            currentProcesso++;
+            MainView.showPanel(MainView.DO_AVL);
+        } else { //avalia, envia pra tela o resultado e, caso queira salvar o resultado, chamar saveAval
+            currentAval.avalia();
+            this.getErv().loadScreen();
+            MainView.showPanel(MainView.RESULT_AVL); //finaliza
+        }
     }
     
     public void saveAval(){
         AvaliacaoDAOImpl av = new AvaliacaoDAOImpl();
-        av.update(currentAval);
+        av.create(currentAval);
         av.saveProcessoSatisfazAvaliacao(currentAval, listProcessos);
         av.saveResultAvaliacaoRE(currentAval, mapImplProjRE);
         av.saveResultAvaliacaoAP(currentAval, mapImplProjAP);
     }
 }
+    

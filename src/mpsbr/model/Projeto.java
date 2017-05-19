@@ -25,6 +25,8 @@ public class Projeto {
     private int id;
     private String nome;
     private String descricao;
+    private String cliente;
+    private String gerente;
     private String faseDesenv;
 
     public String getNome() {
@@ -50,13 +52,40 @@ public class Projeto {
     public void setFaseDesenv(String faseDesenv) {
         this.faseDesenv = faseDesenv;
     }
+
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getGerente() {
+        return gerente;
+    }
+
+    public void setGerente(String gerente) {
+        this.gerente = gerente;
+    }    
     
-    public Projeto(String nome, String descricao, String faseDesenv){
+    public Projeto(int id, String nome, String descricao, String faseDesenv, String cliente, String gerente){
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.faseDesenv = faseDesenv;
+        this.cliente = cliente;
+        this.gerente = gerente;
     }
 
+    public Projeto(String nome, String descricao, String faseDesenv, String cliente, String gerente) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.faseDesenv = faseDesenv;
+        this.cliente = cliente;
+        this.gerente = gerente;
+    }
+    
     public int getId() {
         return id;
     }
@@ -69,9 +98,22 @@ public class Projeto {
         ProjetoDAO pd = new ProjetoDAOImpl();
         Map<String,String> names = new HashMap<String,String>();
         for(Projeto p  : pd.getAllProjeto()){
-            names.put(p.getNome(), p.getDescricao());
+            names.put(p.getNome(), p.getFaseDesenv());
         }
         return names;
     }
     
+    public static boolean create(Projeto proj) {
+        ProjetoDAO pd = new ProjetoDAOImpl();
+        return pd.create(proj);
+    }
+    
+    public static List<Projeto> getProjsAvaliados(List<String> nomesProjs){
+        ProjetoDAO pd = new ProjetoDAOImpl();
+        List<Projeto> result = new ArrayList<>();
+        for (String nome : nomesProjs) {
+            result.add(pd.findByNome(nome));
+        }
+        return result;
+    }
 }

@@ -50,6 +50,36 @@ public class NivelDAOImpl implements NivelDAO{
     }
 
     @Override
+    public boolean createAllNivel(){
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+            String createSQL = "";
+            String[] niveis = new String[] {"G","F","E","D","C","B","A"};
+            PreparedStatement prepStatement = null;
+            for(int i = 0; i < niveis.length; i++){
+                if(i == 0){
+                    createSQL = "insert into nivel(nome, nivel_anterior) values (?, ?)";
+                    prepStatement = conexao.prepareStatement(createSQL);
+                    prepStatement.setString(1, niveis[i]);
+                    prepStatement.setNull(2, java.sql.Types.VARCHAR);
+                } else {
+                    createSQL = "insert into nivel(nome, nivel_anterior) values (?, (SELECT id FROM nivel as n WHERE n.nome= ?))";
+                    prepStatement = conexao.prepareStatement(createSQL);
+                    prepStatement.setString(1, niveis[i]);
+                    prepStatement.setString(2, niveis[i-1]);
+                }
+                prepStatement.executeUpdate();
+            }
+            conexao.close();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }        
+    }
+    
+    @Override
     public ArrayList<Nivel> getAllNivel() {
         ArrayList<Nivel> result = new ArrayList<>();
         Nivel nivelAnterior = null;
@@ -58,7 +88,7 @@ public class NivelDAOImpl implements NivelDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT * FROM nivel order by nome desc";
+            String selectSQL = "SELECT * FROM nivel ORDER BY nome DESC";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
             ResultSet rs = prepStatement.executeQuery();
             

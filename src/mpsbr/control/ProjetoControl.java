@@ -5,8 +5,10 @@
  */
 package mpsbr.control;
 
+import mpsbr.model.Projeto;
 import mpsbr.view.BuscaProjetoView;
 import mpsbr.view.CadastraProjetoView;
+import mpsbr.view.ConsultaProjetoView;
 
 /**
  *
@@ -18,11 +20,13 @@ public class ProjetoControl {
     
     CadastraProjetoView cpv;
     BuscaProjetoView bpv;
+    ConsultaProjetoView copv;
 
     private ProjetoControl()
     {
         this.setBpv(new BuscaProjetoView());
         this.setCpv(new CadastraProjetoView());
+        this.setCopv(new ConsultaProjetoView());
     }
     
     /**
@@ -30,12 +34,10 @@ public class ProjetoControl {
      */
     public static ProjetoControl getInstance()
     {
-        if(ProjetoControl.pc == null)
-            return new ProjetoControl();
-        else
-            return ProjetoControl.pc;
+        if (pc == null)
+            pc = new ProjetoControl();
+        return pc;
     }
-    
     
     public CadastraProjetoView getCpv() {
         return cpv;
@@ -52,7 +54,20 @@ public class ProjetoControl {
     public void setBpv(BuscaProjetoView bpv) {
         this.bpv = bpv;
     }
+
+    public ConsultaProjetoView getCopv() {
+        return copv;
+    }
+
+    public void setCopv(ConsultaProjetoView copv) {
+        this.copv = copv;
+    }
     
-    
+    public boolean cadastraProj(Projeto proj){
+        boolean b;
+        b = Projeto.create(proj);
+        this.getCpv().loadScreen();
+        return b;
+    }
     
 }
