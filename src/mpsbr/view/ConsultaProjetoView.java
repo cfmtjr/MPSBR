@@ -83,13 +83,13 @@ public class ConsultaProjetoView extends javax.swing.JPanel {
         gerenteTextField.setEditable(false);
         add(gerenteTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, 530, -1));
 
-        cadastrarbutton.setText("Ok");
+        cadastrarbutton.setText("OK");
         cadastrarbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cadastrarbuttonActionPerformed(evt);
             }
         });
-        add(cadastrarbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 470, -1, -1));
+        add(cadastrarbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 470, -1, -1));
 
         faseLabel.setText("Fase de Desenvolvimento:");
         add(faseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));

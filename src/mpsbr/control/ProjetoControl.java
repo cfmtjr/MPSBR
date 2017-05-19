@@ -63,9 +63,11 @@ public class ProjetoControl {
         this.copv = copv;
     }
     
-    public void cadastraProj(Projeto proj){
-        Projeto.create(proj);
+    public boolean cadastraProj(Projeto proj){
+        boolean b;
+        b = Projeto.create(proj);
         this.getCpv().loadScreen();
+        return b;
     }
     
 }
