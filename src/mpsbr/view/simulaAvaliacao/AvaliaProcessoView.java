@@ -113,40 +113,45 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void proxProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxProcButtonActionPerformed
-        AvaliacaoControl ac = AvaliacaoControl.getInstance();
-        Map<Processo, List<Implementa<ResultadoEsperado>>> mapGrausRE = ac.getMapImplProjRE();
-        Map<Processo, List<Implementa<AtributoDeProcesso>>> mapGrausAP = ac.getMapImplProjAP();
-        
-        mapGrausRE.put(currProc, new ArrayList<>());
-        List<Implementa<ResultadoEsperado>> lstRe = mapGrausRE.get(currProc);
-        
-        DefaultTableModel reModel = (DefaultTableModel) ReTable.getModel();
-        DefaultTableModel apModel = (DefaultTableModel) ApTable.getModel();
-        
-        List<Projeto> projsAvaliados = ac.getProjsAvaliados();
-        Map<Projeto, String> grauPorProj;
-        
-        ResultadoEsperado re = null;
-        for(int i = 0; i < ReTable.getRowCount(); i++){
-            re = this.listRe[i];
-            grauPorProj = new HashMap<>();
-            for(int j = 1; j <= projsAvaliados.size(); j++)
-                grauPorProj.put(projsAvaliados.get(j-1),(String) reModel.getValueAt(i, j));
-            lstRe.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, re));
-        }
-            
-        mapGrausAP.put(currProc, new ArrayList<>());
-        List<Implementa<AtributoDeProcesso>> lstAp = mapGrausAP.get(currProc);
+        if(!hasAnyEmptyValue())
+        {
+            AvaliacaoControl ac = AvaliacaoControl.getInstance();
+            Map<Processo, List<Implementa<ResultadoEsperado>>> mapGrausRE = ac.getMapImplProjRE();
+            Map<Processo, List<Implementa<AtributoDeProcesso>>> mapGrausAP = ac.getMapImplProjAP();
 
-        AtributoDeProcesso ap = null;
-        for (int i = 0; i < ApTable.getRowCount(); i++) {
-            ap = this.listAp[i];
-            grauPorProj = new HashMap<>();
-            for (int j = 1; j <= projsAvaliados.size(); j++) 
-                grauPorProj.put(projsAvaliados.get(j-1), (String) apModel.getValueAt(i, j));
-            lstAp.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, ap));
+            mapGrausRE.put(currProc, new ArrayList<>());
+            List<Implementa<ResultadoEsperado>> lstRe = mapGrausRE.get(currProc);
+
+            DefaultTableModel reModel = (DefaultTableModel) ReTable.getModel();
+            DefaultTableModel apModel = (DefaultTableModel) ApTable.getModel();
+
+            List<Projeto> projsAvaliados = ac.getProjsAvaliados();
+            Map<Projeto, String> grauPorProj;
+
+            ResultadoEsperado re = null;
+            for(int i = 0; i < ReTable.getRowCount(); i++){
+                re = this.listRe[i];
+                grauPorProj = new HashMap<>();
+                for(int j = 1; j <= projsAvaliados.size(); j++)
+                    grauPorProj.put(projsAvaliados.get(j-1),(String) reModel.getValueAt(i, j));
+                lstRe.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, re));
+            }
+
+            mapGrausAP.put(currProc, new ArrayList<>());
+            List<Implementa<AtributoDeProcesso>> lstAp = mapGrausAP.get(currProc);
+
+            AtributoDeProcesso ap = null;
+            for (int i = 0; i < ApTable.getRowCount(); i++) {
+                ap = this.listAp[i];
+                grauPorProj = new HashMap<>();
+                for (int j = 1; j <= projsAvaliados.size(); j++) 
+                    grauPorProj.put(projsAvaliados.get(j-1), (String) apModel.getValueAt(i, j));
+                lstAp.add(new Implementa<>(ac.getCurrentAval().getDataAval(), grauPorProj, ap));
+            }
+            ac.nextProcessAval();
         }
-        ac.nextProcessAval();
+        else
+            JOptionPane.showMessageDialog(this, "É necessário preencher todos os campos antes de prosseguir");
     }//GEN-LAST:event_proxProcButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -215,6 +220,27 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         for (int i = 0; i < this.listAp.length; i++) {
             apModel.addRow(new String[] {this.listAp[i].getCodigo()});
         }
+    }
+    
+    private boolean hasAnyEmptyValue(){
+        DefaultTableModel reModel = (DefaultTableModel) ReTable.getModel();
+        DefaultTableModel apModel = (DefaultTableModel) ApTable.getModel();
+
+        List<Projeto> projsAvaliados = AvaliacaoControl.getInstance().getProjsAvaliados();
+        for (int i = 0; i < ReTable.getRowCount(); i++) {
+            for (int j = 1; j <= projsAvaliados.size(); j++) {
+                if(((String) reModel.getValueAt(i, j)) == null)
+                    return true;
+            }
+        }
+
+        for (int i = 0; i < ApTable.getRowCount(); i++) {
+            for (int j = 1; j <= projsAvaliados.size(); j++) {
+                if (((String) apModel.getValueAt(i, j)) == null)
+                    return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import mpsbr.DAO.ProcessoDAO;
 import mpsbr.facade.MPSBRFacade;
 import mpsbr.model.AtributoDeProcesso;
@@ -56,6 +57,8 @@ public class ProcessoDAOImpl implements ProcessoDAO{
             conexao.close();
             return true;
         } catch (SQLException ex) {
+            if(ex.getErrorCode() == 1062)
+                JOptionPane.showMessageDialog(null, "Este Processo já foi cadastrado previamente");
             Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

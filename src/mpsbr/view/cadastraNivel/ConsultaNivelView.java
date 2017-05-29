@@ -5,6 +5,7 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import javax.swing.JOptionPane;
 import mpsbr.view.*;
 import mpsbr.control.NivelControl;
 import mpsbr.model.AtributoDeProcesso;
@@ -114,15 +115,21 @@ public class ConsultaNivelView extends javax.swing.JPanel {
 
     private void buscarProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarProcButtonActionPerformed
         String cod = (String) processoComboBox.getSelectedItem();
-        Processo p = null;
-        NivelControl nc = NivelControl.getInstance();
-        for (Processo processo : nc.getProcessos().keySet()) {
-            if(processo.getCodigo().equals(cod)){
-                p = processo;
-                break;
+        if(cod != null)
+        {
+            Processo p = null;
+            NivelControl nc = NivelControl.getInstance();
+            for (Processo processo : nc.getProcessos().keySet()) {
+                if(processo.getCodigo().equals(cod)){
+                    p = processo;
+                    break;
+                }
             }
+            nc.consultaProc(p, nc.getProcessos().get(p));
         }
-        nc.consultaProc(p, nc.getProcessos().get(p));
+        else
+            JOptionPane.showMessageDialog(this, "Selecione um Processo para continuar");
+
     }//GEN-LAST:event_buscarProcButtonActionPerformed
 
     private void apComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_apComboBoxItemStateChanged
@@ -135,15 +142,20 @@ public class ConsultaNivelView extends javax.swing.JPanel {
 
     private void buscarAPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarAPButtonActionPerformed
         String cod = (String) apComboBox.getSelectedItem();
-        AtributoDeProcesso ap = null;
-        NivelControl nc = NivelControl.getInstance();
-        for (AtributoDeProcesso atr : nc.getAp()) {
-            if (atr.getCodigo().equals(cod)) {
-                ap = atr;
-                break;
+        if(cod != null)
+        {
+            AtributoDeProcesso ap = null;
+            NivelControl nc = NivelControl.getInstance();
+            for (AtributoDeProcesso atr : nc.getAp()) {
+                if (atr.getCodigo().equals(cod)) {
+                    ap = atr;
+                    break;
+                }
             }
+            nc.consultaAp(ap);
         }
-        nc.consultaAp(ap);
+        else
+            JOptionPane.showMessageDialog(this, "Selecione um Atributo de Processo para continuar");
     }//GEN-LAST:event_buscarAPButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed

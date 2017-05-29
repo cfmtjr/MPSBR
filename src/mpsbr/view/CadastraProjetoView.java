@@ -104,7 +104,7 @@ public class CadastraProjetoView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        // TODO add your handling code here:
+        loadScreen();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void faseComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faseComboBoxActionPerformed
@@ -124,12 +124,18 @@ public class CadastraProjetoView extends javax.swing.JPanel {
         else
         {
             boolean isOK;
-            isOK = ProjetoControl.getInstance().cadastraProj(new Projeto(nome, desc, faseDesenv, cliente, gerente));
-            if(isOK)
+            ProjetoControl pc = ProjetoControl.getInstance();
+            if(!pc.verificaSeExiste(nome))
             {
-                JOptionPane.showMessageDialog(new JFrame(),"Projeto cadastrado com sucesso");            
-                loadScreen();
+                isOK = ProjetoControl.getInstance().cadastraProj(new Projeto(nome, desc, faseDesenv, cliente, gerente));
+                if(isOK)
+                {
+                    JOptionPane.showMessageDialog(new JFrame(),"Projeto cadastrado com sucesso");            
+                    loadScreen();
+                }
             }
+            else
+                JOptionPane.showMessageDialog(new JFrame(), "Projeto já previamente cadastrado");
         }
     }//GEN-LAST:event_cadastrarbuttonActionPerformed
 

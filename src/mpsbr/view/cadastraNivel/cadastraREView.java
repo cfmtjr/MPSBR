@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
+import mpsbr.model.Nivel;
 import mpsbr.view.MainView;
 
 /**
@@ -195,6 +196,7 @@ public class cadastraREView extends javax.swing.JPanel {
         }
         else
         {
+               
             NivelControl.getInstance().cadastroRE(codigo,nome,desc,this.getNiveis());
         }
         
@@ -260,6 +262,36 @@ public class cadastraREView extends javax.swing.JPanel {
 
     public void loadScreen() 
     {
+        NivelControl nc = NivelControl.getInstance();
+        
+        this.NivAComboBox.setEnabled(true);
+        this.NivBComboBox.setEnabled(true);
+        this.NivCComboBox.setEnabled(true);
+        this.NivDComboBox.setEnabled(true);
+        this.NivEComboBox.setEnabled(true);
+        this.NivFComboBox.setEnabled(true);
+        this.NivGComboBox.setEnabled(true);
+
+        Nivel n = nc.getNivel();
+        Nivel anterior = n.getNivelAnterior();
+        if(anterior != null)
+        {
+            switch(anterior.getNome())
+            {
+                case "B":
+                    this.NivBComboBox.setEnabled(false);
+                case "C":
+                    this.NivCComboBox.setEnabled(false);
+                case "D":
+                    this.NivDComboBox.setEnabled(false);
+                case "E":
+                    this.NivEComboBox.setEnabled(false);
+                case "F":
+                    this.NivFComboBox.setEnabled(false);
+                case "G":
+                    this.NivGComboBox.setEnabled(false);
+            }
+        }
         this.codigoTextField.setText("");
         this.descricaoTextArea.setText("");
         this.nomeTextField.setText("");

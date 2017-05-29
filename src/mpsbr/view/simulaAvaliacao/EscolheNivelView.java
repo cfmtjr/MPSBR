@@ -5,7 +5,9 @@
  */
 package mpsbr.view.simulaAvaliacao;
 
+import javax.swing.JOptionPane;
 import mpsbr.control.AvaliacaoControl;
+import mpsbr.model.Nivel;
 
 /**
  *
@@ -57,7 +59,11 @@ public class EscolheNivelView extends javax.swing.JPanel {
 
     private void nivelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nivelButtonActionPerformed
         // TODO add your handling code here:
-        AvaliacaoControl.getInstance().preAval((String) nivelComboBox.getSelectedItem());
+        String nivel = (String) nivelComboBox.getSelectedItem();
+        if(Nivel.getNivelFromDB(nivel.split(" ")[1]) != null)
+            AvaliacaoControl.getInstance().preAval(nivel);
+        else
+            JOptionPane.showMessageDialog(this, "Nível não cadastrado");
     }//GEN-LAST:event_nivelButtonActionPerformed
 
 

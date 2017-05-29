@@ -6,6 +6,7 @@
 package mpsbr.view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import mpsbr.DAO.ProjetoDAO;
 import mpsbr.DAOImpl.ProjetoDAOImpl;
 import mpsbr.control.ProjetoControl;
@@ -83,8 +84,14 @@ public class BuscaProjetoView extends javax.swing.JPanel {
 
     private void buscarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarButtonActionPerformed
         ProjetoControl pc = ProjetoControl.getInstance();
-        pc.getCopv().loadScreen(projetos.get(projetoComboBox.getSelectedIndex()));
-        MainView.showPanel(MainView.CONSULTA_PRJ);
+        int projeto = projetoComboBox.getSelectedIndex();
+        if(projeto > -1)
+        {
+            pc.getCopv().loadScreen(projetos.get(projeto));
+            MainView.showPanel(MainView.CONSULTA_PRJ);
+        }
+        else
+            JOptionPane.showMessageDialog(this, "Selecione um Projeto para continuar");
     }//GEN-LAST:event_buscarButtonActionPerformed
 
 

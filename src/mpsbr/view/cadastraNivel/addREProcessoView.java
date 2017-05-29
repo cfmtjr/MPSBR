@@ -7,6 +7,7 @@ package mpsbr.view.cadastraNivel;
 
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
 import mpsbr.model.Processo;
 import mpsbr.model.ResultadoEsperado;
@@ -115,7 +116,10 @@ public class addREProcessoView extends javax.swing.JPanel {
     private void novoREButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoREButtonActionPerformed
         // TODO add your handling code here:
         String processo = (String) this.procComboBox.getSelectedItem();
-        NivelControl.getInstance().addREProcess(processo);
+        if(processo != null)
+            NivelControl.getInstance().addREProcess(processo);
+        else
+            JOptionPane.showMessageDialog(this, "Selecione um Processo para continuar");
     }//GEN-LAST:event_novoREButtonActionPerformed
 
     private void oklButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oklButtonActionPerformed

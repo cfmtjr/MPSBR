@@ -70,4 +70,10 @@ public class ProjetoControl {
         return b;
     }
     
+    public boolean verificaSeExiste(String nome){
+        if(Projeto.getByNome(nome) != null)
+            return true;
+        return false;
+    }
+    
 }

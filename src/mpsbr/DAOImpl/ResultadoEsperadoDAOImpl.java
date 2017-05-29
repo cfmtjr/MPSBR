@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import mpsbr.DAO.ResultadoEsperadoDAO;
 import mpsbr.model.ConnectionDB;
 import mpsbr.model.Nivel;
@@ -52,6 +53,8 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             conexao.close();
             return true;
         } catch (SQLException ex) {
+            if (ex.getErrorCode() == 1062)
+                JOptionPane.showMessageDialog(null, "Este Resultado Esperado já foi cadastrado previamente");
             Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

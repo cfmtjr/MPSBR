@@ -116,4 +116,9 @@ public class Projeto {
         }
         return result;
     }
+    
+    public static Projeto getByNome(String nome){
+        ProjetoDAO pd = new ProjetoDAOImpl();
+        return pd.findByNome(nome);
+    }
 }

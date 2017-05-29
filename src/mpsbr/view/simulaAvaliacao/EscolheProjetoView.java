@@ -156,45 +156,50 @@ public class EscolheProjetoView extends javax.swing.JPanel
     private void addProjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addProjButtonActionPerformed
         // TODO add your handling code here:
         String nomePrj = (String) this.projetoComboBox.getSelectedItem();
-        DefaultTableModel model = (DefaultTableModel) this.projetoTable.getModel();
-        int numRows = model.getRowCount();
-        boolean isAdded = false;
-        if(numRows < this.numProjs){
-            for(int i=0;i<numRows;i++)
-            {
-                if(nomePrj.equals(model.getValueAt(i, 0))){
-                    isAdded=true;
-                    JOptionPane.showMessageDialog(new JFrame(), "Projeto já cadastrado para avaliação");
-                }
-            }
-            if(!isAdded)
-            {
-                String projStatus = this.getProjetosMap().get(nomePrj);
-                if(projStatus.equals("EM DESENVOLVIMENTO") && (this.numProjsEmDesenv + 1) > (this.numProjs/2))
-                    JOptionPane.showMessageDialog(new JFrame(), "Pelo menos metade dos Projetos deve estar concluída");
-                else
-                {   
-                    if(projStatus.equals("EM DESENVOLVIMENTO"))
-                        this.numProjsEmDesenv++;
-                    String[] row = new String[2];
-                    row[0] = nomePrj;
-                    row[1] = projStatus;
-                    model.addRow(row);
-                    int restantes = numProjs - model.getRowCount();
-                    if(restantes > 0) {
-                        this.jLabel4.setText("Selecione mais " + restantes + " Projeto" + ((restantes == 1) ? "" : "s"));
-                        this.jLabel4.setForeground(Color.red);
-                    } else {
-                        this.jLabel4.setText("Número máximo de Projetos alcançado");
-                        this.jLabel4.setForeground(Color.green);
+        if(nomePrj != null)
+        {
+            DefaultTableModel model = (DefaultTableModel) this.projetoTable.getModel();
+            int numRows = model.getRowCount();
+            boolean isAdded = false;
+            if(numRows < this.numProjs){
+                for(int i=0;i<numRows;i++)
+                {
+                    if(nomePrj.equals(model.getValueAt(i, 0))){
+                        isAdded=true;
+                        JOptionPane.showMessageDialog(new JFrame(), "Projeto já cadastrado para avaliação");
                     }
-                    this.validate();
-                    this.repaint();
+                }
+                if(!isAdded)
+                {
+                    String projStatus = this.getProjetosMap().get(nomePrj);
+                    if(projStatus.equals("EM DESENVOLVIMENTO") && (this.numProjsEmDesenv + 1) > (this.numProjs/2))
+                        JOptionPane.showMessageDialog(new JFrame(), "Pelo menos metade dos Projetos deve estar concluída");
+                    else
+                    {   
+                        if(projStatus.equals("EM DESENVOLVIMENTO"))
+                            this.numProjsEmDesenv++;
+                        String[] row = new String[2];
+                        row[0] = nomePrj;
+                        row[1] = projStatus;
+                        model.addRow(row);
+                        int restantes = numProjs - model.getRowCount();
+                        if(restantes > 0) {
+                            this.jLabel4.setText("Selecione mais " + restantes + " Projeto" + ((restantes == 1) ? "" : "s"));
+                            this.jLabel4.setForeground(Color.red);
+                        } else {
+                            this.jLabel4.setText("Número máximo de Projetos alcançado");
+                            this.jLabel4.setForeground(Color.green);
+                        }
+                        this.validate();
+                        this.repaint();
+                    }
                 }
             }
+            else
+                JOptionPane.showMessageDialog(new JFrame(), "Número máximo de Projetos alcançado");
         }
         else
-            JOptionPane.showMessageDialog(new JFrame(), "Número máximo de Projetos alcançado");
+            JOptionPane.showMessageDialog(new JFrame(), "Nenhum Projeto selecionado");
     }//GEN-LAST:event_addProjButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed

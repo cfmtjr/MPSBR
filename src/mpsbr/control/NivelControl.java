@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JOptionPane;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Nivel;
 import mpsbr.model.Processo;
@@ -311,13 +312,24 @@ public class NivelControl {
     {   
         ResultadoEsperado re = null;
         if(codNovoProcesso != null){
+            boolean exists = false;
             if(novoProcesso == null)
                 novoProcesso = new HashMap<>();
-            re = new ResultadoEsperado(codigo, nome, desc, codNovoProcesso);
-            novoProcesso.put(re, niveis);
-            this.getCpv().getResultados().add(re.getCodigo());
-            this.getCpv().setREList(this.getCpv().getResultados());
-            MainView.showPanel(MainView.CADASTRA_PROC);
+            for (ResultadoEsperado result : novoProcesso.keySet()) {
+                if(exists = result.getCodigo().equals(codigo))
+                {
+                    JOptionPane.showMessageDialog(null, "Este Resultado Esperado já foi cadastrado previamente");
+                    break;
+                }
+            }
+            if(!exists)
+            {
+                re = new ResultadoEsperado(codigo, nome, desc, codNovoProcesso);
+                novoProcesso.put(re, niveis);
+                this.getCpv().getResultados().add(re.getCodigo());
+                this.getCpv().setREList(this.getCpv().getResultados());
+                MainView.showPanel(MainView.CADASTRA_PROC);
+            }
         } else {
             re = new ResultadoEsperado(codigo, nome, desc, getProprietario().getCodigo());
             if(ResultadoEsperado.createREInDB(re, niveis))
