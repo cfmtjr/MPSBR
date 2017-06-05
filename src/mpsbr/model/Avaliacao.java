@@ -129,7 +129,7 @@ public class Avaliacao {
     }
     
     public void avalia(){
-        AvaliacaoControl control = AvaliacaoControl.getInstance();
+            AvaliacaoControl control = AvaliacaoControl.getInstance();
         HashMap<Processo, List<Implementa<ResultadoEsperado>>> grausImplREProcI = (HashMap<Processo, List<Implementa<ResultadoEsperado>>>) control.getMapImplProjRE();
         HashMap<Processo, List<Implementa<AtributoDeProcesso>>> grausImplAPProcI = (HashMap<Processo, List<Implementa<AtributoDeProcesso>>>) control.getMapImplProjAP();
         Map<String, String> grausImplREUOProcI = new HashMap<>();
@@ -148,11 +148,14 @@ public class Avaliacao {
                     p.setStatus("SATISFEITO");
                 } else {
                     p.setStatus("NAO SATISFEITO");
+                    this.setStatus("NAO PASSOU");
                 }
             } else {
                 p.setStatus("NAO SATISFEITO");
                 this.setStatus("NAO PASSOU");
             }
+            grausImplREUOProcI.clear();
+            grausImplAPUOProcI.clear();
         } if(!this.getStatus().equals("NAO PASSOU")){ //!= n passou
             this.setStatus("PASSOU");
         }            
