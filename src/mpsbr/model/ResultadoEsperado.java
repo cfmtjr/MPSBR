@@ -89,4 +89,16 @@ public class ResultadoEsperado {
         ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();
         return red.create(re, validoPara);
     }
+
+    public static boolean reHasRegisteredLevel(ResultadoEsperado re, List<String> validoPara) {
+        ResultadoEsperadoDAO red = new ResultadoEsperadoDAOImpl();
+        List<String> niveisValidos = red.getAllNivelValidoParaRE(re);
+        if(niveisValidos != null) {
+            for (String nivel : niveisValidos) {
+                if(validoPara.contains(nivel))
+                    return true;
+            }
+        }
+        return false;
+    }
 }

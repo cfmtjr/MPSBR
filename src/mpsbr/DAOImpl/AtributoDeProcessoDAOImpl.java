@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -125,6 +127,39 @@ public class AtributoDeProcessoDAOImpl implements AtributoDeProcessoDAO{
 
             if (rs.next())
                 result = new AtributoDeProcesso(rs.getInt("ap.id"), rs.getString("ap.codigo"),rs.getString("ap.nome"), rs.getString("ap.descricao"), rs.getString("n.nome"));
+            conexao.close();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    @Override
+    public Map<String, List<String>> getAllNotasPorNivelEAP(String nomeNivel) {
+        Map<String, List<String>> result = new HashMap<>();
+        String cod = null;
+        List<String> notas = null;
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+
+            String selectSQL = "SELECT ap.codigo, graus.grau_impl FROM graus_impl_ap graus JOIN ap ON graus.ap_id=ap.id JOIN nivel n ON graus.nivel_id=n.id WHERE n.nome=?";
+
+            PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
+            prepStatement.setString(1, nomeNivel);
+            ResultSet rs = prepStatement.executeQuery();
+
+            while (rs.next()) {
+                cod = rs.getString("ap.codigo");
+                notas = result.get(cod);
+                if(notas == null)
+                {
+                    notas = new ArrayList<>();
+                    result.put(cod, notas);
+                }
+                notas.add(rs.getString("graus.grau_impl"));
+            }
             conexao.close();
             return result;
         } catch (SQLException ex) {

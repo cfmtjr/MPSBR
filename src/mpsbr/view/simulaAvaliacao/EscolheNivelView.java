@@ -60,10 +60,11 @@ public class EscolheNivelView extends javax.swing.JPanel {
     private void nivelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nivelButtonActionPerformed
         // TODO add your handling code here:
         String nivel = (String) nivelComboBox.getSelectedItem();
-        if(Nivel.getNivelFromDB(nivel.split(" ")[1]) != null)
+        Nivel nv = Nivel.getNivelFromDB(nivel.split(" ")[1]);
+        if(nv != null && nv.getStatus().equals("HABILITADO"))
             AvaliacaoControl.getInstance().preAval(nivel);
         else
-            JOptionPane.showMessageDialog(this, "Nível não cadastrado");
+            JOptionPane.showMessageDialog(this, "Nível com cadastro não realizado ou ainda não finalizado");
     }//GEN-LAST:event_nivelButtonActionPerformed
 
 

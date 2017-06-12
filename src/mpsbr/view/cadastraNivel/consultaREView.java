@@ -6,7 +6,9 @@
 package mpsbr.view.cadastraNivel;
 
 import java.util.List;
+import mpsbr.control.NivelControl;
 import mpsbr.facade.MPSBRFacade;
+import mpsbr.model.Nivel;
 import mpsbr.model.ResultadoEsperado;
 import mpsbr.view.MainView;
 
@@ -74,7 +76,9 @@ public class consultaREView extends javax.swing.JPanel {
 
         descricaoTextArea.setEditable(false);
         descricaoTextArea.setColumns(20);
+        descricaoTextArea.setLineWrap(true);
         descricaoTextArea.setRows(5);
+        descricaoTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descricaoTextArea);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));
@@ -214,7 +218,8 @@ public class consultaREView extends javax.swing.JPanel {
 
     public void loadScreen(ResultadoEsperado re) 
     {
-        List<String> niveis = MPSBRFacade.red.getAllNivelValidoParaRE(re);
+        Nivel nv = NivelControl.getInstance().getNivel();
+        List<String> niveis = MPSBRFacade.red.queryAllNivelValidoParaRE(re, nv.getNome());
         this.codigoTextField.setText(re.getCodigo());
         this.descricaoTextArea.setText(re.getDescricao());
         this.nomeTextField.setText(re.getNome());

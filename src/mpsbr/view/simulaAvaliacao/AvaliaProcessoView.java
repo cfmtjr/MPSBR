@@ -62,6 +62,7 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         jLabel1.setText("Simulação de Avaliação");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
+        procLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         procLabel.setText("Processo X");
         add(procLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 

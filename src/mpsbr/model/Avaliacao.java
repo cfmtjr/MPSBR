@@ -118,7 +118,11 @@ public class Avaliacao {
         List<AtributoDeProcesso> aps = AtributoDeProcesso.getAtributoDeProcessoPorNivel(this.getNivel());
         return aps;
     }
-    
+
+    public Map<String, List<String>> mapNotasPorAp() {
+       Map<String, List<String>> notasPorAp = AtributoDeProcesso.getNotasPorNivelEAp(nivel.getNome());
+       return notasPorAp;
+    }
     public Map<Processo, List<ResultadoEsperado>> mapResultadoEsperado(List<Processo> processos)
     {
         ResultadoEsperadoDAO red  = new ResultadoEsperadoDAOImpl();
@@ -129,11 +133,13 @@ public class Avaliacao {
     }
     
     public void avalia(){
-            AvaliacaoControl control = AvaliacaoControl.getInstance();
+        AvaliacaoControl control = AvaliacaoControl.getInstance();
         HashMap<Processo, List<Implementa<ResultadoEsperado>>> grausImplREProcI = (HashMap<Processo, List<Implementa<ResultadoEsperado>>>) control.getMapImplProjRE();
         HashMap<Processo, List<Implementa<AtributoDeProcesso>>> grausImplAPProcI = (HashMap<Processo, List<Implementa<AtributoDeProcesso>>>) control.getMapImplProjAP();
         Map<String, String> grausImplREUOProcI = new HashMap<>();
         Map<String, String> grausImplAPUOProcI = new HashMap<>();
+        Map<String, List<String>> notasPorAp = new HashMap<>();
+        notasPorAp = mapNotasPorAp();
         for (Processo p : grausImplREProcI.keySet()) {
             ArrayList<Implementa<ResultadoEsperado>> implRE = (ArrayList<Implementa<ResultadoEsperado>>) grausImplREProcI.get(p);
             for (Implementa<ResultadoEsperado> implementa : implRE) {
@@ -143,7 +149,7 @@ public class Avaliacao {
             for (Implementa<AtributoDeProcesso> implementa : implAP) {
                 grausImplAPUOProcI.put(implementa.getCaracteristicaAvaliada().getCodigo(), identificaGrauImpProcUO(implementa.getGrauImplPorProj()));
             }
-            if(validaApProc(grausImplAPUOProcI)){
+            if(validaApProc(grausImplAPUOProcI, mapNotasPorAp())){
                 if(validaReProc(grausImplREUOProcI)){
                     p.setStatus("SATISFEITO");
                 } else {
@@ -227,73 +233,13 @@ public class Avaliacao {
 
     // Verifica, de acordo com o nível, se os AP do processo estão caracterizados de forma que o processo pode ser classificado 
     // como satisfeito
-    public boolean validaApProc(Map<String, String> grausImplAP) {
-        switch(this.getNivel().getNome()) {
-            case "G":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T;L")) 
-                    return false;
-                break;
-            case "F":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T;L")
-                        || !validaAp(grausImplAP, "AP2.2", "T;L"))
-                    return false;
-                break;
-            case "E":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T")
-                        || !validaAp(grausImplAP, "AP2.2", "T")
-                        || !validaAp(grausImplAP, "AP3.1", "T;L")
-                        || !validaAp(grausImplAP, "AP3.2", "T;L"))
-                    return false;
-                break;
-            case "D":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T")
-                        || !validaAp(grausImplAP, "AP2.2", "T")
-                        || !validaAp(grausImplAP, "AP3.1", "T;L")
-                        || !validaAp(grausImplAP, "AP3.2", "T;L"))
-                    return false;
-                break;
-            case "C":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T")
-                        || !validaAp(grausImplAP, "AP2.2", "T")
-                        || !validaAp(grausImplAP, "AP3.1", "T;L")
-                        || !validaAp(grausImplAP, "AP3.2", "T;L"))
-                    return false;
-                break;
-            case "B":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T")
-                        || !validaAp(grausImplAP, "AP2.2", "T")
-                        || !validaAp(grausImplAP, "AP3.1", "T")
-                        || !validaAp(grausImplAP, "AP3.2", "T")
-                        || !validaAp(grausImplAP, "AP4.1", "T;L")
-                        || !validaAp(grausImplAP, "AP4.2", "T;L"))
-                    return false;
-                break;
-            case "A":
-                if (!validaAp(grausImplAP, "AP1.1", "T")
-                        || !validaAp(grausImplAP, "AP2.1", "T")
-                        || !validaAp(grausImplAP, "AP2.2", "T")
-                        || !validaAp(grausImplAP, "AP3.1", "T")
-                        || !validaAp(grausImplAP, "AP3.2", "T")
-                        || !validaAp(grausImplAP, "AP4.1", "T")
-                        || !validaAp(grausImplAP, "AP4.2", "T")
-                        || !validaAp(grausImplAP, "AP5.1", "T;L")
-                        || !validaAp(grausImplAP, "AP5.2", "T;L"))
-                    return false;
-                break;
+    public boolean validaApProc(Map<String, String> grausImplAP, Map<String, List<String>> notasPorAp) {
+        //Para cada AP, verifica se o grau de implementação atribuído equivale a uma das notas cadastradas no DB para que ele se dê como satisfeito
+        for (String codAp : grausImplAP.keySet()) {
+            if(!notasPorAp.get(codAp).contains(grausImplAP.get(codAp)))
+                return false;
         }
         return true;
     }
 
-    
-    //Valida uma AP do processo i, de acordo com o nível escolhido (tabela 10)
-    public boolean validaAp(Map<String, String> grausImplAP, String codAp, String valPossiveis) {
-        List<String> valsList = Arrays.asList(valPossiveis.split(";"));
-        return valsList.contains(grausImplAP.get(codAp));
-    }
 }

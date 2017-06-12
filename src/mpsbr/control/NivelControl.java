@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Nivel;
@@ -316,10 +317,19 @@ public class NivelControl {
             if(novoProcesso == null)
                 novoProcesso = new HashMap<>();
             for (ResultadoEsperado result : novoProcesso.keySet()) {
-                if(exists = result.getCodigo().equals(codigo))
+                if(result.getCodigo().equals(codigo))
                 {
-                    JOptionPane.showMessageDialog(null, "Este Resultado Esperado já foi cadastrado previamente");
-                    break;
+                    List<String> existingREValidLevels = novoProcesso.get(result);
+                    for (String existingREValidLevel : existingREValidLevels) {
+                        if(niveis.contains(existingREValidLevel))
+                            exists = true;
+                            break;
+                    }
+                    if(exists)
+                    {
+                        JOptionPane.showMessageDialog(null, "Pelo menos um dos níveis escolhidos já foi cadastrado previamente para este Resultado Esperado");
+                        break;
+                    }
                 }
             }
             if(!exists)
@@ -332,11 +342,15 @@ public class NivelControl {
             }
         } else {
             re = new ResultadoEsperado(codigo, nome, desc, getProprietario().getCodigo());
-            if(ResultadoEsperado.createREInDB(re, niveis))
-                processos.get(proprietario).add(re);
-            setProprietario(null);
-            this.getArev().loadScreen(processos);
-            MainView.showPanel(MainView.ADD_RE);
+            if(!ResultadoEsperado.reHasRegisteredLevel(re, niveis)){
+                if(ResultadoEsperado.createREInDB(re, niveis))
+                    processos.get(proprietario).add(re);
+                setProprietario(null);
+                this.getArev().loadScreen(processos);
+                MainView.showPanel(MainView.ADD_RE);
+            }
+            else
+                JOptionPane.showMessageDialog(null, "Pelo menos um dos níveis escolhidos já foi cadastrado previamente para este Resultado Esperado");
         }
     }
 
@@ -407,5 +421,20 @@ public class NivelControl {
     
     public boolean cadastraNiveis(){
         return Nivel.cadastraAllNivel();
+    }
+    
+    public void finalizaCadastro(){
+        if(Nivel.habilitaNivel(this.nivel.getNome()))
+            MainView.showPanel(MainView.SEL_NIVEL);
+        else
+            JOptionPane.showMessageDialog(new JFrame(), "Erro ao finalizar o cadastro de nível");
+}
+    
+    public boolean isNivelAnteriorHabilitado(String currNivel){
+        Nivel nv = Nivel.getNivelFromDB(currNivel);
+        if(nv.getNivelAnterior() != null)
+            return (nv.getNivelAnterior().getStatus().equals("HABILITADO"));
+        else
+            return true;
     }
 }

@@ -17,5 +17,6 @@ public interface NivelDAO {
     public boolean createAllNivel();
     public ArrayList<Nivel> getAllNivel();
     public Nivel findByName(String name);
+    public boolean habilitaNivel(String name);
     public boolean update(Nivel nivel);
 }

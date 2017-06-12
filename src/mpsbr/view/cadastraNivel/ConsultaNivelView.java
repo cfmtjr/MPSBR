@@ -41,6 +41,10 @@ public class ConsultaNivelView extends javax.swing.JPanel {
         apLabel = new javax.swing.JLabel();
         apComboBox = new javax.swing.JComboBox<>();
         buscarAPButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nomeNivel = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -103,6 +107,20 @@ public class ConsultaNivelView extends javax.swing.JPanel {
             }
         });
         add(buscarAPButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 150, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Status:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
+
+        statusLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Nivel ");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, -1));
+
+        nomeNivel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        add(nomeNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void processoComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_processoComboBoxItemStateChanged
@@ -170,8 +188,12 @@ public class ConsultaNivelView extends javax.swing.JPanel {
     private javax.swing.JButton buscarProcButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel nomeNivel;
     private javax.swing.JComboBox<String> processoComboBox;
     private javax.swing.JLabel processoLabel;
+    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
     public void loadScreen() {
@@ -184,6 +206,8 @@ public class ConsultaNivelView extends javax.swing.JPanel {
         for (AtributoDeProcesso ap : nc.getAp()) {
             apComboBox.addItem(ap.getCodigo());
         }
+        this.nomeNivel.setText(nc.getNivel().getNome());
+        this.statusLabel.setText(nc.getNivel().getStatus());
         this.validate();
         this.repaint();
     }

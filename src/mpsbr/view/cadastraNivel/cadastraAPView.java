@@ -68,7 +68,9 @@ public class cadastraAPView extends javax.swing.JPanel {
         add(codigoTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(99, 100, 100, 20));
 
         descricaoTextArea.setColumns(20);
+        descricaoTextArea.setLineWrap(true);
         descricaoTextArea.setRows(5);
+        descricaoTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descricaoTextArea);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));

@@ -6,6 +6,7 @@
 package mpsbr.model;
 
 import java.util.List;
+import java.util.Map;
 import mpsbr.DAO.AtributoDeProcessoDAO;
 import mpsbr.DAOImpl.AtributoDeProcessoDAOImpl;
 
@@ -85,5 +86,10 @@ public class AtributoDeProcesso {
     public static boolean createAPInDB(AtributoDeProcesso ap) {
         AtributoDeProcessoDAO apd = new AtributoDeProcessoDAOImpl();
         return apd.create(ap);
+    }
+    
+    public static Map<String, List<String>> getNotasPorNivelEAp(String nomeNivel) {
+        AtributoDeProcessoDAO apd = new AtributoDeProcessoDAOImpl();
+        return apd.getAllNotasPorNivelEAP(nomeNivel);
     }
 }

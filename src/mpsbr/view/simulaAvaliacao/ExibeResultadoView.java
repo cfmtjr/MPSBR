@@ -49,6 +49,7 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         jLabel1.setText("Simulação de Avaliação");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Resultado de Avaliação");
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, -1, -1));
 
@@ -67,12 +68,15 @@ public class ExibeResultadoView extends javax.swing.JPanel {
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 640, 160));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel3.setText("Resultado Final");
         add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
 
+        resultadoLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         resultadoLabel.setText("Satisfeito");
         add(resultadoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 360, -1, -1));
 
+        nivelLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         nivelLabel.setText("Nível X");
         add(nivelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, -1, -1));
 

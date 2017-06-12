@@ -23,5 +23,6 @@ public interface ResultadoEsperadoDAO {
     public ArrayList<ResultadoEsperado> getAllResultadoEsperadoPorProcesso(Processo processo);
     public ResultadoEsperado findByCodigo(String codigo);
     public ArrayList<String> getAllNivelValidoParaRE(ResultadoEsperado re);
+    public ArrayList<String> queryAllNivelValidoParaRE(ResultadoEsperado re, String nomeNivel);
     public boolean update(String nome);    
 }

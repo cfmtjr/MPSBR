@@ -69,7 +69,9 @@ public class consultaAPView extends javax.swing.JPanel {
 
         descricaoTextArea.setEditable(false);
         descricaoTextArea.setColumns(20);
+        descricaoTextArea.setLineWrap(true);
         descricaoTextArea.setRows(5);
+        descricaoTextArea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descricaoTextArea);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 350, -1));

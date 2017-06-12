@@ -33,6 +33,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Resultado de Avalia&#xe7;&#xe3;o"/>
       </Properties>
       <Constraints>
@@ -69,6 +72,9 @@
     </Container>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Resultado Final"/>
       </Properties>
       <Constraints>
@@ -79,6 +85,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="resultadoLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Satisfeito"/>
       </Properties>
       <Constraints>
@@ -89,6 +98,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="nivelLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="N&#xed;vel X"/>
       </Properties>
       <Constraints>

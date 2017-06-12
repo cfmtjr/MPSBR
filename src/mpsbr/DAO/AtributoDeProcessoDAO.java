@@ -7,6 +7,7 @@ package mpsbr.DAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import mpsbr.model.AtributoDeProcesso;
 import mpsbr.model.Nivel;
 
@@ -19,5 +20,6 @@ public interface AtributoDeProcessoDAO {
     public ArrayList<AtributoDeProcesso> getAllAtributoDeProcesso();
     public List<AtributoDeProcesso> getAllAtributoDeProcessoPorNivel(Nivel nivel);
     public AtributoDeProcesso findByCodigo(String codigo);
+    public Map<String, List<String>> getAllNotasPorNivelEAP(String nomeNivel);
     public boolean update(String nome);    
 }

@@ -5,6 +5,7 @@
  */
 package mpsbr.view.cadastraNivel;
 
+import javax.swing.JOptionPane;
 import mpsbr.control.NivelControl;
 
 /**
@@ -60,9 +61,13 @@ public class selecionaNivelView extends javax.swing.JPanel {
 
     private void CadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroButtonActionPerformed
         String nivel = (String) this.nivelComboBox.getSelectedItem();
-        if(!NivelControl.getInstance().checaCadastroNivel(nivel.split(" ")[1]))
-            NivelControl.getInstance().cadastraNiveis();
-        NivelControl.getInstance().startCadastroNivel(nivel);
+        NivelControl nc = NivelControl.getInstance();
+        if(!nc.checaCadastroNivel(nivel.split(" ")[1]))
+            nc.cadastraNiveis();
+        if(nc.isNivelAnteriorHabilitado(nivel.split(" ")[1]))
+            NivelControl.getInstance().startCadastroNivel(nivel);
+        else
+            JOptionPane.showMessageDialog(this, "Não é possível começar o cadastro de um nível enquanto o cadastro dos níveis inferiores não forem realizados.");
     }//GEN-LAST:event_CadastroButtonActionPerformed
 
 

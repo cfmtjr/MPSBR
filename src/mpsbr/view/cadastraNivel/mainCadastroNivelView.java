@@ -43,22 +43,27 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
         jScrollPane5 = new javax.swing.JScrollPane();
         APList = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
-        addAPButton = new javax.swing.JToggleButton();
+        finalizaCadastroButton = new javax.swing.JToggleButton();
         addProcessoButton = new javax.swing.JToggleButton();
+        addAPButton = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        nomeNivel = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Cadastro de Nível");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, -1));
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
 
         jScrollPane3.setViewportView(processoList);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 130, 90));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 90));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("Processos Cadastrados:");
-        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
         changeProcButton.setText("Adicionar RE em Processo Existente");
         changeProcButton.addActionListener(new java.awt.event.ActionListener() {
@@ -66,24 +71,24 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
                 changeProcButtonActionPerformed(evt);
             }
         });
-        add(changeProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 240, -1));
-        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, 360, 10));
+        add(changeProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 240, -1));
+        add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 360, 10));
 
         jScrollPane5.setViewportView(APList);
 
-        add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 130, 90));
+        add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 130, 90));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setText("APs Cadastrados:");
-        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
+        add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
-        addAPButton.setText("Adicionar Novo AP");
-        addAPButton.addActionListener(new java.awt.event.ActionListener() {
+        finalizaCadastroButton.setText("Finalizar Cadastro");
+        finalizaCadastroButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addAPButtonActionPerformed(evt);
+                finalizaCadastroButtonActionPerformed(evt);
             }
         });
-        add(addAPButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 140, -1));
+        add(finalizaCadastroButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, 140, -1));
 
         addProcessoButton.setText("Adicionar Novo Processo");
         addProcessoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -91,7 +96,29 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
                 addProcessoButtonActionPerformed(evt);
             }
         });
-        add(addProcessoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 190, -1));
+        add(addProcessoButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 190, -1));
+
+        addAPButton.setText("Adicionar Novo AP");
+        addAPButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addAPButtonActionPerformed(evt);
+            }
+        });
+        add(addAPButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 140, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Status:");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
+
+        statusLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        add(statusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Nivel ");
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
+
+        nomeNivel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        add(nomeNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void changeProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeProcButtonActionPerformed
@@ -104,6 +131,10 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
         NivelControl.getInstance().cadastroProcesso();
     }//GEN-LAST:event_addProcessoButtonActionPerformed
 
+    private void finalizaCadastroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finalizaCadastroButtonActionPerformed
+        NivelControl.getInstance().finalizaCadastro();
+    }//GEN-LAST:event_finalizaCadastroButtonActionPerformed
+
     private void addAPButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAPButtonActionPerformed
         NivelControl.getInstance().cadastroAP();
     }//GEN-LAST:event_addAPButtonActionPerformed
@@ -114,18 +145,24 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
     private javax.swing.JToggleButton addAPButton;
     private javax.swing.JToggleButton addProcessoButton;
     private javax.swing.JToggleButton changeProcButton;
+    private javax.swing.JToggleButton finalizaCadastroButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel nomeNivel;
     private javax.swing.JList<String> processoList;
+    private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
     public void loadScreen(Map<Processo, List<ResultadoEsperado>>processos, List<AtributoDeProcesso> aps){
         String[] processosCods = new String[processos.size()];
         String[] apsCods = new String[aps.size()];
+        NivelControl nc = NivelControl.getInstance();
         int i = 0;
         for (Processo p : processos.keySet()) {
             processosCods[i] = p.getCodigo();
@@ -138,6 +175,8 @@ public class mainCadastroNivelView extends javax.swing.JPanel {
         }
         this.processoList.setListData(processosCods);
         this.APList.setListData(apsCods);
+        this.nomeNivel.setText(nc.getNivel().getNome());
+        this.statusLabel.setText(nc.getNivel().getStatus());
         this.validate();
         this.repaint();
     }

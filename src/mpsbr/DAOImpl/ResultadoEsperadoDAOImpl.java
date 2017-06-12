@@ -43,7 +43,7 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             prepStatement.executeUpdate();
             
             for (String nomeNivel : validoPara) {
-                createSQL = "INSERT INTO re_valido_para(re_id, nivel_id) VALUES ((SELECT id FROM re WHERE codigo=?),(SELECT id FROM nivel WHERE nome=?))";
+                createSQL = "INSERT INTO re_valido_para(re_id, nivel_id) VALUES ((SELECT id FROM re WHERE codigo=? ORDER BY id DESC LIMIT 1),(SELECT id FROM nivel WHERE nome=?))";
                 prepStatement = conexao.prepareStatement(createSQL);
                 prepStatement.setString(1, re.getCodigo());
                 prepStatement.setString(2, nomeNivel);
@@ -53,8 +53,6 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             conexao.close();
             return true;
         } catch (SQLException ex) {
-            if (ex.getErrorCode() == 1062)
-                JOptionPane.showMessageDialog(null, "Este Resultado Esperado já foi cadastrado previamente");
             Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
@@ -202,9 +200,9 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             ConnectionDB conn = new ConnectionDB();
             Connection conexao = conn.getConnection();
 
-            String selectSQL = "SELECT n.nome FROM nivel n JOIN re_valido_para val ON n.id=val.nivel_id WHERE re_id=?";
+            String selectSQL = "SELECT n.nome FROM nivel n JOIN re_valido_para val ON n.id=val.nivel_id WHERE re_id in (SELECT id FROM re WHERE codigo=?)";
             PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
-            prepStatement.setInt(1, re.getId());
+            prepStatement.setString(1, re.getCodigo());
             ResultSet rs = prepStatement.executeQuery();
 
             while (rs.next()) {
@@ -217,4 +215,47 @@ public class ResultadoEsperadoDAOImpl implements ResultadoEsperadoDAO{
             return null;
         }
     }
+    
+    @Override
+    public ArrayList<String> queryAllNivelValidoParaRE(ResultadoEsperado re, String nomeNivel) {
+        int reID = 0;
+        ArrayList<String> result = new ArrayList<>();
+
+        try {
+            ConnectionDB conn = new ConnectionDB();
+            Connection conexao = conn.getConnection();
+            
+            String selectSQL = "SELECT re.id FROM re JOIN re_valido_para val ON re.id=val.re_id JOIN nivel n ON n.id=val.nivel_id WHERE re.codigo=? AND n.nome=?";
+            PreparedStatement prepStatement = conexao.prepareStatement(selectSQL);
+            prepStatement.setString(1, re.getCodigo());
+            prepStatement.setString(2, nomeNivel);
+            ResultSet rs = prepStatement.executeQuery();
+            
+            if(rs.next())
+                reID = rs.getInt("re.id");
+            
+            if(reID != 0)
+            {
+                selectSQL = "SELECT n.nome FROM nivel n JOIN re_valido_para val ON n.id=val.nivel_id WHERE re_id=?";
+                prepStatement = conexao.prepareStatement(selectSQL);
+                prepStatement.setInt(1, reID);
+                rs = prepStatement.executeQuery();
+
+                while (rs.next()) {
+                    result.add(rs.getString("n.nome"));
+                }
+                conexao.close();
+                return result;
+            }
+            else
+            {
+                conexao.close();
+                return null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NivelDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
 }

@@ -69,7 +69,9 @@ public class ConsultaProjetoView extends javax.swing.JPanel {
 
         descricaoTextField.setEditable(false);
         descricaoTextField.setColumns(20);
+        descricaoTextField.setLineWrap(true);
         descricaoTextField.setRows(5);
+        descricaoTextField.setWrapStyleWord(true);
         jScrollPane1.setViewportView(descricaoTextField);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 530, -1));

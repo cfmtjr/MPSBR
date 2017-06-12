@@ -14,10 +14,12 @@ import mpsbr.DAOImpl.NivelDAOImpl;
  */
 public class Nivel {
     private String nome;
+    private String status;
     private Nivel nivelAnterior; 
 
-    public Nivel(String nome, Nivel nivelAnterior) {
+    public Nivel(String nome, String status, Nivel nivelAnterior) {
         this.nome = nome;
+        this.status = status;
         this.nivelAnterior = nivelAnterior;
     }
 
@@ -29,6 +31,14 @@ public class Nivel {
         this.nome = nome;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public Nivel getNivelAnterior() {
         return nivelAnterior;
     }
@@ -45,6 +55,11 @@ public class Nivel {
     public static boolean cadastraAllNivel(){
         NivelDAO nv = new NivelDAOImpl();
         return nv.createAllNivel();
+    }
+    
+    public static boolean habilitaNivel(String nome){
+        NivelDAO nv = new NivelDAOImpl();
+        return nv.habilitaNivel(nome);
     }
     
 }
