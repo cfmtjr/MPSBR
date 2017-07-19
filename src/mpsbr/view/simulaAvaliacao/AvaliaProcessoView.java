@@ -6,6 +6,7 @@
 package mpsbr.view.simulaAvaliacao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,8 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         ApTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         proxProcButton = new javax.swing.JButton();
+        descText = new javax.swing.JLabel();
+        descSeparator = new javax.swing.JSeparator();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -77,6 +80,11 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ReTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ReTableMouseClicked(evt);
+            }
+        });
         ReScrollPane.setViewportView(ReTable);
 
         add(ReScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 570, 100));
@@ -92,6 +100,11 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        ApTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ApTableMouseClicked(evt);
+            }
+        });
         ApScrollPane.setViewportView(ApTable);
 
         add(ApScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 570, 100));
@@ -111,6 +124,10 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
             }
         });
         add(proxProcButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, -1, -1));
+
+        descText.setText("Descrição:");
+        add(descText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, -1, -1));
+        add(descSeparator, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 570, 10));
     }// </editor-fold>//GEN-END:initComponents
 
     private void proxProcButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proxProcButtonActionPerformed
@@ -159,12 +176,60 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Opção não Habilitada");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void ReTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReTableMouseClicked
+        if(this.ReTable.getSelectedRow()>=0)
+        {
+            String nome="";
+            for(ResultadoEsperado re : this.listRe)
+            {
+                if(this.ReTable.getValueAt(this.ReTable.getSelectedRow(), this.ReTable.getSelectedColumn()).equals(re.getCodigo()))
+                {
+                    nome = re.getCodigo()+": "+ re.getNome();
+                    break;
+                }
+            }
+            if(!nome.equals(""))
+                this.descText.setText(nome);
+            else
+                this.descText.setText("");
+        }
+        else
+        {
+            this.descText.setText("");
+        }
+    }//GEN-LAST:event_ReTableMouseClicked
+
+    private void ApTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ApTableMouseClicked
+        if(this.ApTable.getSelectedColumn()==0)
+        {
+            String nome="";
+            for(AtributoDeProcesso ap : this.listAp)
+            {
+                if(this.ApTable.getValueAt(this.ApTable.getSelectedRow(), this.ApTable.getSelectedColumn()).equals(ap.getCodigo()))
+                {
+                    nome = ap.getCodigo()+": "+ ap.getNome();
+                    break;
+                }
+            }
+            if(!nome.equals(""))
+                this.descText.setText(nome);
+            else
+                this.descText.setText("");
+        }
+        else
+        {
+            this.descText.setText("");
+        }
+    }//GEN-LAST:event_ApTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane ApScrollPane;
     private javax.swing.JTable ApTable;
     private javax.swing.JScrollPane ReScrollPane;
     private javax.swing.JTable ReTable;
+    private javax.swing.JSeparator descSeparator;
+    private javax.swing.JLabel descText;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel procLabel;
@@ -174,7 +239,7 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
     public void loadScreen(List<Projeto> projs, Processo pAtual) {
         
         this.currProc = pAtual;
-        this.procLabel.setText("Processo " + pAtual.getCodigo());
+        this.procLabel.setText("Processo " + pAtual.getNome());
         Vector<String> colunas = new Vector<>();
         
         colunas.add("Código");
@@ -242,6 +307,12 @@ public class AvaliaProcessoView extends javax.swing.JPanel {
             }
         }
         return false;
+    }
+
+    private Vector<String> orderCols(Vector<String> colunas) {
+        Collections.sort(colunas);
+        System.out.println(colunas);
+        return colunas;
     }
 
 }

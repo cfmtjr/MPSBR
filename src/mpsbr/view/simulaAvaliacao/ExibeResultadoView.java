@@ -136,7 +136,7 @@ public class ExibeResultadoView extends javax.swing.JPanel {
         this.jScrollPane1.setVisible(true);
         
         for (Processo processo : ac.getListProcessos()) {
-            modelResults.addRow(new String[] {"Processo " + processo.getCodigo(), processo.getStatus()});
+            modelResults.addRow(new String[] {processo.getNome(), processo.getStatus()});
         }
         
         resultadoLabel.setText(ac.getCurrentAval().getStatus());

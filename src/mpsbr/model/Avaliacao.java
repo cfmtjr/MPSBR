@@ -154,16 +154,16 @@ public class Avaliacao {
                     p.setStatus("SATISFEITO");
                 } else {
                     p.setStatus("NAO SATISFEITO");
-                    this.setStatus("NAO PASSOU");
+                    this.setStatus("REPROVADO");
                 }
             } else {
                 p.setStatus("NAO SATISFEITO");
-                this.setStatus("NAO PASSOU");
+                this.setStatus("REPROVADO");
             }
             grausImplREUOProcI.clear();
             grausImplAPUOProcI.clear();
-        } if(!this.getStatus().equals("NAO PASSOU")){ //!= n passou
-            this.setStatus("PASSOU");
+        } if(!this.getStatus().equals("REPROVADO")){ //!= n passou
+            this.setStatus("APROVADO");
         }            
     }
     
@@ -241,5 +241,4 @@ public class Avaliacao {
         }
         return true;
     }
-
 }
